@@ -87,12 +87,11 @@
 </head>
 <body>
 
-<header id="header" class="header position-relative">
+
 @yield('header')
-</header>
 
 
-<main class="container main my-5">
+<main class="main">
     @yield('content')
 </main>
 
@@ -102,7 +101,8 @@
 
 <!-- Scroll Top -->
 <a href="#" id="scroll-top" class="scroll-top d-flex align-items-center justify-content-center"><i
-        class="bi bi-arrow-up-short"></i></a>
+    <i class="fa-light fa-arrow-up"></i>
+</a>
 
 <!-- Preloader -->
 <div id="preloader"></div>
