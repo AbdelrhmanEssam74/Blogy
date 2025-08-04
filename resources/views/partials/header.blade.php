@@ -1,4 +1,5 @@
 @section('header')
+    <header id="header" class="header position-relative">
     <div class="container-fluid container-xl position-relative">
 
         <div class="top-row d-flex align-items-center justify-content-between">
@@ -28,34 +29,28 @@
                     <li><a href="{{route('home')}}" class="active">Home</a></li>
                     <li><a href="about.html">About</a></li>
                     <li><a href="{{route('categories.index')}}">Category</a></li>
-                    <li><a href="blog-details.html">Blog Details</a></li>
-                    <li><a href="author-profile.html">Author Profile</a></li>
-                    <li class="dropdown"><a href="#"><span>Pages</span>
-                            <i class="bi bi-chevron-down toggle-dropdown"></i></a>
-                        <ul>
-                            <li><a href="about.html">About</a></li>
-                            <li><a href="category.html">Category</a></li>
-                            <li><a href="blog-details.html">Blog Details</a></li>
-                            <li><a href="author-profile.html">Author Profile</a></li>
-                            <li><a href="search-results.html">Search Results</a></li>
-                            <li><a href="404.html">404 Not Found Page</a></li>
-
-                            <li class="dropdown"><a href="#"><span>Deep Dropdown</span>
-                                    <i class="bi bi-chevron-down toggle-dropdown"></i></a>
-                                <ul>
-                                    <li><a href="#">Deep Dropdown 1</a></li>
-                                    <li><a href="#">Deep Dropdown 2</a></li>
-                                    <li><a href="#">Deep Dropdown 3</a></li>
-                                    <li><a href="#">Deep Dropdown 4</a></li>
-                                    <li><a href="#">Deep Dropdown 5</a></li>
-                                </ul>
-                            </li>
-                        </ul>
-                    </li>
                     <li><a href="contact.html">Contact</a></li>
+                    @if(!auth()->user())
+                        <li><a href="{{route('login')}}">Login</a></li>
+                        <li><a href="{{route('register')}}">Register</a></li>
+                    @else
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-bs-toggle="dropdown">{{auth()->user()->full_name}}</a>
+                            <ul class="dropdown-menu">
+{{--                                <li><a href="{{route('profile.show')}}">Profile</a></li>--}}
+{{--                                <li><a href="{{route('posts.create')}}">Create Post</a></li>--}}
+                                <li><a href="{{route('logout')}}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">Logout</a></li>
+                                <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+                                    @csrf
+                                </form>
+                            </ul>
+                        </li>
+                    @endif
                 </ul>
-                <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
+                <i class="mobile-nav-toggle  d-xl-none fa-regular fa-bars"></i>
             </nav>
         </div>
     </div>
+    </header>
+
 @endsection

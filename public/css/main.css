@@ -1044,7 +1044,7 @@ section,
 
 .blog-hero .blog-item .post-meta .date::before,
 .blog-hero .blog-item .post-meta .category::before {
-    font-family: "bootstrap-icons";
+    font-family: "FontAwesome";
     margin-right: 0.5rem;
     font-size: 1rem;
 }
