@@ -87,7 +87,9 @@
 </head>
 <body>
 
-
+@if(auth()->user()->role_id === 4)
+    <x-create_first_article/>
+@endif
 @yield('header')
 
 
@@ -114,6 +116,7 @@
 <script src="{{asset('vendor/swiper/swiper-bundle.min.js')}}"></script>
 <script src="{{asset('vendor/purecounter/purecounter_vanilla.js')}}"></script>
 <script src="{{asset('vendor/glightbox/js/glightbox.min.js')}}"></script>
+
 
 <!-- Main JS File -->
 <script src="{{asset('js/main.js')}}"></script>
