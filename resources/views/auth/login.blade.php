@@ -1,47 +1,254 @@
-<x-guest-layout>
-    <!-- Session Status -->
-    <x-auth-session-status class="mb-4" :status="session('status')" />
+@extends('app.layout')
 
-    <form method="POST" action="{{ route('login') }}">
-        @csrf
+@section('title', 'Register')
 
-        <!-- Email Address -->
-        <div>
-            <x-input-label for="email" :value="__('Email')" />
-            <x-text-input id="email" class="block mt-1 w-full" type="email" name="email" :value="old('email')" required autofocus autocomplete="username" />
-            <x-input-error :messages="$errors->get('email')" class="mt-2" />
+@section('content')
+    <div class="full-width-auth-container">
+        <!-- Image Section -->
+        <div class="auth-image-section">
+            <img fetchpriority="high"
+                 src="{{asset('img/auth-background.jpg')}}"
+                 alt="">
         </div>
+        <!-- Form Section -->
+        <div class="auth-form-section">
+            <div class="auth-form-content">
+                <p class="text-center text-muted mb-4">Welcome Back</p>
 
-        <!-- Password -->
-        <div class="mt-4">
-            <x-input-label for="password" :value="__('Password')" />
+                <form method="POST" action="{{ route('login') }}" enctype="multipart/form-data">
+                    @csrf
+                    {{-- Email --}}
+                    <div class="form-floating mb-3">
+                        <input id="email" type="email" name="email"
+                               class="form-control @error('email') is-invalid @enderror"
+                               placeholder="name@example.com" value="{{ old('email') }}"  >
+                        <label for="email"><i class="bi bi-envelope-fill me-2"></i>Email address</label>
+                        @error('email')
+                        <div class="invalid-feedback d-block">{{ $message }}</div>
+                        @enderror
+                    </div>
 
-            <x-text-input id="password" class="block mt-1 w-full"
-                            type="password"
-                            name="password"
-                            required autocomplete="current-password" />
+                    {{-- Password --}}
+                    <div class="form-floating mb-3">
+                        <input id="password" type="password" name="password"
+                               class="form-control @error('password') is-invalid @enderror"
+                               placeholder="Password"  >
+                        <label for="password"><i class="bi bi-lock-fill me-2"></i>Password</label>
+                        @error('password')
+                        <div class="invalid-feedback d-block">{{ $message }}</div>
+                        @enderror
+                    </div>
+                    {{-- Submit --}}
+                    <div class="d-grid">
+                        <button type="submit" class="btn btn-primary btn-lg ">
+                            <i class="bi bi-person-plus-fill me-1"></i> Login
+                        </button>
+                    </div>
 
-            <x-input-error :messages="$errors->get('password')" class="mt-2" />
+                    {{-- create an account --}}
+                    <div class="text-center mt-3">
+                        <p class="text-muted mb-0">Don't have an account? <a href="{{ route('register') }}">Register</a></p>
+                    </div>
+                </form>
+            </div>
         </div>
+    </div>
 
-        <!-- Remember Me -->
-        <div class="block mt-4">
-            <label for="remember_me" class="inline-flex items-center">
-                <input id="remember_me" type="checkbox" class="rounded border-gray-300 text-indigo-600 shadow-sm focus:ring-indigo-500" name="remember">
-                <span class="ms-2 text-sm text-gray-600">{{ __('Remember me') }}</span>
-            </label>
-        </div>
+    <style>
+        /* Base Styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
 
-        <div class="flex items-center justify-end mt-4">
-            @if (Route::has('password.request'))
-                <a class="underline text-sm text-gray-600 hover:text-gray-900 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500" href="{{ route('password.request') }}">
-                    {{ __('Forgot your password?') }}
-                </a>
-            @endif
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+        }
 
-            <x-primary-button class="ms-3">
-                {{ __('Log in') }}
-            </x-primary-button>
-        </div>
-    </form>
-</x-guest-layout>
+        /* Full Width Container */
+        .full-width-auth-container {
+            display: flex;
+        }
+
+        /* Image Section */
+        .auth-image-section {
+            flex: 1;
+            height: 100vh;
+            max-width: 100%;
+            background-color: #f5f5f5;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+        }
+
+        .auth-image-section img {
+            width: 100%;
+            height: auto;
+            -o-object-fit: cover;
+            object-fit: cover;
+        }
+
+        /* Form Section */
+        .auth-form-section {
+            background-color: #f8f8ff;
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .auth-form-content {
+            width: 100%;
+            max-width: 420px;
+            padding: 2rem;
+        }
+
+        .auth-title {
+            font-size: 1.75rem;
+            font-weight: 600;
+            margin-bottom: 1.5rem;
+            text-align: center;
+            color: #1a1a1a;
+        }
+
+        /* Form Elements */
+        .auth-form {
+            width: 100%;
+        }
+
+        .disclaimer {
+            font-size: 0.75rem;
+            color: #666;
+            margin-bottom: 1.5rem;
+            line-height: 1.5;
+        }
+
+        .disclaimer a {
+            color: #0066cc;
+            text-decoration: none;
+        }
+
+        .disclaimer a:hover {
+            text-decoration: underline;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-size: 0.875rem;
+            font-weight: 500;
+            color: #333;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 0.875rem 1rem;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            font-size: 1rem;
+            transition: border-color 0.2s;
+        }
+
+        .form-group input:focus {
+            outline: none;
+            border-color: #0066cc;
+            box-shadow: 0 0 0 2px rgba(0, 102, 204, 0.1);
+        }
+
+        /* Buttons */
+        .primary-button {
+            width: 100%;
+            padding: 0.875rem;
+            background-color: #0066cc;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            font-size: 1rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: background-color 0.2s;
+            margin-bottom: 1.5rem;
+        }
+
+        .primary-button:hover {
+            background-color: #0052a3;
+        }
+
+        /* Divider */
+        .divider {
+            display: flex;
+            align-items: center;
+            margin: 1.5rem 0;
+            color: #999;
+            font-size: 0.875rem;
+        }
+
+        .divider::before,
+        .divider::after {
+            content: "";
+            flex: 1;
+            border-bottom: 1px solid #eee;
+        }
+
+        .divider::before {
+            margin-right: 1rem;
+        }
+
+        .divider::after {
+            margin-left: 1rem;
+        }
+
+        /* SSO Buttons */
+        .sso-buttons {
+            display: flex;
+            flex-direction: row;
+            gap: 0.75rem;
+        }
+
+        .sso-button {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 0.75rem;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            font-size: 0.9375rem;
+            font-weight: 500;
+            text-decoration: none;
+            color: #333;
+            transition: background-color 0.2s;
+        }
+
+        .sso-button:hover {
+            background-color: #f5f5f5;
+        }
+
+        .sso-icon {
+            width: 20px;
+            height: 20px;
+            margin-right: 0.75rem;
+        }
+
+        /* Responsive Adjustments */
+        @media (max-width: 768px) {
+            .full-width-auth-container {
+                flex-direction: column;
+            }
+
+            .auth-image-section {
+                height: 200px;
+            }
+
+            .auth-form-content {
+                padding: 1.5rem;
+            }
+        }
+    </style>
+@endsection
