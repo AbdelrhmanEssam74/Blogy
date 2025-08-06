@@ -80,5 +80,35 @@ class ArticleController extends Controller
 
         return redirect('/articles')->with('success', 'Article updated successfully');
     }
+     public function store_first(Request $request)
+    {
+        $user = auth()->user();
+        if(!$user)
+        {
+           return redirect('/login')->with('error', 'You must be logged in to create an article.');
+        }
+        $validated = $request->validate([
+            'title' => 'required|max:255',
+            'image' => 'required|image|mimes:jpg,jpeg,png,webp|max:2048',
+            'content' => 'required|max:255',
+        ]);
+        return response()->json(['data' => $validated]);
+        $slug = $this->str_slug($request->title, '-');
+        $validated['slug'] = $slug;
+        if ($request->hasFile('image')) {
+            $imagePath = $request->file('image')->store('articles', 'public');
+            $validated['image'] = $imagePath;
+        }
+
+        Article::create($validated);
+
+        return redirect('/home')->with('success', '🎉 Congratulations! You\'ve published your first article. You can now manage and create more content as a Writer.');
+    }
+
+    private function str_slug(mixed $title, string $string)
+    {
+        $slug = preg_replace('/[^A-Za-z0-9-]+/', $string, strtolower($title));
+        return trim($slug, $string);
+    }
 
 }
