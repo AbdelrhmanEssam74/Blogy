@@ -13,6 +13,7 @@ Route::get('/articles', [ArticleController::class, 'index'])->name('articles.ind
 
 Route::get('/articles/create', [ArticleController::class, 'create'])->name('articles.create');
 Route::post('/articles', [ArticleController::class, 'store'])->name('articles.store');
+Route::post('/articles', [ArticleController::class, 'store_first'])->name('articles.store.first');
 
 Route::get('/articles/delete/{id}', [ArticleController::class, 'delete'])->name('articles.delete');
 Route::get('/articles/{slug}', [ArticleController::class, 'show'])->name('articles.show');
