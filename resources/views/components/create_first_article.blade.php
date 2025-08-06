@@ -20,7 +20,8 @@
         <h2>Publish Your Article</h2>
         <p>Ready to share your ideas with our community? Fill out the form below to get started!</p>
 
-        <form id="articleForm">
+        <form id="articleForm" action="{{ route('articles.store.first') }}" method="POST" enctype="multipart/form-data">
+            @csrf
             <div class="form-group">
                 <label for="articleTitle">Title</label>
                 <input type="text" id="articleTitle" placeholder="Enter your article title" required>
@@ -261,16 +262,6 @@
                 modal.style.display = 'none';
                 document.body.style.overflow = 'auto';
             }
-        });
-
-        // Form submission
-        document.getElementById('articleForm').addEventListener('submit', function(e) {
-            e.preventDefault();
-            // Here you would normally send the data to your server
-            alert('Article submitted! (This is a demo)');
-            modal.style.display = 'none';
-            document.body.style.overflow = 'auto';
-            dismissAlert(); // Optionally dismiss the alert after submission
         });
     });
 </script>

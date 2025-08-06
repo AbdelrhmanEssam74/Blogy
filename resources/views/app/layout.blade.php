@@ -87,8 +87,10 @@
 </head>
 <body>
 
-@if(auth()->user()->role_id === 4)
-    <x-create_first_article/>
+@if(auth()->check())
+    @if(auth()->user()->role_id === 4)
+        <x-create_first_article/>
+    @endif
 @endif
 @yield('header')
 
