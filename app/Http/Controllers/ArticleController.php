@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Models\Article;
+use App\Models\Category;
 use Illuminate\Http\Request;
+use Illuminate\Support\Str;
 
 class ArticleController extends Controller
 {
@@ -25,14 +27,34 @@ class ArticleController extends Controller
         return view('articles.create');
     }
 
+    public function create_first()
+    {
+        $categories = Category::all();
+        if (auth()->user()->articles()->count() > 0) {
+            return redirect('/articles')->with('error', 'You have already created an article. You can create more articles from the articles page.');
+        }
+        return view('articles.create-first', ['categories' => $categories]);
+
+    }
+
     public function store(Request $request)
     {
+//        echo "hello";
         $validated = $request->validate([
             'title' => 'required|max:255',
-            'slug' => 'required|unique:articles',
             'image' => 'required|image|mimes:jpg,jpeg,png,webp|max:2048',
-            'content' => 'required|max:255',
+            'content' => 'required|max:1000|min:10',
+            'category_id' => 'required|exists:categories,category_id',
         ]);
+
+        $validated['writer_id'] = auth()->user()->user_id;
+
+        $slug = Str::slug($request->title, '-');
+        $count = Article::where('slug', 'like', $slug . '%')->count();
+        if ($count > 0) {
+            $slug .= '-' . ($count + 1);
+        }
+        $validated['slug'] = $slug;
 
         if ($request->hasFile('image')) {
             $imagePath = $request->file('image')->store('articles', 'public');
@@ -40,8 +62,12 @@ class ArticleController extends Controller
         }
 
         Article::create($validated);
+        // update user role to 2 (writer)
+        $user = auth()->user();
+        $user->role_id = 2;
+        $user->save();
 
-        return redirect('/articles')->with('success', 'Article created successfully');
+        return redirect('/articles/create-first')->with('message', '🎉 Congratulations! You\'ve published your first article. You can now manage and create more content as a Writer.');
     }
 
 
@@ -49,7 +75,7 @@ class ArticleController extends Controller
     {
         $article = Article::findorfail($id);
         $article->delete();
-        return redirect('/articles')->with('success', 'Article Deleted Successfully');
+        return redirect('/articles')->with('success', 'Article deleted successfully');
     }
 
     public function edit($id)
@@ -80,12 +106,12 @@ class ArticleController extends Controller
 
         return redirect('/articles')->with('success', 'Article updated successfully');
     }
-     public function store_first(Request $request)
+
+    public function store_first(Request $request)
     {
         $user = auth()->user();
-        if(!$user)
-        {
-           return redirect('/login')->with('error', 'You must be logged in to create an article.');
+        if (!$user) {
+            return redirect('/login')->with('error', 'You must be logged in to create an article.');
         }
         $validated = $request->validate([
             'title' => 'required|max:255',
@@ -105,10 +131,5 @@ class ArticleController extends Controller
         return redirect('/home')->with('success', '🎉 Congratulations! You\'ve published your first article. You can now manage and create more content as a Writer.');
     }
 
-    private function str_slug(mixed $title, string $string)
-    {
-        $slug = preg_replace('/[^A-Za-z0-9-]+/', $string, strtolower($title));
-        return trim($slug, $string);
-    }
 
 }

@@ -12,7 +12,7 @@
 
                 <!-- Featured Post (Large) -->
                 <article class="blog-item featured" data-aos="fade-up">
-                    <img src="{{asset('img/blog/blog-post-3.webp')}}" alt="Blog Image" class="img-fluid">
+                    <img src="{{ asset('images/blog/blog-post-3.webp')}}" alt="Blog Image" class="img-fluid">
                     <div class="blog-content">
                         <div class="post-meta">
                             <span class="date">Apr. 14th, 2025</span>
@@ -27,7 +27,7 @@
 
                 <!-- Regular Posts -->
                 <article class="blog-item" data-aos="fade-up" data-aos-delay="100">
-                    <img src="{{asset('img/blog/blog-post-portrait-1.webp')}}" alt="Blog Image" class="img-fluid">
+                    <img src="{{ asset('images/blog/blog-post-portrait-1.webp')}}" alt="Blog Image" class="img-fluid">
                     <div class="blog-content">
                         <div class="post-meta">
                             <span class="date">Apr. 14th, 2025</span>
@@ -41,7 +41,7 @@
                 </article><!-- End Blog Item -->
 
                 <article class="blog-item" data-aos="fade-up" data-aos-delay="200">
-                    <img src="{{asset('img/blog/blog-post-9.webp')}}" alt="Blog Image" class="img-fluid">
+                    <img src="{{ asset('images/blog/blog-post-9.webp')}}" alt="Blog Image" class="img-fluid">
                     <div class="blog-content">
                         <div class="post-meta">
                             <span class="date">Apr. 14th, 2025</span>
@@ -55,7 +55,7 @@
                 </article><!-- End Blog Item -->
 
                 <article class="blog-item" data-aos="fade-up" data-aos-delay="300">
-                    <img src="{{asset('img/blog/blog-post-7.webp')}}" alt="Blog Image" class="img-fluid">
+                    <img src="{{ asset('images/blog/blog-post-7.webp')}}" alt="Blog Image" class="img-fluid">
                     <div class="blog-content">
                         <div class="post-meta">
                             <span class="date">Apr. 14th, 2025</span>
@@ -69,7 +69,7 @@
                 </article><!-- End Blog Item -->
 
                 <article class="blog-item" data-aos="fade-up" data-aos-delay="400">
-                    <img src="{{asset('img/blog/blog-post-6.webp')}}" alt="Blog Image" class="img-fluid">
+                    <img src="{{ asset('images/blog/blog-post-6.webp')}}" alt="Blog Image" class="img-fluid">
                     <div class="blog-content">
                         <div class="post-meta">
                             <span class="date">Apr. 14th, 2025</span>
@@ -85,7 +85,11 @@
             </div>
 
         </div>
-
+        @if(auth()->check())
+            @if(auth()->user()->role_id === 4)
+                <x-create_first_article/>
+            @endif
+        @endif
     </section>
     <!-- /Blog Hero Section -->
     <!-- Featured Posts Section -->
@@ -129,7 +133,7 @@
                 <div class="swiper-wrapper">
                     <div class="swiper-slide">
                         <div class="blog-post-item">
-                            <img src="{{asset('img/blog/blog-post-portrait-1.webp')}}" alt="Blog Image">
+                            <img src="{{ asset('images/blog/blog-post-portrait-1.webp')}}" alt="Blog Image">
                             <div class="blog-post-content">
                                 <div class="post-meta">
                                     <span><i class="fa-light fa-user"></i> Julia Parker</span>
@@ -147,7 +151,7 @@
 
                     <div class="swiper-slide">
                         <div class="blog-post-item">
-                            <img src="{{asset('img/blog/blog-post-portrait-2.webp')}}" alt="Blog Image">
+                            <img src="{{ asset('images/blog/blog-post-portrait-2.webp')}}" alt="Blog Image">
                             <div class="blog-post-content">
                                 <div class="post-meta">
                                     <span><i class="fa-light fa-user"></i> Mark Wilson</span>
@@ -164,7 +168,7 @@
 
                     <div class="swiper-slide">
                         <div class="blog-post-item">
-                            <img src="{{asset('img/blog/blog-post-portrait-3.webp')}}" alt="Blog Image">
+                            <img src="{{ asset('images/blog/blog-post-portrait-3.webp')}}" alt="Blog Image">
                             <div class="blog-post-content">
                                 <div class="post-meta">
                                     <span><i class="fa-light fa-user"></i> Sarah Johnson</span>
@@ -181,7 +185,7 @@
 
                     <div class="swiper-slide">
                         <div class="blog-post-item">
-                            <img src="{{asset('img/blog/blog-post-portrait-4.webp')}}" alt="Blog Image">
+                            <img src="{{ asset('images/blog/blog-post-portrait-4.webp')}}" alt="Blog Image">
                             <div class="blog-post-content">
                                 <div class="post-meta">
                                     <span><i class="fa-light fa-user"></i> David Brown</span>
@@ -198,7 +202,7 @@
 
                     <div class="swiper-slide">
                         <div class="blog-post-item">
-                            <img src="{{asset('img/blog/blog-post-portrait-5.webp')}}" alt="Blog Image">
+                            <img src="{{ asset('images/blog/blog-post-portrait-5.webp')}}" alt="Blog Image">
                             <div class="blog-post-content">
                                 <div class="post-meta">
                                     <span><i class="fa-light fa-user"></i> Emma Davis</span>
@@ -235,13 +239,13 @@
                 <div class="col-lg-4">
                     <article class="featured-post">
                         <div class="post-img">
-                            <img src="{{asset('img/blog/blog-post-6.webp')}}" alt="" class="img-fluid" loading="lazy">
+                            <img src="{{ asset('images/blog/blog-post-6.webp')}}" alt="" class="img-fluid" loading="lazy">
                         </div>
                         <div class="post-content">
                             <div class="category-meta">
                                 <span class="post-category">Health</span>
                                 <div class="author-meta">
-                                    <img src="{{asset('img/person/person-f-13.webp')}}" alt="" class="author-img">
+                                    <img src="{{ asset('images/person/person-f-13.webp')}}" alt="" class="author-img">
                                     <span class="author-name">William G.</span>
                                     <span class="post-date">28 April 2024</span>
                                 </div>
@@ -257,13 +261,13 @@
                 <div class="col-lg-4">
                     <article class="featured-post">
                         <div class="post-img">
-                            <img src="{{asset('img/blog/blog-post-7.webp')}}" alt="" class="img-fluid" loading="lazy">
+                            <img src="{{ asset('images/blog/blog-post-7.webp')}}" alt="" class="img-fluid" loading="lazy">
                         </div>
                         <div class="post-content">
                             <div class="category-meta">
                                 <span class="post-category">Education</span>
                                 <div class="author-meta">
-                                    <img src="{{asset('img/person/person-m-10.webp')}}" alt="" class="author-img">
+                                    <img src="{{ asset('images/person/person-m-10.webp')}}" alt="" class="author-img">
                                     <span class="author-name">Emma D.</span>
                                     <span class="post-date">30 May 2024</span>
                                 </div>
@@ -279,13 +283,13 @@
                 <div class="col-lg-4">
                     <article class="featured-post">
                         <div class="post-img">
-                            <img src="{{asset('img/blog/blog-post-5.webp')}}" alt="" class="img-fluid" loading="lazy">
+                            <img src="{{ asset('images/blog/blog-post-5.webp')}}" alt="" class="img-fluid" loading="lazy">
                         </div>
                         <div class="post-content">
                             <div class="category-meta">
                                 <span class="post-category">Gaming</span>
                                 <div class="author-meta">
-                                    <img src="{{asset('img/person/person-f-14.webp')}}" alt="" class="author-img">
+                                    <img src="{{ asset('images/person/person-f-14.webp')}}" alt="" class="author-img">
                                     <span class="author-name">James F.</span>
                                     <span class="post-date">3 June 2024</span>
                                 </div>
@@ -338,7 +342,7 @@
                 </div>
 
                 <div class="content-right position-relative" data-aos="fade-left" data-aos-delay="300">
-                    <img src="{{asset('img/misc/misc-1.webp')}}" alt="Digital Platform" class="img-fluid rounded-4">
+                    <img src="{{ asset('images/misc/misc-1.webp')}}" alt="Digital Platform" class="img-fluid rounded-4">
                     <div class="floating-card">
                         <div class="card-icon">
                             <i class="bi bi-graph-up-arrow"></i>
@@ -376,7 +380,7 @@
                     <article>
 
                         <div class="post-img">
-                            <img src="{{asset('img/blog/blog-post-4.webp')}}" alt="" class="img-fluid">
+                            <img src="{{ asset('images/blog/blog-post-4.webp')}}" alt="" class="img-fluid">
                         </div>
 
                         <p class="post-category">Sports</p>
@@ -386,7 +390,7 @@
                         </h2>
 
                         <div class="d-flex align-items-center">
-                            <img src="{{asset('img/person/person-f-14.webp')}}" alt="" class="img-fluid post-author-img flex-shrink-0">
+                            <img src="{{ asset('images/person/person-f-14.webp')}}" alt="" class="img-fluid post-author-img flex-shrink-0">
                             <div class="post-meta">
                                 <p class="post-author">Lisa Neymar</p>
                                 <p class="post-date">
@@ -402,7 +406,7 @@
                     <article>
 
                         <div class="post-img">
-                            <img src="{{asset('img/blog/blog-post-5.webp')}}" alt="" class="img-fluid">
+                            <img src="{{ asset('images/blog/blog-post-5.webp')}}" alt="" class="img-fluid">
                         </div>
 
                         <p class="post-category">Politics</p>
@@ -412,7 +416,7 @@
                         </h2>
 
                         <div class="d-flex align-items-center">
-                            <img src="{{asset('img/person/person-m-11.webp')}}" alt="" class="img-fluid post-author-img flex-shrink-0">
+                            <img src="{{ asset('images/person/person-m-11.webp')}}" alt="" class="img-fluid post-author-img flex-shrink-0">
                             <div class="post-meta">
                                 <p class="post-author">Denis Peterson</p>
                                 <p class="post-date">
@@ -428,7 +432,7 @@
                     <article>
 
                         <div class="post-img">
-                            <img src="{{asset('img/blog/blog-post-6.webp')}}" alt="" class="img-fluid">
+                            <img src="{{ asset('images/blog/blog-post-6.webp')}}" alt="" class="img-fluid">
                         </div>
 
                         <p class="post-category">Entertainment</p>
@@ -438,7 +442,7 @@
                         </h2>
 
                         <div class="d-flex align-items-center">
-                            <img src="{{asset('img/person/person-f-15.webp')}}" alt="" class="img-fluid post-author-img flex-shrink-0">
+                            <img src="{{ asset('images/person/person-f-15.webp')}}" alt="" class="img-fluid post-author-img flex-shrink-0">
                             <div class="post-meta">
                                 <p class="post-author">Mika Lendon</p>
                                 <p class="post-date">
@@ -475,7 +479,7 @@
                 </div>
                 <div class="col-lg-4">
                     <div class="cta-image" data-aos="zoom-out" data-aos-delay="200">
-                        <img src="{{asset('img/cta/cta-1.webp')}}" alt="" class="img-fluid">
+                        <img src="{{ asset('images/cta/cta-1.webp')}}" alt="" class="img-fluid">
                     </div>
                 </div>
             </div>

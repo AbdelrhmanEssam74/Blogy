@@ -13,41 +13,6 @@
     </button>
 </div>
 
-<!-- The Modal -->
-<div id="publishModal" class="modal">
-    <div class="modal-content">
-        <span class="modal-close">&times;</span>
-        <h2>Publish Your Article</h2>
-        <p>Ready to share your ideas with our community? Fill out the form below to get started!</p>
-
-        <form id="articleForm" action="{{ route('articles.store.first') }}" method="POST" enctype="multipart/form-data">
-            @csrf
-            <div class="form-group">
-                <label for="articleTitle">Title</label>
-                <input type="text" id="articleTitle" placeholder="Enter your article title" required>
-            </div>
-
-            <div class="form-group">
-                <label for="articleContent">Content</label>
-                <textarea id="articleContent" rows="6" placeholder="Write your article here..." required></textarea>
-            </div>
-{{--     upload article image--}}
-            <div class="form-group">
-                <label for="articleImage">Upload Image</label>
-                <input type="file" id="articleImage" accept="image/*">
-                <small class="form-text text-muted">Add an image to enhance your article.</small>
-            </div>
-
-            <div class="form-group">
-                <label for="articleTags">Tags (comma separated)</label>
-                <input type="text" id="articleTags" placeholder="e.g., technology, writing, tips">
-            </div>
-
-            <button type="submit" class="submit-btn">Submit Article</button>
-        </form>
-    </div>
-</div>
-
 <style>
     .publish-alert {
         position: fixed;
@@ -106,83 +71,6 @@
         color: #4b5563;
     }
 
-    /* Modal Styles */
-    .modal {
-        display: none;
-        position: fixed;
-        z-index: 1100;
-        left: 0;
-        top: 0;
-        width: 100%;
-        height: 100%;
-        background-color: rgba(0,0,0,0.5);
-        animation: fadeIn 0.3s;
-    }
-
-    .modal-content {
-        background-color: #fff;
-        margin: 5% auto;
-        padding: 25px;
-        border-radius: 8px;
-        width: 90%;
-        max-width: 600px;
-        box-shadow: 0 5px 15px rgba(0,0,0,0.3);
-        position: relative;
-    }
-
-    .modal-close {
-        position: absolute;
-        right: 20px;
-        top: 15px;
-        font-size: 28px;
-        font-weight: bold;
-        color: #aaa;
-        cursor: pointer;
-    }
-
-    .modal-close:hover {
-        color: #333;
-    }
-
-    .form-group {
-        margin-bottom: 20px;
-    }
-
-    .form-group label {
-        display: block;
-        margin-bottom: 8px;
-        font-weight: 600;
-    }
-
-    .form-group input,
-    .form-group textarea {
-        width: 100%;
-        padding: 10px;
-        border: 1px solid #ddd;
-        border-radius: 4px;
-        font-size: 16px;
-    }
-
-    .form-group textarea {
-        resize: vertical;
-    }
-
-    .submit-btn {
-        background-color: #2563eb;
-        color: white;
-        border: none;
-        padding: 12px 20px;
-        border-radius: 4px;
-        cursor: pointer;
-        font-size: 16px;
-        font-weight: 600;
-        transition: background-color 0.3s;
-        width: 100%;
-    }
-
-    .submit-btn:hover {
-        background-color: #1d4ed8;
-    }
 
     /* Animations */
     @keyframes slideUp {
@@ -213,55 +101,32 @@
             font-size: 14px;
         }
 
-        .modal-content {
-            margin: 10% auto;
-            width: 95%;
-        }
     }
 </style>
 
 <script>
-    // Alert dismissal
-    function dismissAlert() {
-        const alert = document.getElementById('publishAlert');
-        alert.style.animation = 'fadeOut 0.3s ease-out';
-        setTimeout(() => {
-            alert.style.display = 'none';
-            localStorage.setItem('alertDismissed', 'true');
-        }, 250);
-    }
-
-    // Modal functionality
     document.addEventListener('DOMContentLoaded', function() {
-        // Check if alert was dismissed
-        if (localStorage.getItem('alertDismissed') === 'true') {
-            document.getElementById('publishAlert').style.display = 'none';
-        }
-
-        // Get modal elements
-        const modal = document.getElementById('publishModal');
+        const publishAlert = document.getElementById('publishAlert');
         const publishLink = document.getElementById('publishLink');
-        const closeBtn = document.querySelector('.modal-close');
 
-        // Open modal when publish link is clicked
-        publishLink.addEventListener('click', function(e) {
-            e.preventDefault();
-            modal.style.display = 'block';
-            document.body.style.overflow = 'hidden'; // Prevent scrolling
-        });
+        // Show the alert if the user has no posts
+        @if(auth()->user() && auth()->user()->role_id === 4 )
+            publishAlert.style.display = 'flex';
+        @else
+            publishAlert.style.display = 'none';
+        @endif
 
-        // Close modal when X is clicked
-        closeBtn.addEventListener('click', function() {
-            modal.style.display = 'none';
-            document.body.style.overflow = 'auto';
-        });
-
-        // Close modal when clicking outside
-        window.addEventListener('click', function(e) {
-            if (e.target === modal) {
-                modal.style.display = 'none';
-                document.body.style.overflow = 'auto';
-            }
+        // Handle click on the publish link
+        publishLink.addEventListener('click', function(event) {
+            event.preventDefault();
+            window.location.href = '{{ route("articles.create-first") }}';
         });
     });
+
+    function dismissAlert() {
+        const publishAlert = document.getElementById('publishAlert');
+        publishAlert.style.display = 'none';
+    }
+
+
 </script>
