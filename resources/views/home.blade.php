@@ -1,6 +1,7 @@
 @extends('app.layout')
 @section('header')
-    @include('partials.header')
+    <x-upper_navbar></x-upper_navbar>
+    <x-down_navbar></x-down_navbar>
 @endsection
 @section('content')
     <!-- Blog Hero Section -->

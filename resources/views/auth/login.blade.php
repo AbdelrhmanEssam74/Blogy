@@ -1,13 +1,15 @@
 @extends('app.layout')
 
 @section('title', 'Register')
-
+@section('header')
+    <x-upper_navbar></x-upper_navbar>
+@endsection
 @section('content')
     <div class="full-width-auth-container">
         <!-- Image Section -->
         <div class="auth-image-section">
             <img fetchpriority="high"
-                 src="{{asset('img/auth-background.jpg')}}"
+                 src="{{asset('images/auth-background.jpg')}}"
                  alt="">
         </div>
         <!-- Form Section -->
@@ -21,7 +23,7 @@
                     <div class="form-floating mb-3">
                         <input id="email" type="email" name="email"
                                class="form-control @error('email') is-invalid @enderror"
-                               placeholder="name@example.com" value="{{ old('email') }}"  >
+                               placeholder="name@example.com" value="{{ old('email') }}">
                         <label for="email"><i class="bi bi-envelope-fill me-2"></i>Email address</label>
                         @error('email')
                         <div class="invalid-feedback d-block">{{ $message }}</div>
@@ -32,7 +34,7 @@
                     <div class="form-floating mb-3">
                         <input id="password" type="password" name="password"
                                class="form-control @error('password') is-invalid @enderror"
-                               placeholder="Password"  >
+                               placeholder="Password">
                         <label for="password"><i class="bi bi-lock-fill me-2"></i>Password</label>
                         @error('password')
                         <div class="invalid-feedback d-block">{{ $message }}</div>
@@ -47,7 +49,8 @@
 
                     {{-- create an account --}}
                     <div class="text-center mt-3">
-                        <p class="text-muted mb-0">Don't have an account? <a href="{{ route('register') }}">Register</a></p>
+                        <p class="text-muted mb-0">Don't have an account? <a href="{{ route('register') }}">Register</a>
+                        </p>
                     </div>
                 </form>
             </div>
@@ -76,7 +79,7 @@
             flex: 1;
             height: 100vh;
             max-width: 100%;
-            background-color: #f5f5f5;
+
             display: flex;
             align-items: center;
             justify-content: center;
@@ -92,7 +95,7 @@
 
         /* Form Section */
         .auth-form-section {
-            background-color: #f8f8ff;
+
             flex: 1;
             display: flex;
             align-items: center;

@@ -87,9 +87,9 @@
 </head>
 <body>
 
-
-@yield('header')
-
+<header id="header" class="header position-relative">
+    @yield('header')
+</header>
 
 <main class="main">
     @yield('content')

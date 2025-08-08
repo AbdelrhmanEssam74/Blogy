@@ -1,13 +1,15 @@
 @extends('app.layout')
 
 @section('title', 'Register')
-
+@section('header')
+    <x-upper_navbar></x-upper_navbar>
+@endsection
 @section('content')
     <div class="full-width-auth-container">
         <!-- Image Section -->
         <div class="auth-image-section">
             <img fetchpriority="high"
-                 src="{{asset('img/auth-background.png')}}"
+                 src="{{asset('images/auth-background.png')}}"
                  alt="">
         </div>
         <!-- Form Section -->
