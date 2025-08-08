@@ -12,8 +12,9 @@ Route::get('/home', [HomeController::class, 'index'])->name('home');
 Route::get('/articles', [ArticleController::class, 'index'])->name('articles.index');
 
 Route::get('/articles/create', [ArticleController::class, 'create'])->name('articles.create');
+Route::get('/articles/create-first', [ArticleController::class, 'create_first'])->name('articles.create-first');
+Route::post('/articles/create-first', [ArticleController::class, 'store'])->name('articles.store-first');
 Route::post('/articles', [ArticleController::class, 'store'])->name('articles.store');
-Route::post('/articles', [ArticleController::class, 'store_first'])->name('articles.store.first');
 
 Route::get('/articles/delete/{id}', [ArticleController::class, 'delete'])->name('articles.delete');
 Route::get('/articles/{slug}', [ArticleController::class, 'show'])->name('articles.show');
