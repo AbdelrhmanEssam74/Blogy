@@ -10,6 +10,8 @@
     <link href="{{asset('vendor/aos/aos.css')}}" rel="stylesheet">
     <link href="{{asset('vendor/swiper/swiper-bundle.min.css')}}" rel="stylesheet">
     <link href="{{asset('vendor/glightbox/css/glightbox.min.css')}}" rel="stylesheet">
+{{--    bootsrap link--}}
+
     {{--    Font Awesome Icons--}}
     <link
         rel="stylesheet"
