@@ -16,7 +16,8 @@ Route::get('/articles', [ArticleController::class, 'index'])->name('articles.ind
 
 // writer routes
 Route::get('/writer/dashboard', [DashboardController::class, 'index'])->name('writer.dashboard');
-Route::get('/writer/create', [WriterArticleController::class, 'index'])->name('writer.create');
+Route::get('/writer/articles', [WriterArticleController::class, 'index'])->name('writer.articles');
+Route::get('/writer/create', [WriterArticleController::class, 'create'])->name('writer.create');
 
 Route::get('/articles/create', [ArticleController::class, 'create'])->name('articles.create');
 Route::get('/articles/create-first', [ArticleController::class, 'create_first'])->name('articles.create-first');
