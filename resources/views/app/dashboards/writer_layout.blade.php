@@ -66,12 +66,15 @@
         href="https://site-assets.fontawesome.com/releases/v6.7.2/css/duotone-light.css"
     >
 </head>
+<link rel="stylesheet" href="{{ asset('css/writer/main.css') }}">
+<link rel="stylesheet" href="{{ asset('css/writer/sidebar.css') }}">
+@yield('styles')
 <body>
 
-<div class="content" id="main-content">
-    @yield('content')
-</div>
 
+@yield('content')
+
+<script src="{{asset('js/writer.js')}}"></script>
 <script>
     const toggleBtn = document.getElementById('sidebar-toggle');
     const sidebar = document.getElementById('sidebar');

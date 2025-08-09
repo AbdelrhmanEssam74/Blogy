@@ -62,9 +62,9 @@ class ArticleController extends Controller
         }
 
         Article::create($validated);
-        // update user role to 2 (writer)
+        // update user role to 3 (writer)
         $user = auth()->user();
-        $user->role_id = 2;
+        $user->role_id = 3;
         $user->save();
 
         return redirect('/articles/create-first')->with('message', '🎉 Congratulations! You\'ve published your first article. You can now manage and create more content as a Writer.');
