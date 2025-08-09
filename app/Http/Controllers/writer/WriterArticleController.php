@@ -10,12 +10,14 @@ class WriterArticleController extends Controller
     public function index()
     {
         // Logic to display a list of articles
-        return view('Writer.articles.create');
+        return view('Writer.articles');
+
     }
 
     public function create()
     {
         // Logic to show the article creation form
+        return view('Writer.articles.create');
     }
 
 
