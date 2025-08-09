@@ -13,7 +13,7 @@
             <i class="fas fa-pen"></i>
             <span>New Article</span>
         </a>
-        <a href="#" class="menu-item " data-target="posts">
+        <a href="{{ route('writer.articles') }}" class="menu-item  {{ request()->routeIs('writer.articles') ? 'active' : '' }}" data-target="posts">
             <i class="fas fa-file-alt"></i>
             <span>Articles</span>
         </a>

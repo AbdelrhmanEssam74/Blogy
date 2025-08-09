@@ -16,10 +16,10 @@
                     <i class="fas fa-calendar-alt"></i>
                     <span>Last 30 Days</span>
                 </button>
-                <button class="btn btn-primary">
+                <a href="{{ route('writer.create') }}" class="btn btn-primary">
                     <i class="fas fa-plus"></i>
-                    <span>New Post</span>
-                </button>
+                    <span>New Article</span>
+                </a>
             </div>
         </div>
 

@@ -10,7 +10,8 @@
     <!-- Main Content -->
     <main class="main-content">
         <div class="header">
-            <h1>Create New Post</h1>
+            <h1>Create New Article</h1>
+            <p>Share your knowledge and insights with the world.</p>
         </div>
 
         <!-- Post Form -->
