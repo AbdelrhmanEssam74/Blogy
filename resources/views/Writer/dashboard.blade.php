@@ -182,5 +182,4 @@
             </div>
         </div>
     </main>
-
 @endsection

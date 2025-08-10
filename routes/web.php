@@ -5,7 +5,7 @@ use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\CommentController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ProfileController;
-use App\Http\Controllers\writer\DashboardController;
+use App\Http\Controllers\writer\WriterDashboardController;
 use App\Http\Controllers\writer\WriterArticleController;
 use Illuminate\Support\Facades\Route;
 
@@ -15,9 +15,11 @@ Route::get('/articles', [ArticleController::class, 'index'])->name('articles.ind
 
 
 // writer routes
-Route::get('/writer/dashboard', [DashboardController::class, 'index'])->name('writer.dashboard');
+Route::get('/writer/dashboard', [WriterDashboardController::class, 'index'])->name('writer.dashboard');
 Route::get('/writer/articles', [WriterArticleController::class, 'index'])->name('writer.articles');
 Route::get('/writer/create', [WriterArticleController::class, 'create'])->name('writer.create');
+Route::get('/writer/profile', [WriterDashboardController::class, 'profile'])->name('writer.profile');
+
 
 Route::get('/articles/create', [ArticleController::class, 'create'])->name('articles.create');
 Route::get('/articles/create-first', [ArticleController::class, 'create_first'])->name('articles.create-first');
