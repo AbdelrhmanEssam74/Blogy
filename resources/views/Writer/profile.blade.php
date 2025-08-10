@@ -150,33 +150,7 @@
 
     <script>
         document.addEventListener('DOMContentLoaded', function() {
-            // Active sidebar menu item management
-            const menuItems = document.querySelectorAll('.menu-item');
-
-            function handleMenuItemClick(event) {
-                event.preventDefault();
-
-                menuItems.forEach(item => {
-                    item.classList.remove('active');
-                });
-
-                this.classList.add('active');
-
-                // In a real app, you would load content here
-                console.log(`Loading ${this.querySelector('span').textContent}...`);
-            }
-
-            menuItems.forEach(item => {
-                item.addEventListener('click', handleMenuItemClick);
-            });
-
-            // Set settings as active by default for this page
-            const settingsItem = document.querySelector('.menu-item:nth-child(8)');
-            if (settingsItem) {
-                settingsItem.classList.add('active');
-            }
-
-            // Tab switching functionality
+                // Tab switching functionality
             const tabBtns = document.querySelectorAll('.tab-btn');
             const tabContents = document.querySelectorAll('.tab-content');
 
