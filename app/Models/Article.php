@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class Article extends Model
 {
     protected $primaryKey = 'article_id';
-    protected $fillable = ['title', 'slug', 'content', 'image', 'category_id', 'writer_id'];
+    protected $fillable = ['title', 'slug', 'content', 'image', 'category_id', 'writer_id' , 'published_at'];
 
     public static function getLimitArticles($n)
     {
@@ -16,6 +16,15 @@ class Article extends Model
 
     public function category()
     {
-        return $this->belongsTo(Category::class);
+        return $this->belongsTo(Category::class, 'category_id', 'category_id');
     }
+    public function comment()
+    {
+        return $this->hasMany(Comment::class, 'article_id', 'article_id');
+    }
+    public function user()
+    {
+        return $this->belongsTo(User::class, 'user_id', 'user_id');
+    }
+
 }

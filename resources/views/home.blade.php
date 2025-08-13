@@ -4,6 +4,19 @@
     <x-down_navbar></x-down_navbar>
 @endsection
 @section('content')
+    {{--    errors - success message--}}
+    @if(session('success'))
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+            {{ session('success') }}
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    @endif
+    @if(session('error'))
+        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+            {{ session('error') }}
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    @endif
     <!-- Blog Hero Section -->
     <section id="blog-hero" class="blog-hero section">
 
@@ -240,7 +253,8 @@
                 <div class="col-lg-4">
                     <article class="featured-post">
                         <div class="post-img">
-                            <img src="{{ asset('images/blog/blog-post-6.webp')}}" alt="" class="img-fluid" loading="lazy">
+                            <img src="{{ asset('images/blog/blog-post-6.webp')}}" alt="" class="img-fluid"
+                                 loading="lazy">
                         </div>
                         <div class="post-content">
                             <div class="category-meta">
@@ -262,7 +276,8 @@
                 <div class="col-lg-4">
                     <article class="featured-post">
                         <div class="post-img">
-                            <img src="{{ asset('images/blog/blog-post-7.webp')}}" alt="" class="img-fluid" loading="lazy">
+                            <img src="{{ asset('images/blog/blog-post-7.webp')}}" alt="" class="img-fluid"
+                                 loading="lazy">
                         </div>
                         <div class="post-content">
                             <div class="category-meta">
@@ -284,7 +299,8 @@
                 <div class="col-lg-4">
                     <article class="featured-post">
                         <div class="post-img">
-                            <img src="{{ asset('images/blog/blog-post-5.webp')}}" alt="" class="img-fluid" loading="lazy">
+                            <img src="{{ asset('images/blog/blog-post-5.webp')}}" alt="" class="img-fluid"
+                                 loading="lazy">
                         </div>
                         <div class="post-content">
                             <div class="category-meta">
@@ -323,15 +339,15 @@
 
                     <div class="features d-flex flex-wrap gap-3 mb-4">
                         <div class="feature-item">
-                <i class="fa-light fa-circle-check"></i>
+                            <i class="fa-light fa-circle-check"></i>
                             <span>Premium Support</span>
                         </div>
                         <div class="feature-item">
-                <i class="fa-light fa-circle-check"></i>
+                            <i class="fa-light fa-circle-check"></i>
                             <span>Cloud Integration</span>
                         </div>
                         <div class="feature-item">
-                <i class="fa-light fa-circle-check"></i>
+                            <i class="fa-light fa-circle-check"></i>
                             <span>Real-time Analytics</span>
                         </div>
                     </div>
@@ -391,7 +407,8 @@
                         </h2>
 
                         <div class="d-flex align-items-center">
-                            <img src="{{ asset('images/person/person-f-14.webp')}}" alt="" class="img-fluid post-author-img flex-shrink-0">
+                            <img src="{{ asset('images/person/person-f-14.webp')}}" alt=""
+                                 class="img-fluid post-author-img flex-shrink-0">
                             <div class="post-meta">
                                 <p class="post-author">Lisa Neymar</p>
                                 <p class="post-date">
@@ -417,7 +434,8 @@
                         </h2>
 
                         <div class="d-flex align-items-center">
-                            <img src="{{ asset('images/person/person-m-11.webp')}}" alt="" class="img-fluid post-author-img flex-shrink-0">
+                            <img src="{{ asset('images/person/person-m-11.webp')}}" alt=""
+                                 class="img-fluid post-author-img flex-shrink-0">
                             <div class="post-meta">
                                 <p class="post-author">Denis Peterson</p>
                                 <p class="post-date">
@@ -443,7 +461,8 @@
                         </h2>
 
                         <div class="d-flex align-items-center">
-                            <img src="{{ asset('images/person/person-f-15.webp')}}" alt="" class="img-fluid post-author-img flex-shrink-0">
+                            <img src="{{ asset('images/person/person-f-15.webp')}}" alt=""
+                                 class="img-fluid post-author-img flex-shrink-0">
                             <div class="post-meta">
                                 <p class="post-author">Mika Lendon</p>
                                 <p class="post-date">
@@ -466,10 +485,13 @@
                 <div class="col-lg-6">
                     <div class="cta-content" data-aos="fade-up" data-aos-delay="200">
                         <h2>Subscribe to our newsletter</h2>
-                        <p>Proin eget tortor risus. Mauris blandit aliquet elit, eget tincidunt nibh pulvinar a. Curabitur aliquet quam id dui posuere blandit.</p>
-                        <form action="forms/newsletter.php" method="post" class="php-email-form cta-form" data-aos="fade-up" data-aos-delay="300">
+                        <p>Proin eget tortor risus. Mauris blandit aliquet elit, eget tincidunt nibh pulvinar a.
+                            Curabitur aliquet quam id dui posuere blandit.</p>
+                        <form action="forms/newsletter.php" method="post" class="php-email-form cta-form"
+                              data-aos="fade-up" data-aos-delay="300">
                             <div class="input-group mb-3">
-                                <input type="email" class="form-control" placeholder="Email address..." aria-label="Email address" aria-describedby="button-subscribe">
+                                <input type="email" class="form-control" placeholder="Email address..."
+                                       aria-label="Email address" aria-describedby="button-subscribe">
                                 <button class="btn btn-primary" type="submit" id="button-subscribe">Subscribe</button>
                             </div>
                             <div class="loading">Loading</div>

@@ -26,46 +26,48 @@
         <!-- Stats Cards -->
         <div class="stats-container">
             <div class="stat-card">
-                <h3>Total Posts</h3>
-                <div class="value">42</div>
+                <h3>Total Articles</h3>
+                <div class="value">{{ $totalArticles }}</div>
                 <div class="change positive">
-                    <i class="fas fa-arrow-up"></i>
-                    <span>12% from last month</span>
+                    {{--  version 2  --}}
+                    {{--<i class="fas fa-arrow-up"></i>--}}
+                    {{-- <span>12% from last month</span>--}}
                 </div>
             </div>
 
             <div class="stat-card">
                 <h3>Published</h3>
-                <div class="value">36</div>
+                <div class="value">{{$publishedArticles}}</div>
                 <div class="change positive">
-                    <i class="fas fa-arrow-up"></i>
-                    <span>8% from last month</span>
+                    {{--  version 2  --}}
+                    {{--                    <i class="fas fa-arrow-up"></i>--}}
+                    {{--                    <span>8% from last month</span>--}}
                 </div>
             </div>
 
             <div class="stat-card">
                 <h3>Drafts</h3>
-                <div class="value">6</div>
+                <div class="value">{{$draftArticles}}</div>
                 <div class="change negative">
-                    <i class="fas fa-arrow-down"></i>
-                    <span>3% from last month</span>
+                    {{--                    <i class="fas fa-arrow-down"></i>--}}
+                    {{--                    <span>3% from last month</span>--}}
                 </div>
             </div>
 
-            <div class="stat-card">
-                <h3>Monthly Views</h3>
-                <div class="value">12.4K</div>
-                <div class="change positive">
-                    <i class="fas fa-arrow-up"></i>
-                    <span>24% from last month</span>
-                </div>
-            </div>
+            {{--            <div class="stat-card">--}}
+            {{--                <h3>Monthly Views</h3>--}}
+            {{--                <div class="value">12.4K</div>--}}
+            {{--                <div class="change positive">--}}
+            {{--                    <i class="fas fa-arrow-up"></i>--}}
+            {{--                    <span>24% from last month</span>--}}
+            {{--                </div>--}}
+            {{--            </div>--}}
         </div>
 
         <!-- Recent Posts Section -->
         <div class="section">
             <div class="section-header">
-                <h2 class="section-title">Recent Posts</h2>
+                <h2 class="section-title">Recent Articles</h2>
                 <a href="#" style="color: var(--primary); font-size: 0.9rem;">View All</a>
             </div>
 
@@ -74,57 +76,36 @@
                 <tr>
                     <th>Title</th>
                     <th>Category</th>
-                    <th>Publish Date</th>
-                    <th>Views</th>
+                    <th>Published At</th>
+                    {{--                    <th>Views</th>--}}
                     <th>Status</th>
                     <th>Actions</th>
                 </tr>
                 </thead>
                 <tbody>
-                <tr>
-                    <td class="post-title">10 Tips for Better Writing in 2023</td>
-                    <td>Writing</td>
-                    <td>May 15, 2023</td>
-                    <td>3,245</td>
-                    <td><span class="post-status status-published">Published</span></td>
-                    <td>
-                        <button class="action-btn"><i class="fas fa-edit"></i></button>
-                        <button class="action-btn"><i class="fas fa-trash"></i></button>
-                    </td>
-                </tr>
-                <tr>
-                    <td class="post-title">The Future of Content Marketing</td>
-                    <td>Marketing</td>
-                    <td>May 10, 2023</td>
-                    <td>2,187</td>
-                    <td><span class="post-status status-published">Published</span></td>
-                    <td>
-                        <button class="action-btn"><i class="fas fa-edit"></i></button>
-                        <button class="action-btn"><i class="fas fa-trash"></i></button>
-                    </td>
-                </tr>
-                <tr>
-                    <td class="post-title">SEO Strategies That Actually Work</td>
-                    <td>SEO</td>
-                    <td>May 5, 2023</td>
-                    <td>4,562</td>
-                    <td><span class="post-status status-published">Published</span></td>
-                    <td>
-                        <button class="action-btn"><i class="fas fa-edit"></i></button>
-                        <button class="action-btn"><i class="fas fa-trash"></i></button>
-                    </td>
-                </tr>
-                <tr>
-                    <td class="post-title">How to Build an Email List</td>
-                    <td>Marketing</td>
-                    <td>Draft</td>
-                    <td>-</td>
-                    <td><span class="post-status status-draft">Draft</span></td>
-                    <td>
-                        <button class="action-btn"><i class="fas fa-edit"></i></button>
-                        <button class="action-btn"><i class="fas fa-trash"></i></button>
-                    </td>
-                </tr>
+                @foreach($recentArticles as $article)
+                    <tr>
+                        <td class="post-title"><a href=""> {{  Str::substr($article->title, 0, 30) }}</a></td>
+                        <td>{{  $article->category->name }}</td>
+                        <td>@if($article->published_at)
+                                {{ Carbon::parse($article->published_id)->format('d M Y h:i')}}
+                            @else
+                                <span class="text-muted fst-italic">Not Published</span>
+                            @endif
+                        </td>
+                        {{--                    <td>3,245</td>--}}
+                        <td><span class="post-status status-{{  $article->status }}">{{  $article->status }}</span></td>
+                        <td>
+                            @if($article->status==='review')
+                                <button class="action-btn"><i class="fas fa-eye"></i></button>
+                            @else
+                                <button class="action-btn"><i class="fas fa-eye"></i></button>
+                                <button class="action-btn"><i class="fas fa-edit"></i></button>
+                                <button class="action-btn"><i class="fas fa-trash"></i></button>
+                            @endif
+                        </td>
+                    </tr>
+                @endforeach
                 </tbody>
             </table>
         </div>
@@ -140,9 +121,10 @@
                     <div class="activity-icon">
                         <i class="fas fa-comment"></i>
                     </div>
+                    {{-- last comment--}}
                     <div class="activity-content">
-                        <h4>New comment on "10 Tips for Better Writing"</h4>
-                        <p>John D. left a comment: "This was really helpful!"</p>
+                        <h4>New comment on "{{ $lastComment[0]->title }}"</h4>
+                        <p>{{ $lastComment[0] }}. left a comment: "This was really helpful!"</p>
                         <div class="activity-time">2 hours ago</div>
                     </div>
                 </div>
