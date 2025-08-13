@@ -1,6 +1,6 @@
 @extends('app.layout')
 
-@section('title', 'Register')
+@section('title', 'Login')
 @section('header')
     <x-upper_navbar></x-upper_navbar>
 @endsection

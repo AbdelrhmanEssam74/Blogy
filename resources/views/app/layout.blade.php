@@ -90,7 +90,7 @@
 <header id="header" class="header position-relative">
     @yield('header')
 </header>
-
+@include('sweetalert::alert')
 <main class="main">
     @yield('content')
 </main>
@@ -100,7 +100,7 @@
 </footer>
 
 <!-- Scroll Top -->
-<a href="#" id="scroll-top" class="scroll-top d-flex align-items-center justify-content-center"><i
+<a href="#" id="scroll-top" class="scroll-top d-flex align-items-center justify-content-center">
     <i class="fa-light fa-arrow-up"></i>
 </a>
 

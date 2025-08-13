@@ -13,7 +13,9 @@
                     <li class="dropdown">
                         <a href="#" class="dropdown-toggle" data-bs-toggle="dropdown">{{auth()->user()->full_name}}</a>
                         <ul class="dropdown-menu">
-                            <li><a href="{{ route('writer.dashboard')}}">Dashboard</a></li>
+                            @if(auth()->user()->role_id===3)
+                                <li><a href="{{ route('writer.dashboard')}}">Dashboard</a></li>
+                            @endif
                             {{--                                <li><a href="{{route('posts.create')}}">Create Post</a></li>--}}
                             <li><a href="{{route('logout')}}"
                                    onclick="event.preventDefault(); document.getElementById('logout-form').submit();">Logout</a>
