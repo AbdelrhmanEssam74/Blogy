@@ -21,7 +21,7 @@ return new class extends Migration
             $table->foreign('writer_id')->references('user_id')->on('users')->onDelete('cascade')->comment('Foreign key to users table');
             $table->unsignedBigInteger('category_id')->comment('ID of the category the article belongs to');
             $table->foreign('category_id')->references('category_id')->on('categories')->onDelete('cascade')->comment('Foreign key to categories table');
-            $table->enum('status', ['draft', 'published', 'archived'])->default('draft')->comment('Status of the article');
+            $table->enum('status', ['draft','review', 'published', 'archived'])->default('review')->comment('Status of the article');
             $table->timestamps();
         });
     }
