@@ -15,20 +15,44 @@ class WriterDashboardController extends Controller
      */
     public function index()
     {
-        $totalArticles = Article::count();
-        $recentArticles = Article::with('category')
+        $totalArticles = Article::where([
+            'writer_id' => auth()->user()->user_id,
+        ])->count();
+        $recentArticles = Article::where([
+            'writer_id' => auth()->user()->user_id,
+        ])->with('category')
             ->latest()
             ->take(4)
             ->get();
-        $publishedArticles = Article::where('status', 'published')->count();
-        $draftArticles = Article::where('status', 'draft')->count();
-        $lastComment = Article::with('comment')->with('user')->latest()->take(1)->get();
+        $publishedArticles = Article::where([
+            'status' => 'published',
+            'writer_id' => auth()->user()->user_id,
+        ])->count();
+        $draftArticles = Article::where(
+            [
+                'status' => 'draft',
+                'writer_id' => auth()->user()->user_id,
+            ]
+        )->count();
+        $ReviewedArticles = Article::where(
+            [
+                'status' => 'review',
+                'writer_id' => auth()->user()->user_id,
+            ]
+        )->count();
+        $lastComment = Article::with('comment')
+            ->with('user')
+            ->where('writer_id', auth()->user()->user_id)
+            ->latest()
+            ->take(1)
+            ->get();
         return view('writer.dashboard', compact(
             'recentArticles',
             'totalArticles',
             'publishedArticles',
             'draftArticles',
             'lastComment',
+            'ReviewedArticles'
         ));
     }
 

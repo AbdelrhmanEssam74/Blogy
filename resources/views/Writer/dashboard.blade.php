@@ -54,14 +54,14 @@
                 </div>
             </div>
 
-            {{--            <div class="stat-card">--}}
-            {{--                <h3>Monthly Views</h3>--}}
-            {{--                <div class="value">12.4K</div>--}}
-            {{--                <div class="change positive">--}}
-            {{--                    <i class="fas fa-arrow-up"></i>--}}
-            {{--                    <span>24% from last month</span>--}}
-            {{--                </div>--}}
-            {{--            </div>--}}
+            <div class="stat-card">
+                <h3>Review</h3>
+                <div class="value">{{$ReviewedArticles}}</div>
+                <div class="change positive">
+                    {{--                    <i class="fas fa-arrow-up"></i>--}}
+                    {{--                    <span>24% from last month</span>--}}
+                </div>
+            </div>
         </div>
 
         <!-- Recent Posts Section -->
@@ -88,7 +88,7 @@
                         <td class="post-title"><a href=""> {{  Str::substr($article->title, 0, 30) }}</a></td>
                         <td>{{  $article->category->name }}</td>
                         <td>@if($article->published_at)
-                                {{ Carbon::parse($article->published_id)->format('d M Y h:i')}}
+                                {{ \Carbon\Carbon::parse($article->published_at)->format('d M Y H:i')}}
                             @else
                                 <span class="text-muted fst-italic">Not Published</span>
                             @endif
