@@ -4,6 +4,7 @@ namespace App\Http\Controllers\writer;
 
 use App\Http\Controllers\Controller;
 use App\Models\Article;
+use App\Models\Comment;
 use Illuminate\Http\Request;
 
 class WriterDashboardController extends Controller
@@ -40,12 +41,14 @@ class WriterDashboardController extends Controller
                 'writer_id' => auth()->user()->user_id,
             ]
         )->count();
-        $lastComment = Article::with('comment')
-            ->with('user')
-            ->where('writer_id', auth()->user()->user_id)
+        $lastComment = Comment::with(['article', 'user'])
+            ->where('status', 'approved')
+            ->whereHas('article', function ($query) {
+                $query->where('writer_id', auth()->user()->user_id);
+            })
             ->latest()
-            ->take(1)
-            ->get();
+            ->first();
+
         return view('writer.dashboard', compact(
             'recentArticles',
             'totalArticles',

@@ -85,7 +85,7 @@
                 <tbody>
                 @foreach($recentArticles as $article)
                     <tr>
-                        <td class="post-title"><a href=""> {{  Str::substr($article->title, 0, 30) }}</a></td>
+                        <td class="post-title"><a href=""> {{  Str::substr($article->title, 0, 30) }} .....</a></td>
                         <td>{{  $article->category->name }}</td>
                         <td>@if($article->published_at)
                                 {{ \Carbon\Carbon::parse($article->published_at)->format('d M Y H:i')}}
@@ -121,46 +121,50 @@
                     <div class="activity-icon">
                         <i class="fas fa-comment"></i>
                     </div>
-                    {{-- last comment--}}
-                    <div class="activity-content">
-                        <h4>New comment on "{{ $lastComment[0]->title }}"</h4>
-                        <p>{{ $lastComment[0] }}. left a comment: "This was really helpful!"</p>
-                        <div class="activity-time">2 hours ago</div>
-                    </div>
-                </div>
+                    @if($lastComment)
+                        <div class="activity-content">
+                            <h4>New comment on "{{ $lastComment->article->title }}"</h4>
+                            <p>{{ $lastComment->user->full_name }} left a comment: "{{ $lastComment->content }}"</p>
+                            <div class="activity-time">{{ $lastComment->created_at->diffForHumans() }}</div>
+                        </div>
+                    @else
+                        <p>No comments yet.</p>
+                    @endif
 
-                <div class="activity-item">
-                    <div class="activity-icon">
-                        <i class="fas fa-thumbs-up"></i>
-                    </div>
-                    <div class="activity-content">
-                        <h4>Post liked</h4>
-                        <p>Your post "SEO Strategies That Actually Work" got 24 new likes</p>
-                        <div class="activity-time">5 hours ago</div>
-                    </div>
                 </div>
+                {{--    New Version--}}
+                {{--                <div class="activity-item">--}}
+                {{--                    <div class="activity-icon">--}}
+                {{--                        <i class="fas fa-thumbs-up"></i>--}}
+                {{--                    </div>--}}
+                {{--                    <div class="activity-content">--}}
+                {{--                        <h4>Post liked</h4>--}}
+                {{--                        <p>Your post "SEO Strategies That Actually Work" got 24 new likes</p>--}}
+                {{--                        <div class="activity-time">5 hours ago</div>--}}
+                {{--                    </div>--}}
+                {{--                </div>--}}
 
-                <div class="activity-item">
-                    <div class="activity-icon">
-                        <i class="fas fa-share"></i>
-                    </div>
-                    <div class="activity-content">
-                        <h4>Post shared</h4>
-                        <p>Your post "The Future of Content Marketing" was shared 8 times</p>
-                        <div class="activity-time">1 day ago</div>
-                    </div>
-                </div>
+                {{--                <div class="activity-item">--}}
+                {{--                    <div class="activity-icon">--}}
+                {{--                        <i class="fas fa-share"></i>--}}
+                {{--                    </div>--}}
+                {{--                    <div class="activity-content">--}}
+                {{--                        <h4>Post shared</h4>--}}
+                {{--                        <p>Your post "The Future of Content Marketing" was shared 8 times</p>--}}
+                {{--                        <div class="activity-time">1 day ago</div>--}}
+                {{--                    </div>--}}
+                {{--                </div>--}}
 
-                <div class="activity-item">
-                    <div class="activity-icon">
-                        <i class="fas fa-user-plus"></i>
-                    </div>
-                    <div class="activity-content">
-                        <h4>New subscriber</h4>
-                        <p>Sarah M. subscribed to your newsletter</p>
-                        <div class="activity-time">2 days ago</div>
-                    </div>
-                </div>
+                {{--                <div class="activity-item">--}}
+                {{--                    <div class="activity-icon">--}}
+                {{--                        <i class="fas fa-user-plus"></i>--}}
+                {{--                    </div>--}}
+                {{--                    <div class="activity-content">--}}
+                {{--                        <h4>New subscriber</h4>--}}
+                {{--                        <p>Sarah M. subscribed to your newsletter</p>--}}
+                {{--                        <div class="activity-time">2 days ago</div>--}}
+                {{--                    </div>--}}
+                {{--                </div>--}}
             </div>
         </div>
     </main>
