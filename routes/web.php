@@ -24,6 +24,8 @@ Route::middleware([checkAuthentication::class, CheckRole::class])->group(functio
     Route::get('/writer/create', [WriterArticleController::class, 'create'])->name('writer-article.create');
     Route::post('/writer/store', [WriterArticleController::class, 'store'])->name('writer-article.store');
     Route::get('/writer/profile', [WriterDashboardController::class, 'profile'])->name('writer.profile');
+    Route::get('/writer/article/{slug}', [WriterArticleController::class, 'view_article'])->name('Writer.view_article');
+
 });
 
 
