@@ -58,4 +58,8 @@ a{
     border-color: var(--primary);
     color: var(--primary);
 }
-
+.invalid-feedback{
+    color: var(--danger);
+    font-size: 0.875rem;
+    margin-top: 0.25rem;
+}
