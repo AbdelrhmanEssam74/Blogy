@@ -111,18 +111,19 @@
             </div>
 
             <div class="article-actions">
-                <button class="btn btn-outline">
-                    <i class="fas fa-file-export"></i>
-                    <span>Export as PDF</span>
-                </button>
-                <button class="btn btn-outline">
-                    <i class="fas fa-copy"></i>
-                    <span>Duplicate Article</span>
-                </button>
-                <button class="btn btn-outline">
-                    <i class="fas fa-archive"></i>
-                    <span>Archive</span>
-                </button>
+                {{--                todo: will avilable in new version--}}
+                {{--                <button class="btn btn-outline">--}}
+                {{--                    <i class="fas fa-file-export"></i>--}}
+                {{--                    <span>Export as PDF</span>--}}
+                {{--                </button>--}}
+                {{--                <button class="btn btn-outline">--}}
+                {{--                    <i class="fas fa-copy"></i>--}}
+                {{--                    <span>Duplicate Article</span>--}}
+                {{--                </button>--}}
+                {{--                <button class="btn btn-outline">--}}
+                {{--                    <i class="fas fa-archive"></i>--}}
+                {{--                    <span>Archive</span>--}}
+                {{--                </button>--}}
                 <button class="btn btn-primary">
                     <i class="fas fa-sync-alt"></i>
                     <span>Update Status</span>

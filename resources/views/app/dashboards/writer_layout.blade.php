@@ -11,7 +11,7 @@
     <link href="{{asset('vendor/swiper/swiper-bundle.min.css')}}" rel="stylesheet">
     <link href="{{asset('vendor/glightbox/css/glightbox.min.css')}}" rel="stylesheet">
     {{--    bootsrap link CDN--}}
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css">
+{{--    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css">--}}
     {{--    Font Awesome Icons--}}
     <link
         rel="stylesheet"
