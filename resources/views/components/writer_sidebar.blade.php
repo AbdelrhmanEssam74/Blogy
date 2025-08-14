@@ -10,7 +10,7 @@
             <i class="fas fa-home"></i>
             <span>Dashboard</span>
         </a>
-        <a href="{{ route('writer.create') }}"
+        <a href="{{ route('writer-article.create') }}"
            class="menu-item {{ request()->routeIs('writer.create') ? 'active' : '' }}" data-target="new-post">
             <i class="fas fa-pen"></i>
             <span>New Article</span>

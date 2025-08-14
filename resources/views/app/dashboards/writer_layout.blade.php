@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    @include('sweetalert::alert')
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>@yield('title', 'Dashboard')</title>
@@ -11,8 +10,8 @@
     <link href="{{asset('vendor/aos/aos.css')}}" rel="stylesheet">
     <link href="{{asset('vendor/swiper/swiper-bundle.min.css')}}" rel="stylesheet">
     <link href="{{asset('vendor/glightbox/css/glightbox.min.css')}}" rel="stylesheet">
-{{--    bootsrap link--}}
-
+    {{--    bootsrap link CDN--}}
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css">
     {{--    Font Awesome Icons--}}
     <link
         rel="stylesheet"
@@ -73,8 +72,7 @@
 <link rel="stylesheet" href="{{ asset('css/writer/sidebar.css') }}">
 @yield('styles')
 <body>
-
-
+@include('sweetalert::alert')
 @yield('content')
 
 <script src="{{asset('js/writer.js')}}"></script>
