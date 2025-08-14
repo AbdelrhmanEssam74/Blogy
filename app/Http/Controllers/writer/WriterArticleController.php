@@ -25,6 +25,12 @@ class WriterArticleController extends Controller
         return view('Writer.articles.create' , ['categories' => $categories]);
     }
 
+    // show article for the writer
+    public function view_article($slug)
+    {
+        $article = Article::where('slug', $slug)->first();
+        return view('Writer.articles.article_view', ['article' => $article]);
+    }
 
     public function store(Request $request)
     {
