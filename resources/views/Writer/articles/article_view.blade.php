@@ -21,7 +21,7 @@
 
         <div class="article-management-container">
             <div class="article-actions">
-                <a href="#" class="btn btn-outline">
+                <a href="{{route('Writer.edit_article' , $article->article_id)}}" class="btn btn-outline">
                     <i class="fas fa-edit"></i>
                     <span>Edit</span>
                 </a>
@@ -99,16 +99,16 @@
         </div>
 
         <div class="management-section">
-            <div class="admin-notes">
-                <div class="notes-header">
-                    <div class="notes-title">Editor's Note</div>
-                    <div class="notes-date">Added by Editor on May 14, 2023</div>
-                </div>
-                <div class="notes-content">
-                    Great article! Just made a few minor edits for clarity. Consider adding an example for tip #5
-                    about active voice.
-                </div>
-            </div>
+{{--            <div class="admin-notes">--}}
+{{--                <div class="notes-header">--}}
+{{--                    <div class="notes-title">Editor's Note</div>--}}
+{{--                    <div class="notes-date">Added by Editor on May 14, 2023</div>--}}
+{{--                </div>--}}
+{{--                <div class="notes-content">--}}
+{{--                    Great article! Just made a few minor edits for clarity. Consider adding an example for tip #5--}}
+{{--                    about active voice.--}}
+{{--                </div>--}}
+{{--            </div>--}}
 
             <div class="article-actions">
                 {{--                todo: will avilable in new version--}}
@@ -124,10 +124,10 @@
                 {{--                    <i class="fas fa-archive"></i>--}}
                 {{--                    <span>Archive</span>--}}
                 {{--                </button>--}}
-                <button class="btn btn-primary">
-                    <i class="fas fa-sync-alt"></i>
-                    <span>Update Status</span>
-                </button>
+{{--                <button class="btn btn-primary">--}}
+{{--                    <i class="fas fa-sync-alt"></i>--}}
+{{--                    <span>Update Status</span>--}}
+{{--                </button>--}}
             </div>
         </div>
         </div>
