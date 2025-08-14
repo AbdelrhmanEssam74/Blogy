@@ -1,6 +1,6 @@
 <aside class="sidebar">
     <div class="sidebar-header">
-        <h2>MyBlog</h2>
+        <h2><a href="{{ route('home') }}">MyBlog</a></h2>
         <p>{{ auth()->user()->full_name }} Dashboard</p>
     </div>
 
