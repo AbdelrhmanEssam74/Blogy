@@ -22,7 +22,7 @@ class WriterArticleController extends Controller
     {
         // get all categories from database
         $categories = Category::select('category_id', 'name')->get();
-        return view('Writer.articles.create' , ['categories' => $categories]);
+        return view('Writer.articles.create', ['categories' => $categories]);
     }
 
     // show article for the writer
@@ -53,7 +53,7 @@ class WriterArticleController extends Controller
         $validated['slug'] = $slug;
         if ($request->hasFile('image')) {
             // create a folder for the article images if it doesn't exist ( main folder name -> articles ) (writer folder name -> user_id)
-            $imagePath = $request->file('image')->store('articles/'. auth()->user()->user_id, 'public');
+            $imagePath = $request->file('image')->store('articles/' . auth()->user()->user_id, 'public');
             $validated['image'] = $imagePath;
         }
 
@@ -74,11 +74,48 @@ class WriterArticleController extends Controller
 
     public function edit($id)
     {
-        // Logic to show the article edit form
+        // Logic to edit an article by ID
+        $article = Article::findOrFail($id);
+        $categories = Category::select('category_id', 'name')->get();
+        return view('Writer.articles.edit', compact('article', 'categories'));
     }
 
-    public function update(Request $request, $article)
+    public function update(Request $request, $article_id)
     {
-        // Logic to update an existing article
+        // get writer id from session
+        // Logic to update an article by ID
+        $validated = $request->validate([
+            'title' => 'required|string|max:255',
+            'content' => 'required|string|max:5000',
+            'category_id' => 'required|exists:categories,category_id',
+            'new-image' => 'nullable|image|mimes:jpg,jpeg,png,webp|max:2048',
+        ]);
+
+        $article = Article::findOrFail($article_id);
+        $article->title = $validated['title'];
+        $article->content = $validated['content'];
+        $article->category_id = $validated['category_id'];
+
+        if ($request->hasFile('new-image')) {
+            // create a folder for the article images if it doesn't exist ( main folder name -> articles ) (writer folder name -> user_id)
+            // delete the old image if it exists
+            if ($article->image) {
+                $oldImagePath = 'public/' . $article->image;
+                if (file_exists($oldImagePath)) {
+                    unlink($oldImagePath);
+                }
+            }
+            // store the new image
+            $imagePath = $request->file('new-image')->store('articles/' . auth()->user()->user_id, 'public');
+            $article->image = $imagePath;
+        }
+        // Check if any attribute changed
+        if (!$article->isDirty()) {
+            Alert::info('No Changes', 'No updates were made to the article.');
+            return redirect()->back();
+        }
+        $article->save();
+        Alert::success('Success', 'Article updated successfully');
+        return redirect()->route('Writer.view_article' , $article->slug);
     }
 }

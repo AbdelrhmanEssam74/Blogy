@@ -180,8 +180,14 @@
     transition: color 0.2s ease;
 }
 
-.action-btn:hover {
+.action-btn.show:hover {
     color: var(--primary);
+}
+.action-btn.edit:hover {
+    color: var(--success);
+}
+.action-btn.delete:hover {
+    color: var(--danger);
 }
 
 /* Activity Feed */

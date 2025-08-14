@@ -41,9 +41,9 @@ class WriterDashboardController extends Controller
                 'writer_id' => auth()->user()->user_id,
             ]
         )->count();
-        $ReviewedArticles = Article::where(
+        $pendingArticles = Article::where(
             [
-                'status' => 'review',
+                'status' => 'pending',
                 'writer_id' => auth()->user()->user_id,
             ]
         )->count();
@@ -61,7 +61,7 @@ class WriterDashboardController extends Controller
             'publishedArticles',
             'draftArticles',
             'lastComment',
-            'ReviewedArticles',
+            'pendingArticles',
             'archivedArticles',
         ));
     }
