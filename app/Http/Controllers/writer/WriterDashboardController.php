@@ -35,6 +35,12 @@ class WriterDashboardController extends Controller
                 'writer_id' => auth()->user()->user_id,
             ]
         )->count();
+        $archivedArticles = Article::where(
+            [
+                'status' => 'archived',
+                'writer_id' => auth()->user()->user_id,
+            ]
+        )->count();
         $ReviewedArticles = Article::where(
             [
                 'status' => 'review',
@@ -55,7 +61,8 @@ class WriterDashboardController extends Controller
             'publishedArticles',
             'draftArticles',
             'lastComment',
-            'ReviewedArticles'
+            'ReviewedArticles',
+            'archivedArticles',
         ));
     }
 

@@ -16,7 +16,7 @@
                     <i class="fas fa-calendar-alt"></i>
                     <span>Last 30 Days</span>
                 </button>
-                <a href="{{ route('writer.create') }}" class="btn btn-primary">
+                <a href="{{ route('writer-article.create') }}" class="btn btn-primary">
                     <i class="fas fa-plus"></i>
                     <span>New Article</span>
                 </a>
@@ -26,7 +26,7 @@
         <!-- Stats Cards -->
         <div class="stats-container">
             <div class="stat-card">
-                <h3>Total Articles</h3>
+                <h3> <i class="fa-light fa-newspaper"></i> Total Articles</h3>
                 <div class="value">{{ $totalArticles }}</div>
                 <div class="change positive">
                     {{--  version 2  --}}
@@ -36,7 +36,7 @@
             </div>
 
             <div class="stat-card">
-                <h3>Published</h3>
+                <h3><i class="fa-light fa-upload"></i> Published</h3>
                 <div class="value">{{$publishedArticles}}</div>
                 <div class="change positive">
                     {{--  version 2  --}}
@@ -46,7 +46,7 @@
             </div>
 
             <div class="stat-card">
-                <h3>Drafts</h3>
+                <h3><i class="fa-light fa-floppy-disk-circle-arrow-right"></i> Drafts</h3>
                 <div class="value">{{$draftArticles}}</div>
                 <div class="change negative">
                     {{--                    <i class="fas fa-arrow-down"></i>--}}
@@ -55,8 +55,16 @@
             </div>
 
             <div class="stat-card">
-                <h3>Review</h3>
+                <h3><i class="fa-light fa-magnifying-glass-arrows-rotate"></i> Review</h3>
                 <div class="value">{{$ReviewedArticles}}</div>
+                <div class="change positive">
+                    {{--                    <i class="fas fa-arrow-up"></i>--}}
+                    {{--                    <span>24% from last month</span>--}}
+                </div>
+            </div>
+            <div class="stat-card">
+                <h3> <i class="fa-light fa-box-archive"></i> Archived</h3>
+                <div class="value">{{$archivedArticles}}</div>
                 <div class="change positive">
                     {{--                    <i class="fas fa-arrow-up"></i>--}}
                     {{--                    <span>24% from last month</span>--}}

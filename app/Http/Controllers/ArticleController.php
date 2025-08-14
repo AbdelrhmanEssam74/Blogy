@@ -48,7 +48,6 @@ class ArticleController extends Controller
         ]);
 
         $validated['writer_id'] = auth()->user()->user_id;
-
         $slug = Str::slug($request->title, '-');
         $count = Article::where('slug', 'like', $slug . '%')->count();
         if ($count > 0) {

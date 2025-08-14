@@ -15,16 +15,34 @@
         </div>
 
         <!-- Post Form -->
-        <form class="post-form">
+        <form class="post-form" method="post" action="{{ route('writer-article.store') }}" enctype="multipart/form-data">
+            @csrf
             <div class="form-group">
                 <label for="post-title" class="form-label">Post Title</label>
-                <input type="text" id="post-title" class="form-control" placeholder="Enter your post title...">
+                <input type="text"
+                       id="post-title"
+                       name="title"
+                       class="form-control
+                @error('title') is-invalid @enderror"
+                       value="{{ old('title') }}"
+                       placeholder="Enter your post title...">
+                @error('title')
+                <div class="invalid-feedback d-block">{{ $message }}</div>
+                @enderror
             </div>
 
             <div class="form-group">
                 <label for="post-content" class="form-label">Content</label>
-                <textarea id="post-content" class="form-control"
-                          placeholder="Write your post content here..."></textarea>
+                <textarea id="post-content" class="form-control  @error('content') is-invalid @enderror"
+                          name="content"
+                          placeholder="Write your post content here...">
+                   @if(old('content'))
+                        {{ old('content') }}
+                   @endif
+                </textarea>
+                @error('content')
+                <div class="invalid-feedback d-block">{{ $message }}</div>
+                @enderror
             </div>
 
             <div class="form-group">
@@ -35,31 +53,33 @@
                             <i class="fas fa-upload"></i>
                             <span>Choose Image</span>
                         </button>
-                        <input type="file" id="post-image" accept="image/*">
+                        <input type="file" id="post-image" name="image" accept="image/*">
                     </div>
                     <div class="image-preview">
                         <i class="fas fa-image" style="font-size: 2rem; color: var(--gray);"></i>
                     </div>
                 </div>
+                @error('image')
+                <div class="invalid-feedback d-block">{{ $message }}</div>
+                @enderror
             </div>
 
             <div class="form-group">
                 <label class="form-label">Categories</label>
                 <div class="category-select">
-                    <input type="radio" id="cat-writing" name="category" class="category-option" checked>
-                    <label for="cat-writing">Writing</label>
-
-                    <input type="radio" id="cat-marketing" name="category" class="category-option">
-                    <label for="cat-marketing">Marketing</label>
-
-                    <input type="radio" id="cat-seo" name="category" class="category-option">
-                    <label for="cat-seo">SEO</label>
-
-                    <input type="radio" id="cat-productivity" name="category" class="category-option">
-                    <label for="cat-productivity">Productivity</label>
-
-                    <input type="radio" id="cat-technology" name="category" class="category-option">
-                    <label for="cat-technology">Technology</label>
+                    @if(!$categories->isEmpty())
+                        <input type="radio" id="cat" checked name="category_id"
+                               class="category-option" value="">
+                        <label for="cat">Select Category</label>
+                        @foreach($categories as $category)
+                            <input type="radio" id="cat-{{ $category->category_id }}" name="category_id"
+                                   class="category-option" value="{{ $category->category_id }}">
+                            <label for="cat-{{ $category->category_id }}">{{ $category->name }}</label>
+                        @endforeach
+                    @endif
+                    @error('category_id')
+                    <div class="invalid-feedback d-block">{{ $message }}</div>
+                        @enderror
                 </div>
                 <div id="post-status" class="status-message">
                     <i class="fas fa-info-circle"></i>
@@ -70,10 +90,10 @@
             </div>
             <div class="form-actions">
 
-                <button type="button" class="btn btn-outline">
-                    <i class="fas fa-save"></i>
-                    <span>Save Draft</span>
-                </button>
+                {{--                <button  type="button" class="btn btn-outline">--}}
+                {{--                    <i class="fas fa-save"></i>--}}
+                {{--                    <span>Save Draft</span>--}}
+                {{--                </button>--}}
                 <button type="submit" class="btn btn-primary">
                     <i class="fas fa-paper-plane"></i>
                     <span>Publish Article</span>
