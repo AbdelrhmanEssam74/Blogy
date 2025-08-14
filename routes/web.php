@@ -21,7 +21,8 @@ Route::middleware([checkAuthentication::class, CheckRole::class])->group(functio
     Route::get('/writer', [WriterDashboardController::class, 'index'])->name('writer.dashboard');
     Route::get('/writer/dashboard', [WriterDashboardController::class, 'index'])->name('writer.dashboard');
     Route::get('/writer/articles', [WriterArticleController::class, 'index'])->name('writer.articles');
-    Route::get('/writer/create', [WriterArticleController::class, 'create'])->name('writer.create');
+    Route::get('/writer/create', [WriterArticleController::class, 'create'])->name('writer-article.create');
+    Route::post('/writer/store', [WriterArticleController::class, 'store'])->name('writer-article.store');
     Route::get('/writer/profile', [WriterDashboardController::class, 'profile'])->name('writer.profile');
 });
 
