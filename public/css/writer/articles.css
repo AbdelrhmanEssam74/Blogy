@@ -96,6 +96,7 @@
 }
 
 .article-title {
+    width: 50%;
     font-weight: 500;
     color: var(--dark);
     display: flex;
