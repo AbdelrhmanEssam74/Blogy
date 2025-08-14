@@ -93,10 +93,11 @@
                 <tbody>
                 @foreach($recentArticles as $article)
                     <tr>
-                        <td class="post-title"><a href=""> {{  Str::substr($article->title, 0, 30) }} .....</a></td>
+                        <td class="post-title"><a href="{{route('Writer.view_article',$article->slug)}}"> {{  Str::substr($article->title, 0, 30) }} .....</a></td>
                         <td>{{  $article->category->name }}</td>
-                        <td>@if($article->published_at)
-                                {{ \Carbon\Carbon::parse($article->published_at)->format('d M Y H:i')}}
+                        <td>
+                            @if($article->published_at)
+                                {{ \Carbon\Carbon::parse($article->published_at)->format('d M Y h:i')}}
                             @else
                                 <span class="text-muted fst-italic">Not Published</span>
                             @endif
