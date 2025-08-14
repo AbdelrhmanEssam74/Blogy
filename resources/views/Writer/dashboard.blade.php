@@ -55,8 +55,8 @@
             </div>
 
             <div class="stat-card">
-                <h3><i class="fa-light fa-magnifying-glass-arrows-rotate"></i> Review</h3>
-                <div class="value">{{$ReviewedArticles}}</div>
+                <h3><i class="fa-light fa-magnifying-glass-arrows-rotate"></i> Pending</h3>
+                <div class="value">{{$pendingArticles}}</div>
                 <div class="change positive">
                     {{--                    <i class="fas fa-arrow-up"></i>--}}
                     {{--                    <span>24% from last month</span>--}}
@@ -108,9 +108,9 @@
                             @if($article->status==='review')
                                 <button class="action-btn"><i class="fas fa-eye"></i></button>
                             @else
-                                <button class="action-btn"><i class="fas fa-eye"></i></button>
-                                <button class="action-btn"><i class="fas fa-edit"></i></button>
-                                <button class="action-btn"><i class="fas fa-trash"></i></button>
+                                <a href="{{route('Writer.view_article',$article->slug)}}" class="action-btn show"><i class="fas fa-eye"></i></a>
+                                <a href="{{route('Writer.edit_article',$article->article_id)}}" class="action-btn edit"><i class="fas fa-edit"></i></a>
+                                <a class="action-btn delete"><i class="fas fa-trash"></i></a>
                             @endif
                         </td>
                     </tr>
