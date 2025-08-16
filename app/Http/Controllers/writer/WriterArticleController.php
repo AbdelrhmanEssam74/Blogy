@@ -13,8 +13,9 @@ class WriterArticleController extends Controller
 {
     public function index()
     {
-        // Logic to display a list of articles
-        return view('Writer.articles');
+       // load all articles for the writer 3 for each page
+        $articles = Article::where('writer_id', auth()->user()->user_id)->with(['category', 'comment'])->paginate(4);
+        return view('Writer.articles', compact('articles'));
 
     }
 
@@ -116,6 +117,6 @@ class WriterArticleController extends Controller
         }
         $article->save();
         Alert::success('Success', 'Article updated successfully');
-        return redirect()->route('Writer.view_article' , $article->slug);
+        return redirect()->route('writer.view_article' , $article->slug);
     }
 }
