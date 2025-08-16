@@ -132,7 +132,10 @@
     background-color: rgba(255, 193, 7, 0.1);
     color: var(--warning);
 }
-
+.status-archived{
+    background-color: rgba(255, 0, 0, 0.1);
+    color: var(--danger);
+}
 .action-btn {
     background: none;
     border: none;
