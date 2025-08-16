@@ -21,7 +21,7 @@
 
         <div class="article-management-container">
             <div class="article-actions">
-                <a href="{{route('Writer.edit_article' , $article->article_id)}}" class="btn btn-outline">
+                <a href="{{route('writer.edit_article' , $article->article_id)}}" class="btn btn-outline">
                     <i class="fas fa-edit"></i>
                     <span>Edit</span>
                 </a>
