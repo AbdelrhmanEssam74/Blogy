@@ -13,7 +13,7 @@ class WriterArticleController extends Controller
 {
     public function index()
     {
-       // load all articles for the writer 3 for each page
+        // load all articles for the writer 3 for each page
         $articles = Article::where('writer_id', auth()->user()->user_id)->with(['category', 'comment'])->paginate(4);
         return view('Writer.articles', compact('articles'));
 
@@ -75,6 +75,14 @@ class WriterArticleController extends Controller
         }
         $article->delete();
         Alert::success('Success', 'Article deleted successfully');
+        $prevRoute = app('router')
+            ->getRoutes()
+            ->match(app('request')
+                ->create(url()->previous()))
+            ->getName();
+        if ($prevRoute === 'writer.view_article') {
+            return redirect()->route('writer.articles');
+        }
         return redirect()->back();
     }
 
@@ -127,6 +135,6 @@ class WriterArticleController extends Controller
         }
         $article->save();
         Alert::success('Success', 'Article updated successfully');
-        return redirect()->route('writer.view_article' , $article->slug);
+        return redirect()->route('writer.view_article', $article->slug);
     }
 }
