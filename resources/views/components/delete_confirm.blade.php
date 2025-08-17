@@ -1,9 +1,5 @@
 @props(['articleId', 'articleTitle'])
 
-<!-- Trigger -->
-
-<button class="action-btn delete" onclick="openDeleteModal('{{ $articleId }}')"><i class="fa-light fa-trash-can"></i></button>
-
 <!-- Modal -->
 <div id="deleteModal-{{ $articleId }}" class="modal-overlay">
     <div class="modal-box">

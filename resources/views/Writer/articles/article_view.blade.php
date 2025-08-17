@@ -29,10 +29,15 @@
                     <i class="fas fa-eye"></i>
                     <span>View Live</span>
                 </a>
-                <a href="#" class="btn btn-danger">
-                    <i class="fas fa-trash"></i>
-                    <span>Delete</span>
-                </a>
+                @if($article->status !== "pending")
+                    <button onclick="openDeleteModal('{{ $article->article_id }}')" class="btn btn-danger">
+                        <i class="fas fa-trash"></i>
+                        <span>Delete</span>
+                    </button>
+                    <x-delete_confirm
+                        :article-id="$article->article_id"
+                        :article-title="$article->title"/>
+                @endif
             </div>
             <div class="article-header">
                 <div>
@@ -99,16 +104,16 @@
         </div>
 
         <div class="management-section">
-{{--            <div class="admin-notes">--}}
-{{--                <div class="notes-header">--}}
-{{--                    <div class="notes-title">Editor's Note</div>--}}
-{{--                    <div class="notes-date">Added by Editor on May 14, 2023</div>--}}
-{{--                </div>--}}
-{{--                <div class="notes-content">--}}
-{{--                    Great article! Just made a few minor edits for clarity. Consider adding an example for tip #5--}}
-{{--                    about active voice.--}}
-{{--                </div>--}}
-{{--            </div>--}}
+            {{--            <div class="admin-notes">--}}
+            {{--                <div class="notes-header">--}}
+            {{--                    <div class="notes-title">Editor's Note</div>--}}
+            {{--                    <div class="notes-date">Added by Editor on May 14, 2023</div>--}}
+            {{--                </div>--}}
+            {{--                <div class="notes-content">--}}
+            {{--                    Great article! Just made a few minor edits for clarity. Consider adding an example for tip #5--}}
+            {{--                    about active voice.--}}
+            {{--                </div>--}}
+            {{--            </div>--}}
 
             <div class="article-actions">
                 {{--                todo: will avilable in new version--}}
@@ -124,10 +129,10 @@
                 {{--                    <i class="fas fa-archive"></i>--}}
                 {{--                    <span>Archive</span>--}}
                 {{--                </button>--}}
-{{--                <button class="btn btn-primary">--}}
-{{--                    <i class="fas fa-sync-alt"></i>--}}
-{{--                    <span>Update Status</span>--}}
-{{--                </button>--}}
+                {{--                <button class="btn btn-primary">--}}
+                {{--                    <i class="fas fa-sync-alt"></i>--}}
+                {{--                    <span>Update Status</span>--}}
+                {{--                </button>--}}
             </div>
         </div>
         </div>

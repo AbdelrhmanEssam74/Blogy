@@ -84,7 +84,9 @@
     font-size: 0.9rem;
     border-bottom: 1px solid var(--light-gray);
 }
-
+.articles-table td:last-child {
+    display: flex;
+}
 .articles-table td {
     padding: 15px;
     border-bottom: 1px solid var(--light-gray);
@@ -96,7 +98,7 @@
 }
 
 .article-title {
-    width: 50%;
+    width: 70%;
     font-weight: 500;
     color: var(--dark);
     display: flex;
@@ -138,15 +140,28 @@
 }
 .action-btn {
     background: none;
-    border: none;
     color: var(--gray);
     cursor: pointer;
     margin-left: 10px;
     transition: color 0.2s ease;
 }
+button.action-btn{
+    border: none;
+    outline: none;
+}
+button.action-btn:focus{
+    outline: none;
+}
 
-.action-btn:hover {
+
+.action-btn.show:hover {
     color: var(--primary);
+}
+.action-btn.edit:hover {
+    color: var(--success);
+}
+.action-btn.delete:hover {
+    color: var(--danger);
 }
 
 .pagination {

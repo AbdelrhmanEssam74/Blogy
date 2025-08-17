@@ -59,12 +59,24 @@
                         <td>{{count( $article->comment) }}</td>
                         <td>{{ $article->category->name }}</td>
                         <td>
-                            @if($article->status==='review')
-                                <button class="action-btn"><i class="fas fa-eye"></i></button>
+                            @if($article->status==='pending')
+                                <a href="{{route('writer.view_article',$article->slug)}}" class="action-btn show">
+                                    <i class="fas fa-eye"></i></a>
+                                <a href="{{route('writer.edit_article',$article->article_id)}}" class="action-btn edit">
+                                    <i class="fas fa-edit"></i></a>
                             @else
-                                <a href="{{route('writer.view_article',$article->slug)}}" class="action-btn show"><i class="fas fa-eye"></i></a>
-                                <a href="{{route('writer.edit_article',$article->article_id)}}" class="action-btn edit"><i class="fas fa-edit"></i></a>
-                                <a class="action-btn delete"><i class="fas fa-trash"></i></a>
+                                <a href="{{route('writer.view_article',$article->slug)}}" class="action-btn show">
+                                    <i class="fas fa-eye"></i></a>
+                                <a href="{{route('writer.edit_article',$article->article_id)}}" class="action-btn edit">
+                                    <i class="fas fa-edit"></i></a>
+                                <button
+                                    onclick="openDeleteModal('{{ $article->article_id }}')"
+                                    class="action-btn delete">
+                                    <i class="fas fa-trash"></i>
+                                </button>
+                                <x-delete_confirm
+                                    :article-id="$article->article_id"
+                                    :article-title="$article->title"/>
                             @endif
                         </td>
                     </tr>
