@@ -65,7 +65,17 @@ class WriterArticleController extends Controller
 
     public function delete($id)
     {
-        // Logic to delete an article by ID
+        $article = Article::findOrFail($id);
+        // delete the article image if it exists
+        if ($article->image) {
+            $imagePath = 'public/' . $article->image;
+            if (file_exists($imagePath)) {
+                unlink($imagePath);
+            }
+        }
+        $article->delete();
+        Alert::success('Success', 'Article deleted successfully');
+        return redirect()->back();
     }
 
     public function show($slug)
