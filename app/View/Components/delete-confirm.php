@@ -6,7 +6,7 @@ use Closure;
 use Illuminate\Contracts\View\View;
 use Illuminate\View\Component;
 
-class delete-confirm extends Component
+class delete_confirm extends Component
 {
     /**
      * Create a new component instance.
@@ -21,6 +21,6 @@ class delete-confirm extends Component
      */
     public function render(): View|Closure|string
     {
-        return view('components.delete-confirm');
+        return view('components.delete_confirm');
     }
 }
