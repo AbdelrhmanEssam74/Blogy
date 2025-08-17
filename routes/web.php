@@ -27,6 +27,7 @@ Route::middleware([checkAuthentication::class, CheckRole::class])->group(functio
     Route::get('/writer/article/{slug}', [WriterArticleController::class, 'view_article'])->name('writer.view_article');
     Route::get('/writer/article/edit/{id}', [WriterArticleController::class, 'edit'])->name('writer.edit_article');
     Route::put('/writer/article/update/{id}', [WriterArticleController::class, 'update'])->name('writer-article.update');
+    Route::delete('/writer/article/delete/{id}', [WriterArticleController::class, 'delete'])->name('writer.article-delete');
 
 });
 
