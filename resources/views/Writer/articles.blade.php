@@ -11,7 +11,7 @@
     <main class="main-content">
         <div class="header">
             <h1>My Articles</h1>
-            <a href="{{ route('writer.create') }}" class="  btn btn-primary">
+            <a href="{{ route('writer-article.create') }}" class="  btn btn-primary">
                 <i class="fas fa-plus"></i>
                 <span>New Article</span>
             </a>
@@ -39,108 +39,55 @@
                 <tr>
                     <th>Article</th>
                     <th>Status</th>
-                    <th>Views</th>
+                    {{--                    <th>Views</th>--}}
                     <th>Comments</th>
-                    <th>Last Updated</th>
+                    <th>Category</th>
                     <th>Actions</th>
                 </tr>
                 </thead>
                 <tbody>
-                <tr>
-                    <td>
-                        <div class="article-title">
-                            <img src="https://via.placeholder.com/40" alt="Article thumbnail">
-                            <span>10 Tips for Better Writing in 2023</span>
-                        </div>
-                    </td>
-                    <td><span class="article-status status-published">Published</span></td>
-                    <td>3,245</td>
-                    <td>24</td>
-                    <td>May 15, 2023</td>
-                    <td>
-                        <button class="action-btn" title="Edit"><i class="fas fa-edit"></i></button>
-                        <button class="action-btn" title="View"><i class="fas fa-eye"></i></button>
-                        <button class="action-btn" title="Delete"><i class="fas fa-trash"></i></button>
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        <div class="article-title">
-                            <img src="https://via.placeholder.com/40" alt="Article thumbnail">
-                            <span>The Future of Content Marketing</span>
-                        </div>
-                    </td>
-                    <td><span class="article-status status-published">Published</span></td>
-                    <td>2,187</td>
-                    <td>15</td>
-                    <td>May 10, 2023</td>
-                    <td>
-                        <button class="action-btn" title="Edit"><i class="fas fa-edit"></i></button>
-                        <button class="action-btn" title="View"><i class="fas fa-eye"></i></button>
-                        <button class="action-btn" title="Delete"><i class="fas fa-trash"></i></button>
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        <div class="article-title">
-                            <img src="https://via.placeholder.com/40" alt="Article thumbnail">
-                            <span>SEO Strategies That Actually Work</span>
-                        </div>
-                    </td>
-                    <td><span class="article-status status-published">Published</span></td>
-                    <td>4,562</td>
-                    <td>32</td>
-                    <td>May 5, 2023</td>
-                    <td>
-                        <button class="action-btn" title="Edit"><i class="fas fa-edit"></i></button>
-                        <button class="action-btn" title="View"><i class="fas fa-eye"></i></button>
-                        <button class="action-btn" title="Delete"><i class="fas fa-trash"></i></button>
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        <div class="article-title">
-                            <img src="https://via.placeholder.com/40" alt="Article thumbnail">
-                            <span>How to Build an Email List</span>
-                        </div>
-                    </td>
-                    <td><span class="article-status status-draft">Draft</span></td>
-                    <td>-</td>
-                    <td>-</td>
-                    <td>Apr 28, 2023</td>
-                    <td>
-                        <button class="action-btn" title="Edit"><i class="fas fa-edit"></i></button>
-                        <button class="action-btn" title="View"><i class="fas fa-eye"></i></button>
-                        <button class="action-btn" title="Delete"><i class="fas fa-trash"></i></button>
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        <div class="article-title">
-                            <img src="https://via.placeholder.com/40" alt="Article thumbnail">
-                            <span>Productivity Hacks for Writers</span>
-                        </div>
-                    </td>
-                    <td><span class="article-status status-pending">Pending Review</span></td>
-                    <td>-</td>
-                    <td>-</td>
-                    <td>Apr 22, 2023</td>
-                    <td>
-                        <button class="action-btn" title="Edit"><i class="fas fa-edit"></i></button>
-                        <button class="action-btn" title="View"><i class="fas fa-eye"></i></button>
-                        <button class="action-btn" title="Delete"><i class="fas fa-trash"></i></button>
-                    </td>
-                </tr>
+                @foreach($articles as $article)
+                    <tr>
+                        <td>
+                            <div class="article-title">
+                                <img src="{{asset('storage/' . $article->image) }}" alt="Article thumbnail">
+                                <a href="{{ route('writer.view_article' , $article->slug) }}">
+                                    <span>{{ $article->title }}</span></a>
+                            </div>
+                        </td>
+                        <td><span class="article-status status-{{$article->status}}">{{$article->status}}</span></td>
+                        <td>{{count( $article->comment) }}</td>
+                        <td>{{ $article->category->name }}</td>
+                        <td>
+                            @if($article->status==='pending')
+                                <a href="{{route('writer.view_article',$article->slug)}}" class="action-btn show">
+                                    <i class="fas fa-eye"></i></a>
+                                <a href="{{route('writer.edit_article',$article->article_id)}}" class="action-btn edit">
+                                    <i class="fas fa-edit"></i></a>
+                            @else
+                                <a href="{{route('writer.view_article',$article->slug)}}" class="action-btn show">
+                                    <i class="fas fa-eye"></i></a>
+                                <a href="{{route('writer.edit_article',$article->article_id)}}" class="action-btn edit">
+                                    <i class="fas fa-edit"></i></a>
+                                <button
+                                    onclick="openDeleteModal('{{ $article->article_id }}')"
+                                    class="action-btn delete">
+                                    <i class="fas fa-trash"></i>
+                                </button>
+                                <x-delete_confirm
+                                    :article-id="$article->article_id"
+                                    :article-title="$article->title"/>
+                            @endif
+                        </td>
+                    </tr>
+                @endforeach
                 </tbody>
             </table>
 
             <div class="pagination">
-                <button class="page-btn"><i class="fas fa-chevron-left"></i></button>
-                <button class="page-btn active">1</button>
-                <button class="page-btn">2</button>
-                <button class="page-btn">3</button>
-                <button class="page-btn"><i class="fas fa-chevron-right"></i></button>
+                {{ $articles->withQueryString()->onEachSide(1)->links('components.pagination') }}
             </div>
+
         </div>
     </main>
 @endsection

@@ -13,8 +13,9 @@ class WriterArticleController extends Controller
 {
     public function index()
     {
-        // Logic to display a list of articles
-        return view('Writer.articles');
+        // load all articles for the writer 3 for each page
+        $articles = Article::where('writer_id', auth()->user()->user_id)->with(['category', 'comment'])->paginate(4);
+        return view('Writer.articles', compact('articles'));
 
     }
 
@@ -64,7 +65,25 @@ class WriterArticleController extends Controller
 
     public function delete($id)
     {
-        // Logic to delete an article by ID
+        $article = Article::findOrFail($id);
+        // delete the article image if it exists
+        if ($article->image) {
+            $imagePath = 'public/' . $article->image;
+            if (file_exists($imagePath)) {
+                unlink($imagePath);
+            }
+        }
+        $article->delete();
+        Alert::success('Success', 'Article deleted successfully');
+        $prevRoute = app('router')
+            ->getRoutes()
+            ->match(app('request')
+                ->create(url()->previous()))
+            ->getName();
+        if ($prevRoute === 'writer.view_article') {
+            return redirect()->route('writer.articles');
+        }
+        return redirect()->back();
     }
 
     public function show($slug)
@@ -116,6 +135,6 @@ class WriterArticleController extends Controller
         }
         $article->save();
         Alert::success('Success', 'Article updated successfully');
-        return redirect()->route('Writer.view_article' , $article->slug);
+        return redirect()->route('writer.view_article', $article->slug);
     }
 }
