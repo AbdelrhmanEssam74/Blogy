@@ -32,6 +32,8 @@ Route::middleware([checkAuthentication::class, CheckRole::class])->group(functio
     // Profile Routes
     Route::get('/writer/profile', [WriterProfileController::class, 'index'])->name('writer.profile');
     Route::patch('/writer/profile/update', [WriterProfileController::class, 'profileUpdate'])->name('writer.profile.update');
+    Route::patch('/writer/account/update', [WriterProfileController::class, 'accountUpdate'])->name('writer.account.update');
+    Route::patch('/writer/security/update', [WriterProfileController::class, 'securityUpdate'])->name('writer.security.update');
 
 });
 
