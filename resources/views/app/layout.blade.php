@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>@yield('title', 'ITIBlog')</title>
+    <title>@yield('title', 'Blogy')</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.5/css/bootstrap.min.css"
           integrity="sha512-VKRuFSBOvhd0K/u8OFOE2ChWfbu8qKvXjGWirtOznTauCSkpeu0suyEg2Zm5JqBumCHJOBJcTfE7xYJlDjknCg=="
           crossorigin="anonymous" referrerpolicy="no-referrer"/>
