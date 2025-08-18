@@ -22,10 +22,19 @@
 
             <!-- Profile Tab -->
             <div class="tab-content active" id="profile-tab">
-                <form class="profile-form">
+                <form class="profile-form" action="{{route('writer.profile.update')}}" method="post"
+                      enctype="multipart/form-data">
+                    @csrf
+                    @method('patch')
                     <div class="avatar-upload">
                         <div class="avatar-preview">
-                            <img src="https://via.placeholder.com/80" alt="Profile picture" id="avatarPreview">
+                            <img
+                                src="{{ $user->writer_profile && $user->writer_profile->profile_picture
+          ? asset('storage/' . $user->writer_profile->profile_picture)
+          : asset('images/default-avatar.jpg') }}"
+                                alt="Profile picture"
+                                id="avatarPreview">
+
                             <i class="fas fa-user" style="font-size: 2rem; color: var(--gray); display: none;"></i>
                         </div>
                         <div class="upload-btn">
@@ -33,29 +42,58 @@
                                 <i class="fas fa-upload"></i>
                                 <span>Change Avatar</span>
                             </button>
-                            <input type="file" id="avatarUpload" accept="image/*">
+                            <input type="file" id="avatarUpload" name="new-image" accept="image/*">
+                            <input type="hidden" name="current-image"
+                                   value="{{$user->writer_profile->profile_picture}}">
                         </div>
                     </div>
 
                     <div class="form-group">
                         <label for="fullName" class="form-label">Full Name</label>
-                        <input type="text" id="fullName" class="form-control" value="Jane Smith">
+                        <input type="text" id="fullName" name="fullName" class="form-control"
+                               value="{{$user->full_name}}">
                     </div>
 
                     <div class="form-group">
                         <label for="bio" class="form-label">Bio</label>
-                        <textarea id="bio" class="form-control" rows="4">Writer and content creator specializing in technology and productivity.</textarea>
+                        <textarea id="bio" class="form-control" name="bio"
+                                  rows="4">{{$user->writer_profile->bio}}</textarea>
                     </div>
 
                     <div class="form-group">
                         <label for="website" class="form-label">Website</label>
-                        <input type="url" id="website" class="form-control" value="https://janesmith.com">
+                        <input type="url" id="website" class="form-control" name="website"
+                               value="{{$user->writer_profile->website}}">
                     </div>
+                    @php
+                        $defaultSocials = ['facebook', 'twitter', 'linkedin'];
+                        $savedSocials = $user->writer_profile->social_media_links
+                            ? json_decode($user->writer_profile->social_media_links, true)
+                            : [];
+                    @endphp
 
                     <div class="form-group">
-                        <label for="location" class="form-label">Location</label>
-                        <input type="text" id="location" class="form-control" value="San Francisco, CA">
+                        <label class="form-label">Social Media</label>
+
+                        @foreach($defaultSocials as $platform)
+                            <div class="form-group mt-2">
+                                <label for="social-{{ $platform }}" class="form-label">{{ ucfirst($platform) }}</label>
+                                <input type="url"
+                                       id="social-{{ $platform }}"
+                                       name="social_media[{{ $platform }}]"
+                                       class="form-control"
+                                       value="{{ old("social_media.$platform", $savedSocials[$platform] ?? '') }}"
+                                       placeholder="https://{{ $platform }}.com/yourprofile">
+                            </div>
+                        @endforeach
                     </div>
+
+
+
+                    {{--                    <div class="form-group">--}}
+                    {{--                        <label for="location" class="form-label">Location</label>--}}
+                    {{--                        <input type="text" id="location" class="form-control" value="San Francisco, CA">--}}
+                    {{--                    </div>--}}
 
                     <div class="form-actions">
                         <button type="button" class="btn btn-outline">Cancel</button>
@@ -63,39 +101,38 @@
                     </div>
                 </form>
             </div>
-
             <!-- Account Tab -->
             <div class="tab-content" id="account-tab">
                 <form class="profile-form">
                     <div class="form-group">
                         <label for="email" class="form-label">Email Address</label>
-                        <input type="email" id="email" class="form-control" value="jane.smith@example.com">
+                        <input type="email" id="email" class="form-control" name="email" value="{{$user->email}}">
                     </div>
 
-                    <div class="form-group">
-                        <label for="username" class="form-label">Username</label>
-                        <input type="text" id="username" class="form-control" value="janesmith">
-                    </div>
+                    {{--                    <div class="form-group">--}}
+                    {{--                        <label for="username" class="form-label">Username</label>--}}
+                    {{--                        <input type="text" id="username" class="form-control" value="janesmith">--}}
+                    {{--                    </div>--}}
 
-                    <div class="form-group">
-                        <label for="language" class="form-label">Language</label>
-                        <select id="language" class="form-control">
-                            <option value="en" selected>English</option>
-                            <option value="es">Spanish</option>
-                            <option value="fr">French</option>
-                            <option value="de">German</option>
-                        </select>
-                    </div>
+                    {{--                    <div class="form-group">--}}
+                    {{--                        <label for="language" class="form-label">Language</label>--}}
+                    {{--                        <select id="language" class="form-control">--}}
+                    {{--                            <option value="en" selected>English</option>--}}
+                    {{--                            <option value="es">Spanish</option>--}}
+                    {{--                            <option value="fr">French</option>--}}
+                    {{--                            <option value="de">German</option>--}}
+                    {{--                        </select>--}}
+                    {{--                    </div>--}}
 
-                    <div class="form-group">
-                        <label for="timezone" class="form-label">Timezone</label>
-                        <select id="timezone" class="form-control">
-                            <option value="-8" selected>(GMT-8) Pacific Time (US & Canada)</option>
-                            <option value="-7">(GMT-7) Mountain Time (US & Canada)</option>
-                            <option value="-6">(GMT-6) Central Time (US & Canada)</option>
-                            <option value="-5">(GMT-5) Eastern Time (US & Canada)</option>
-                        </select>
-                    </div>
+                    {{--                    <div class="form-group">--}}
+                    {{--                        <label for="timezone" class="form-label">Timezone</label>--}}
+                    {{--                        <select id="timezone" class="form-control">--}}
+                    {{--                            <option value="-8" selected>(GMT-8) Pacific Time (US & Canada)</option>--}}
+                    {{--                            <option value="-7">(GMT-7) Mountain Time (US & Canada)</option>--}}
+                    {{--                            <option value="-6">(GMT-6) Central Time (US & Canada)</option>--}}
+                    {{--                            <option value="-5">(GMT-5) Eastern Time (US & Canada)</option>--}}
+                    {{--                        </select>--}}
+                    {{--                    </div>--}}
 
                     <div class="form-actions">
                         <button type="button" class="btn btn-outline">Cancel</button>
@@ -103,7 +140,12 @@
                     </div>
                 </form>
             </div>
-
+            {{-- Notification Tab --}}
+            <div class="tab-content" id="notifications-tab">
+                <div class="notification-settings">
+                    Will be available soon
+                </div>
+            </div>
             <!-- Security Tab -->
             <div class="tab-content" id="security-tab">
                 <form class="profile-form">
@@ -131,12 +173,12 @@
                         </div>
                     </div>
 
-                    <div class="form-group">
-                        <div class="form-check">
-                            <input type="checkbox" id="twoFactor" class="form-check-input">
-                            <label for="twoFactor" class="form-check-label">Enable Two-Factor Authentication</label>
-                        </div>
-                    </div>
+                    {{--                    <div class="form-group">--}}
+                    {{--                        <div class="form-check">--}}
+                    {{--                            <input type="checkbox" id="twoFactor" class="form-check-input">--}}
+                    {{--                            <label for="twoFactor" class="form-check-label">Enable Two-Factor Authentication</label>--}}
+                    {{--                        </div>--}}
+                    {{--                    </div>--}}
 
                     <div class="form-actions">
                         <button type="button" class="btn btn-outline">Cancel</button>
@@ -144,18 +186,19 @@
                     </div>
                 </form>
             </div>
+
         </div>
     </main>
 
 
     <script>
-        document.addEventListener('DOMContentLoaded', function() {
-                // Tab switching functionality
+        document.addEventListener('DOMContentLoaded', function () {
+            // Tab switching functionality
             const tabBtns = document.querySelectorAll('.tab-btn');
             const tabContents = document.querySelectorAll('.tab-content');
 
             tabBtns.forEach(btn => {
-                btn.addEventListener('click', function() {
+                btn.addEventListener('click', function () {
                     const tabId = this.getAttribute('data-tab');
 
                     // Update active tab button
@@ -176,12 +219,12 @@
             const avatarUpload = document.getElementById('avatarUpload');
             const avatarPreview = document.getElementById('avatarPreview');
 
-            avatarUpload.addEventListener('change', function(e) {
+            avatarUpload.addEventListener('change', function (e) {
                 const file = e.target.files[0];
                 if (file) {
                     const reader = new FileReader();
 
-                    reader.onload = function(event) {
+                    reader.onload = function (event) {
                         avatarPreview.src = event.target.result;
                         avatarPreview.style.display = 'block';
                         avatarPreview.nextElementSibling.style.display = 'none';
@@ -195,7 +238,7 @@
             const toggleIcons = document.querySelectorAll('.toggle-icon');
 
             toggleIcons.forEach(icon => {
-                icon.addEventListener('click', function() {
+                icon.addEventListener('click', function () {
                     const targetId = this.getAttribute('data-target');
                     const passwordInput = document.getElementById(targetId);
 
