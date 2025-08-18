@@ -7,6 +7,7 @@ use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\writer\WriterDashboardController;
 use App\Http\Controllers\writer\WriterArticleController;
+use App\Http\Controllers\writer\WriterProfileController;
 use App\Http\Middleware\checkAuthentication;
 use App\Http\Middleware\CheckRole;
 use Illuminate\Support\Facades\Route;
@@ -20,14 +21,17 @@ Route::get('/articles', [ArticleController::class, 'index'])->name('articles.ind
 Route::middleware([checkAuthentication::class, CheckRole::class])->group(function () {
     Route::get('/writer', [WriterDashboardController::class, 'index'])->name('writer.dashboard');
     Route::get('/writer/dashboard', [WriterDashboardController::class, 'index'])->name('writer.dashboard');
+    // Article Routes
     Route::get('/writer/articles', [WriterArticleController::class, 'index'])->name('writer.articles');
     Route::get('/writer/create', [WriterArticleController::class, 'create'])->name('writer-article.create');
     Route::post('/writer/store', [WriterArticleController::class, 'store'])->name('writer-article.store');
-    Route::get('/writer/profile', [WriterDashboardController::class, 'profile'])->name('writer.profile');
     Route::get('/writer/article/{slug}', [WriterArticleController::class, 'view_article'])->name('writer.view_article');
     Route::get('/writer/article/edit/{id}', [WriterArticleController::class, 'edit'])->name('writer.edit_article');
     Route::put('/writer/article/update/{id}', [WriterArticleController::class, 'update'])->name('writer-article.update');
     Route::delete('/writer/article/delete/{id}', [WriterArticleController::class, 'delete'])->name('writer.article-delete');
+    // Profile Routes
+    Route::get('/writer/profile', [WriterProfileController::class, 'index'])->name('writer.profile');
+    Route::patch('/writer/profile/update', [WriterProfileController::class, 'profileUpdate'])->name('writer.profile.update');
 
 });
 
