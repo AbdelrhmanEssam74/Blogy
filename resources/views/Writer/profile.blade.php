@@ -14,10 +14,10 @@
 
         <div class="settings-container">
             <div class="settings-tabs">
-                <button class="tab-btn active" data-tab="profile">Profile</button>
-                <button class="tab-btn" data-tab="account">Account</button>
-                <button class="tab-btn" data-tab="notifications">Notifications</button>
-                <button class="tab-btn" data-tab="security">Security</button>
+                <button class="tab-btn active" id="tab-profile" data-tab="profile">Profile</button>
+                <button class="tab-btn" id="tab-account" data-tab="account">Account</button>
+                <button class="tab-btn" id="tab-notifications" data-tab="notifications">Notifications</button>
+                <button class="tab-btn" id="tab-security" data-tab="security">Security</button>
             </div>
 
             <!-- Profile Tab -->
@@ -26,6 +26,7 @@
                       enctype="multipart/form-data">
                     @csrf
                     @method('patch')
+                    <input type="hidden" name="active_tab" value="profile">
                     <div class="avatar-upload">
                         <div class="avatar-preview">
                             <img
@@ -89,7 +90,6 @@
                     </div>
 
 
-
                     {{--                    <div class="form-group">--}}
                     {{--                        <label for="location" class="form-label">Location</label>--}}
                     {{--                        <input type="text" id="location" class="form-control" value="San Francisco, CA">--}}
@@ -103,10 +103,18 @@
             </div>
             <!-- Account Tab -->
             <div class="tab-content" id="account-tab">
-                <form class="profile-form">
+                <form class="profile-form" action="{{route('writer.account.update')}}" method="post">
+                    @csrf
+                    @method('patch')
+                    <input type="hidden" name="active_tab" value="account">
                     <div class="form-group">
                         <label for="email" class="form-label">Email Address</label>
-                        <input type="email" id="email" class="form-control" name="email" value="{{$user->email}}">
+                        <input type="email" id="email" disabled class="form-control" name="email"
+                               value="{{$user->email}}">
+                        <small class="form-text text-muted">This email address will be used for login.</small>
+                        <br>
+                        <small class="form-text text-muted">This email address can not be changes</small>
+
                     </div>
 
                     {{--                    <div class="form-group">--}}
@@ -134,10 +142,10 @@
                     {{--                        </select>--}}
                     {{--                    </div>--}}
 
-                    <div class="form-actions">
-                        <button type="button" class="btn btn-outline">Cancel</button>
-                        <button type="submit" class="btn btn-primary">Save Changes</button>
-                    </div>
+                    {{--                    <div class="form-actions">--}}
+                    {{--                        <button type="button" class="btn btn-outline">Cancel</button>--}}
+                    {{--                        <button type="submit" class="btn btn-primary">Save Changes</button>--}}
+                    {{--                    </div>--}}
                 </form>
             </div>
             {{-- Notification Tab --}}
@@ -148,43 +156,71 @@
             </div>
             <!-- Security Tab -->
             <div class="tab-content" id="security-tab">
-                <form class="profile-form">
-                    <div class="form-group">
-                        <label for="currentPassword" class="form-label">Current Password</label>
-                        <div class="password-toggle">
-                            <input type="password" id="currentPassword" class="form-control">
-                            <i class="fas fa-eye toggle-icon" data-target="currentPassword"></i>
+
+                @php
+                    $activeTab = session('active_tab', 'profile'); // الافتراضي profile
+                @endphp
+
+                <div class="tab-pane fade {{ $activeTab == 'security' ? 'show active' : '' }}" id="security-tab">
+
+                    <form class="profile-form" action="{{ route('writer.security.update') }}" method="post">
+                        @csrf
+                        @method('PATCH')
+                        <input type="hidden" name="active_tab" value="security">
+
+                        {{-- Current Password --}}
+                        <div class="form-group">
+                            <label for="currentPassword" class="form-label">Current Password</label>
+                            <div class="password-toggle">
+                                <input type="password"
+                                       id="currentPassword"
+                                       name="current_password"
+                                       class="form-control @error('current_password') is-invalid @enderror"
+                                       value="{{ old('current_password') }}">
+                                <i class="fas fa-eye toggle-icon" data-target="currentPassword"></i>
+                            </div>
+                            @error('current_password')
+                            <div class="invalid-feedback d-block">{{ $message }}</div>
+                            @enderror
                         </div>
-                    </div>
 
-                    <div class="form-group">
-                        <label for="newPassword" class="form-label">New Password</label>
-                        <div class="password-toggle">
-                            <input type="password" id="newPassword" class="form-control">
-                            <i class="fas fa-eye toggle-icon" data-target="newPassword"></i>
+                        {{-- New Password --}}
+                        <div class="form-group">
+                            <label for="newPassword" class="form-label">New Password</label>
+                            <div class="password-toggle">
+                                <input type="password"
+                                       id="newPassword"
+                                       name="new_password"
+                                       class="form-control @error('new_password') is-invalid @enderror">
+                                <i class="fas fa-eye toggle-icon" data-target="newPassword"></i>
+                            </div>
+                            @error('new_password')
+                            <div class="invalid-feedback d-block">{{ $message }}</div>
+                            @enderror
                         </div>
-                    </div>
 
-                    <div class="form-group">
-                        <label for="confirmPassword" class="form-label">Confirm New Password</label>
-                        <div class="password-toggle">
-                            <input type="password" id="confirmPassword" class="form-control">
-                            <i class="fas fa-eye toggle-icon" data-target="confirmPassword"></i>
+                        {{-- Confirm New Password --}}
+                        <div class="form-group">
+                            <label for="confirmPassword" class="form-label">Confirm New Password</label>
+                            <div class="password-toggle">
+                                <input type="password"
+                                       id="confirmPassword"
+                                       name="new_password_confirmation"
+                                       class="form-control @error('new_password_confirmation') is-invalid @enderror">
+                                <i class="fas fa-eye toggle-icon" data-target="confirmPassword"></i>
+                            </div>
+                            @error('new_password_confirmation')
+                            <div class="invalid-feedback d-block">{{ $message }}</div>
+                            @enderror
                         </div>
-                    </div>
 
-                    {{--                    <div class="form-group">--}}
-                    {{--                        <div class="form-check">--}}
-                    {{--                            <input type="checkbox" id="twoFactor" class="form-check-input">--}}
-                    {{--                            <label for="twoFactor" class="form-check-label">Enable Two-Factor Authentication</label>--}}
-                    {{--                        </div>--}}
-                    {{--                    </div>--}}
+                        <div class="form-actions">
+                            <button type="button" class="btn btn-outline">Cancel</button>
+                            <button type="submit" class="btn btn-primary">Update Password</button>
+                        </div>
+                    </form>
+                </div>
 
-                    <div class="form-actions">
-                        <button type="button" class="btn btn-outline">Cancel</button>
-                        <button type="submit" class="btn btn-primary">Update Password</button>
-                    </div>
-                </form>
             </div>
 
         </div>
@@ -193,66 +229,76 @@
 
     <script>
         document.addEventListener('DOMContentLoaded', function () {
-            // Tab switching functionality
             const tabBtns = document.querySelectorAll('.tab-btn');
             const tabContents = document.querySelectorAll('.tab-content');
 
+            // القيمة اللي جاية من السيشن (Laravel)
+            const activeTab = @json(session('active_tab', 'profile'));
+
+            function activateTab(tabId) {
+                // أزرار التاب
+                tabBtns.forEach(btn => {
+                    btn.classList.toggle('active', btn.getAttribute('data-tab') === tabId);
+                });
+
+                // محتوى التاب
+                tabContents.forEach(content => {
+                    content.classList.toggle('active', content.id === `${tabId}-tab`);
+                });
+            }
+
+            // أول ما الصفحة تفتح
+            activateTab(activeTab);
+
+            // عند الضغط على زر
             tabBtns.forEach(btn => {
                 btn.addEventListener('click', function () {
-                    const tabId = this.getAttribute('data-tab');
-
-                    // Update active tab button
-                    tabBtns.forEach(btn => btn.classList.remove('active'));
-                    this.classList.add('active');
-
-                    // Show corresponding content
-                    tabContents.forEach(content => {
-                        content.classList.remove('active');
-                        if (content.id === `${tabId}-tab`) {
-                            content.classList.add('active');
-                        }
-                    });
+                    activateTab(this.getAttribute('data-tab'));
                 });
             });
 
-            // Avatar upload preview
+            // Avatar preview
             const avatarUpload = document.getElementById('avatarUpload');
             const avatarPreview = document.getElementById('avatarPreview');
 
-            avatarUpload.addEventListener('change', function (e) {
-                const file = e.target.files[0];
-                if (file) {
-                    const reader = new FileReader();
-
-                    reader.onload = function (event) {
-                        avatarPreview.src = event.target.result;
-                        avatarPreview.style.display = 'block';
-                        avatarPreview.nextElementSibling.style.display = 'none';
+            if (avatarUpload && avatarPreview) {
+                avatarUpload.addEventListener('change', function (e) {
+                    const file = e.target.files[0];
+                    if (file) {
+                        const reader = new FileReader();
+                        reader.onload = function (event) {
+                            avatarPreview.src = event.target.result;
+                            avatarPreview.style.display = 'block';
+                            if (avatarPreview.nextElementSibling) {
+                                avatarPreview.nextElementSibling.style.display = 'none';
+                            }
+                        };
+                        reader.readAsDataURL(file);
                     }
+                });
+            }
 
-                    reader.readAsDataURL(file);
-                }
-            });
-
-            // Password toggle visibility
-            const toggleIcons = document.querySelectorAll('.toggle-icon');
-
-            toggleIcons.forEach(icon => {
+            // Password toggle
+            document.querySelectorAll('.toggle-icon').forEach(icon => {
                 icon.addEventListener('click', function () {
                     const targetId = this.getAttribute('data-target');
                     const passwordInput = document.getElementById(targetId);
 
-                    if (passwordInput.type === 'password') {
-                        passwordInput.type = 'text';
-                        this.classList.remove('fa-eye');
-                        this.classList.add('fa-eye-slash');
-                    } else {
-                        passwordInput.type = 'password';
-                        this.classList.remove('fa-eye-slash');
-                        this.classList.add('fa-eye');
+                    if (passwordInput) {
+                        if (passwordInput.type === 'password') {
+                            passwordInput.type = 'text';
+                            this.classList.replace('fa-eye', 'fa-eye-slash');
+                        } else {
+                            passwordInput.type = 'password';
+                            this.classList.replace('fa-eye-slash', 'fa-eye');
+                        }
                     }
                 });
             });
         });
     </script>
+
+
+
+
 @endsection
