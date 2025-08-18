@@ -66,9 +66,5 @@ class WriterDashboardController extends Controller
         ));
     }
 
-    public function profile()
-    {
-        $user = auth()->user();
-        return view('writer.profile', compact('user'));
-    }
+
 }
