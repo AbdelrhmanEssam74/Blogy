@@ -16,6 +16,9 @@
                             @if(auth()->user()->role_id===3)
                                 <li><a href="{{ route('writer.dashboard')}}">Dashboard</a></li>
                             @endif
+                            @if(auth()->user()->role_id===1)
+                                <li><a href="{{ route('admin.dashboard')}}">Dashboard</a></li>
+                            @endif
                             {{--                                <li><a href="{{route('posts.create')}}">Create Post</a></li>--}}
                             <li><a href="{{route('logout')}}"
                                    onclick="event.preventDefault(); document.getElementById('logout-form').submit();">Logout</a>

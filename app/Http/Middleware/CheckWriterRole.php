@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
 use RealRashid\SweetAlert\Facades\Alert;
 
-class CheckRole
+class CheckWriterRole
 {
     /**
      * Handle an incoming request.
@@ -15,7 +15,7 @@ class CheckRole
     public function handle(Request $request, Closure $next): Response
     {
         // Allowed roles
-        $allowedRoles = [1, 2, 3]; // admin, author, writer
+
 
         // Check if user is logged in
         if (!$request->user()) {
@@ -24,7 +24,7 @@ class CheckRole
         }
 
         // Check role
-        if (!in_array($request->user()->role_id, $allowedRoles)) {
+        if ($request->user()->role_id !== 3) {
             Alert::error('Access Denied', 'You do not have permission to access this page.');
             return redirect()->route('home');
         }
