@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\admin\AdminDashboardController;
 use App\Http\Controllers\ArticleController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\CommentController;
@@ -8,8 +9,9 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\writer\WriterDashboardController;
 use App\Http\Controllers\writer\WriterArticleController;
 use App\Http\Controllers\writer\WriterProfileController;
+use App\Http\Middleware\CheckAdminRole;
 use App\Http\Middleware\checkAuthentication;
-use App\Http\Middleware\CheckRole;
+use App\Http\Middleware\CheckWriterRole;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', [HomeController::class, 'index'])->name('home');
@@ -18,7 +20,7 @@ Route::get('/articles', [ArticleController::class, 'index'])->name('articles.ind
 
 
 // writer routes
-Route::middleware([checkAuthentication::class, CheckRole::class])->group(function () {
+Route::middleware([checkAuthentication::class, CheckWriterRole::class])->group(function () {
     Route::get('/writer', [WriterDashboardController::class, 'index'])->name('writer.dashboard');
     Route::get('/writer/dashboard', [WriterDashboardController::class, 'index'])->name('writer.dashboard');
     // Article Routes
@@ -34,9 +36,13 @@ Route::middleware([checkAuthentication::class, CheckRole::class])->group(functio
     Route::patch('/writer/profile/update', [WriterProfileController::class, 'profileUpdate'])->name('writer.profile.update');
     Route::patch('/writer/account/update', [WriterProfileController::class, 'accountUpdate'])->name('writer.account.update');
     Route::patch('/writer/security/update', [WriterProfileController::class, 'securityUpdate'])->name('writer.security.update');
-
 });
 
+//Admin Routes
+Route::middleware([checkAuthentication::class, CheckAdminRole::class])->group(function () {
+    Route::get('/admin', [AdminDashboardController::class, 'index'])->name('admin.dashboard');
+    Route::get('/admin/dashboard', [AdminDashboardController::class, 'index'])->name('admin.dashboard');
+});
 
 Route::get('/articles/create', [ArticleController::class, 'create'])->name('articles.create');
 Route::get('/articles/create-first', [ArticleController::class, 'create_first'])->name('articles.create-first');

@@ -1,0 +1,44 @@
+<!-- Sidebar -->
+<aside class="sidebar">
+    <div class="sidebar-header">
+        <h2>MyBlog</h2>
+        <p>Admin Dashboard</p>
+    </div>
+
+    <div class="sidebar-menu">
+        <a href="admin-dashboard.html" class="menu-item active">
+            <i class="fa-light fa-gauge"></i>
+            <span>Dashboard</span>
+        </a>
+        <a href="admin-articles.html" class="menu-item">
+            <i class="fa-light fa-file-lines"></i>
+            <span>Articles</span>
+        </a>
+        <a href="admin-categories.html" class="menu-item">
+            <i class="fa-light fa-tags"></i>
+            <span>Categories</span>
+        </a>
+        <a href="admin-users.html" class="menu-item">
+            <i class="fa-light fa-users"></i>
+            <span>Users</span>
+        </a>
+        <a href="admin-comments.html" class="menu-item">
+            <i class="fa-light fa-comments"></i>
+            <span>Comments</span>
+        </a>
+        <a href="admin-settings.html" class="menu-item">
+            <i class="fa-light fa-gears"></i>
+            <span>Settings</span>
+        </a>
+    </div>
+
+    <div class="sidebar-footer">
+        <div class="user-profile">
+            <div class="user-avatar">AD</div>
+            <div class="user-info">
+                <h4>Admin User</h4>
+                <p>Administrator</p>
+            </div>
+        </div>
+    </div>
+</aside>
