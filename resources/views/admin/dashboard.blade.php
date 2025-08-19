@@ -15,10 +15,6 @@
                     <i class="fas fa-calendar-alt"></i>
                     <span>Last 30 Days</span>
                 </button>
-                <button class="btn btn-primary">
-                    <i class="fas fa-plus"></i>
-                    <span>New Article</span>
-                </button>
             </div>
         </div>
 
@@ -26,18 +22,22 @@
         <div class="stats-grid">
             <div class="stat-card">
                 <div class="stat-card-header">
-                    <h3>Total Articles</h3>
-                    <div class="stat-icon primary">
-                        <i class="fas fa-file-alt"></i>
+                    <h3>Total Users</h3>
+                    <div class="stat-icon warning">
+                        <i class="fas fa-users"></i>
                     </div>
                 </div>
-                <div class="value">142</div>
-                <div class="stat-change positive">
-                    <i class="fas fa-arrow-up"></i>
-                    <span>12% from last month</span>
-                </div>
+                <div class="value">{{$totalUsers}}</div>
             </div>
-
+            <div class="stat-card">
+                <div class="stat-card-header">
+                    <h3>Total Articles</h3>
+                    <div class="stat-icon primary">
+                        <i class="fa-sharp fa-light fa-file-lines"></i>
+                    </div>
+                </div>
+                <div class="value">{{$totalArticles}}</div>
+            </div>
             <div class="stat-card">
                 <div class="stat-card-header">
                     <h3>Published</h3>
@@ -45,39 +45,18 @@
                         <i class="fas fa-check-circle"></i>
                     </div>
                 </div>
-                <div class="value">126</div>
-                <div class="stat-change positive">
-                    <i class="fas fa-arrow-up"></i>
-                    <span>8% from last month</span>
-                </div>
-            </div>
+                <div class="value">{{$publishedArticles}}</div>
 
+            </div>
             <div class="stat-card">
                 <div class="stat-card-header">
-                    <h3>Active Users</h3>
-                    <div class="stat-icon warning">
-                        <i class="fas fa-users"></i>
-                    </div>
-                </div>
-                <div class="value">2,845</div>
-                <div class="stat-change positive">
-                    <i class="fas fa-arrow-up"></i>
-                    <span>24% from last month</span>
-                </div>
-            </div>
-
-            <div class="stat-card">
-                <div class="stat-card-header">
-                    <h3>Monthly Views</h3>
+                    <h3>Total Categories</h3>
                     <div class="stat-icon danger">
-                        <i class="fas fa-eye"></i>
+                        <i class="fa-duotone fa-thin fa-tag"></i>
                     </div>
                 </div>
-                <div class="value">124K</div>
-                <div class="stat-change positive">
-                    <i class="fas fa-arrow-up"></i>
-                    <span>18% from last month</span>
-                </div>
+                <div class="value">{{$totalCategories}}</div>
+
             </div>
         </div>
 
@@ -97,49 +76,48 @@
                     <th>Title</th>
                     <th>Author</th>
                     <th>Status</th>
-                    <th>Views</th>
+                    {{--                    <th>Views</th>--}}
                     <th>Last Updated</th>
                     <th>Actions</th>
                 </tr>
                 </thead>
                 <tbody>
-                <tr>
-                    <td>10 Tips for Better Writing</td>
-                    <td>Jane Smith</td>
-                    <td><span class="badge badge-published">Published</span></td>
-                    <td>3,245</td>
-                    <td>May 15, 2023</td>
-                    <td>
-                        <button class="action-btn" title="Edit"><i class="fas fa-edit"></i></button>
-                        <button class="action-btn" title="View"><i class="fas fa-eye"></i></button>
-                    </td>
-                </tr>
-                <tr>
-                    <td>The Future of Content Marketing</td>
-                    <td>John Doe</td>
-                    <td><span class="badge badge-published">Published</span></td>
-                    <td>2,187</td>
-                    <td>May 10, 2023</td>
-                    <td>
-                        <button class="action-btn" title="Edit"><i class="fas fa-edit"></i></button>
-                        <button class="action-btn" title="View"><i class="fas fa-eye"></i></button>
-                    </td>
-                </tr>
-                <tr>
-                    <td>SEO Strategies That Work</td>
-                    <td>John Doe</td>
-                    <td><span class="badge badge-pending">Pending</span></td>
-                    <td>-</td>
-                    <td>May 5, 2023</td>
-                    <td>
-                        <button class="action-btn" title="Edit"><i class="fas fa-edit"></i></button>
-                        <button class="action-btn" title="View"><i class="fas fa-eye"></i></button>
-                    </td>
-                </tr>
+
+                @foreach($recentArticles as $article)
+                    <tr>
+                        <td>
+                            <a href="{{route('writer.view_article',$article->slug)}}"> {{  Str::substr($article->title, 0, 30) }}
+                                .....</a>
+                        </td>
+                        <td>
+                            <a href="#">{{$article->user->full_name}}</a>
+                        </td>
+                        <td>
+                            <span class="badge badge-{{$article->status}}">{{$article->status}}</span></td>
+                        <td>
+                            @if($article->published_at)
+                                {{ \Carbon\Carbon::parse($article->published_at)->format('d M Y h:i')}}
+                            @else
+                                <span class="text-muted fst-italic">Not Published</span>
+                            @endif
+                        </td>
+                        {{--                    <td>3,245</td>--}}
+                        <td>
+                            <a href="{{route('writer.view_article',$article->slug)}}" class="action-btn show">
+                                <i class="fas fa-eye"></i></a>
+                            <a href="{{route('writer.edit_article',$article->article_id)}}" class="action-btn edit">
+                                <i class="fas fa-edit"></i></a>
+                        </td>
+                    </tr>
+
+                @endforeach
+
+
                 </tbody>
             </table>
         </div>
 
+        {{--        todo        --}}
         <!-- Recent Activity Section -->
         <div class="content-section">
             <div class="section-header">
