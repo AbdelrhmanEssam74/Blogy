@@ -6,11 +6,11 @@
     </div>
 
     <div class="sidebar-menu">
-        <a href="admin-dashboard.html" class="menu-item active">
+        <a href="{{ route('admin.dashboard') }}" class="menu-item active">
             <i class="fa-light fa-gauge"></i>
             <span>Dashboard</span>
         </a>
-        <a href="admin-articles.html" class="menu-item">
+        <a href="{{ route('admin.articles') }}" class="menu-item">
             <i class="fa-light fa-file-lines"></i>
             <span>Articles</span>
         </a>
@@ -34,9 +34,9 @@
 
     <div class="sidebar-footer">
         <div class="user-profile">
-            <div class="user-avatar">AD</div>
+            <div class="user-avatar">{{ auth()->user()->full_name[0] }}</div>
             <div class="user-info">
-                <h4>Admin User</h4>
+                <h4>{{auth()->user()->full_name}}</h4>
                 <p>Administrator</p>
             </div>
         </div>
