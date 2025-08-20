@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\admin\AdminArticlesController;
 use App\Http\Controllers\admin\AdminDashboardController;
 use App\Http\Controllers\ArticleController;
 use App\Http\Controllers\CategoryController;
@@ -42,6 +43,7 @@ Route::middleware([checkAuthentication::class, CheckWriterRole::class])->group(f
 Route::middleware([checkAuthentication::class, CheckAdminRole::class])->group(function () {
     Route::get('/admin', [AdminDashboardController::class, 'index'])->name('admin.dashboard');
     Route::get('/admin/dashboard', [AdminDashboardController::class, 'index'])->name('admin.dashboard');
+    Route::get('/admin/articles', [AdminArticlesController::class, 'index'])->name('admin.articles');
 });
 
 Route::get('/articles/create', [ArticleController::class, 'create'])->name('articles.create');
