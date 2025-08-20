@@ -1,4 +1,9 @@
 @if ($paginator->hasPages())
+    <div class="pager-info">
+        Showing {{ $paginator->firstItem() }} to {{ $paginator->lastItem() }}
+        of {{ $paginator->total() }} results
+    </div>
+
     <nav class="pager" role="navigation" aria-label="Pagination">
         <ul class="pager__list">
             {{-- Previous --}}
@@ -39,6 +44,7 @@
             </li>
         </ul>
     </nav>
+
     <style>
         .pager { display:flex; justify-content:center; margin-top:1rem; }
         .pager__list { display:flex; gap:.5rem; list-style:none; padding:0; margin:0; }
@@ -52,5 +58,11 @@
         .pager__link.is-disabled { opacity:.5; pointer-events:none; cursor:not-allowed; }
         .pager__ellipsis { padding:.5rem .75rem; color:#6b7280; }
 
+        .pager-info {
+            text-align:center;
+            margin-bottom:.5rem;
+            font-size:.875rem;
+            color:#374151;
+        }
     </style>
 @endif
