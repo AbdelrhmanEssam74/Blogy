@@ -29,25 +29,97 @@ class AdminArticlesController extends Controller
                 'articlesCount'
             ));
     }
+
     // 2. admin shows a single article
     public function show($slug)
     {
         // get the article with its category, user, and comments based on the slug
-        $article = Article::where('slug', $slug)->with(['category' , 'user' , 'comment'])->first();
+        $article = Article::where('slug', $slug)->with(['category', 'user', 'comment'])->first();
         return view('admin.articles.article_view', ['article' => $article]);
     }
+
     // 3. admin approves article
-    public function approve($article_id){
-//        dd($article_id);
+    public function approve($article_id)
+    {
         $article = Article::findOrFail($article_id);
-        if ($article){
+        if ($article) {
             $article->status = 'published';
             $article->save();
             Alert::success('Success', 'Article published successfully');
             return redirect()->back();
         }
+        Alert::error('Error', 'Article not found');
+        return redirect()->back();
     }
+
     // 4. admin rejects article
+    public function reject($article_id)
+    {
+        $article = Article::findOrFail($article_id);
+        if ($article) {
+            $article->status = 'rejected';
+            $article->save();
+            Alert::success('Success', 'Article rejected successfully');
+            return redirect()->back();
+        }
+        Alert::error('Error', 'Article not found');
+        return redirect()->back();
+    }
+
     // 5. admin deletes article
+    public function delete($article_id)
+    {
+        $article = Article::findOrFail($article_id);
+        if ($article) {
+            $article->status = 'deleted';
+            $article->save();
+            Alert::success('Success', 'Article deleted successfully');
+            return redirect()->back();
+        }
+        Alert::error('Error', 'Article not found');
+        return redirect()->back();
+    }
+
     // 6. admin archives article
+    public function archive($article_id)
+    {
+        $article = Article::findOrFail($article_id);
+        if ($article) {
+            $article->status = 'archived';
+            $article->save();
+            Alert::success('Success', 'Article archived successfully');
+            return redirect()->back();
+        }
+        Alert::error('Error', 'Article not found');
+        return redirect()->back();
+    }
+
+    // 7. admin restores article
+    public function restore($article_id)
+    {
+        $article = Article::findOrFail($article_id);
+        if ($article) {
+            $article->status = 'published';
+            $article->save();
+            Alert::success('Success', 'Article restored successfully');
+            return redirect()->back();
+        }
+        Alert::error('Error', 'Article not found');
+        return redirect()->back();
+
+    }
+
+    // 8. admin deletes article permanently
+    public function delete_permanently($article_id)
+    {
+        $article = Article::findOrFail($article_id);
+        if ($article) {
+            $article->delete();
+            Alert::success('Success', 'Article deleted permanently');
+            return redirect()->back();
+        }
+        Alert::error('Error', 'Article not found');
+        return redirect()->back();
+    }
+
 }
