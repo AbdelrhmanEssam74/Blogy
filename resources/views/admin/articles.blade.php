@@ -108,10 +108,10 @@
                         <td>
                             @if($article->status === 'pending')
                                 <div class="action-buttons">
-                                    <a href="#" class="action-btn btn-approve">
+                                    <button class="action-btn btn-approve" onclick="approveArticle({{$article->article_id}},'{{route('admin.article-approve',$article->article_id)}}')">
                                         <i class="fas fa-check"></i>
                                         <span>Approve</span>
-                                    </a>
+                                    </button>
                                     <a class="action-btn btn-reject">
                                         <i class="fas fa-times"></i>
                                         <span>Reject</span>
@@ -119,10 +119,10 @@
                                 </div>
                             @elseif($article->status === 'published')
                                 <div class="action-buttons">
-                                    <a href="#" class="action-btn btn-archive">
+                                    <button  class="action-btn btn-archive">
                                         <i class="fas fa-archive"></i>
                                         <span>Archive</span>
-                                    </a>
+                                    </button>
                                     <a href="#" class="action-btn btn-delete">
                                         <i class="fas fa-trash"></i>
                                         <span>Delete</span>
@@ -153,7 +153,7 @@
                                 </div>
                             @elseif($article->status === 'draft')
                                 <div class="action-buttons">
-                                    <a href="#"  class="action-btn btn-archive">
+                                    <a href="#" class="action-btn btn-archive">
                                         <i class="fas fa-archive"></i>
                                         <span>Archive</span>
                                     </a>
@@ -165,6 +165,11 @@
                             @endif
                         </td>
                     </tr>
+                    {{-- update status form  --}}
+                    <form id="update-form" action="" method="POST" class="d-none">
+                        @method('PUT')
+                        @csrf
+                    </form>
                 @endforeach
                 </tbody>
             </table>
@@ -186,5 +191,11 @@
                 });
             });
         });
+        // send request to approve article
+        function approveArticle(articleId , route) {
+            const form = document.getElementById('update-form');
+            form.action = route;
+            form.submit();
+        }
     </script>
 @endsection
