@@ -44,6 +44,7 @@ Route::middleware([checkAuthentication::class, CheckAdminRole::class])->group(fu
     Route::get('/admin', [AdminDashboardController::class, 'index'])->name('admin.dashboard');
     Route::get('/admin/dashboard', [AdminDashboardController::class, 'index'])->name('admin.dashboard');
     Route::get('/admin/articles', [AdminArticlesController::class, 'index'])->name('admin.articles');
+    Route::get('/admin/article/{slug}', [AdminArticlesController::class, 'show'])->name('admin.article-show');
 });
 
 Route::get('/articles/create', [ArticleController::class, 'create'])->name('articles.create');
