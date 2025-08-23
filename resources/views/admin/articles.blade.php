@@ -98,7 +98,7 @@
                 @foreach($articles as $article)
                     <tr>
                         <td>
-                            <a href="{{route('writer.view_article',$article->slug)}}"> {{  Str::substr($article->title, 0, 30) }}
+                            <a href="{{route('admin.article-show',$article->slug)}}"> {{  Str::substr($article->title, 0, 30) }}
                                 .....</a>
                         </td>
                         <td>{{$article->user->full_name}}</td>
