@@ -215,6 +215,10 @@
     background-color: rgba(107, 114, 128, 0.1);
     color: var(--gray);
 }
+.badge-deleted {
+    background-color: rgba(255, 183, 183, 0.1);
+    color: var(--danger);
+}
 
 /* Action Buttons */
 .action-buttons {

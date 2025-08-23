@@ -45,6 +45,13 @@ Route::middleware([checkAuthentication::class, CheckAdminRole::class])->group(fu
     Route::get('/admin/dashboard', [AdminDashboardController::class, 'index'])->name('admin.dashboard');
     Route::get('/admin/articles', [AdminArticlesController::class, 'index'])->name('admin.articles');
     Route::get('/admin/article/{slug}', [AdminArticlesController::class, 'show'])->name('admin.article-show');
+    // articles management
+    Route::put('/admin/articles/approve/{article_id}', [AdminArticlesController::class, 'approve'])->name('admin.article-approve');
+    Route::put('/admin/articles/reject/{article_id}', [AdminArticlesController::class, 'reject'])->name('admin.article-reject');
+    Route::put('/admin/articles/delete/{article_id}', [AdminArticlesController::class, 'delete'])->name('admin.article-delete');
+    Route::put('/admin/articles/archive/{article_id}', [AdminArticlesController::class, 'archive'])->name('admin.article-archive');
+    Route::put('/admin/articles/restore/{article_id}', [AdminArticlesController::class, 'restore'])->name('admin.article-restore');
+    Route::put('/admin/articles/delete-permanently/{article_id}', [AdminArticlesController::class, 'delete_permanently'])->name('admin.article-delete-permanently');
 });
 
 Route::get('/articles/create', [ArticleController::class, 'create'])->name('articles.create');
