@@ -6,11 +6,13 @@
     </div>
 
     <div class="sidebar-menu">
-        <a href="{{ route('admin.dashboard') }}" class="menu-item active">
+        <a href="{{ route('admin.dashboard') }}"
+           class="menu-item {{ request()->routeIs('admin.dashboard') ? 'active' : '' }}" data-target="dashboard">
             <i class="fa-light fa-gauge"></i>
             <span>Dashboard</span>
         </a>
-        <a href="{{ route('admin.articles') }}" class="menu-item">
+        <a href="{{ route('admin.articles') }}"
+           class="menu-item {{request()->routeIs('admin.articles') ? 'active' : ' '}}" data-target="articles">
             <i class="fa-light fa-file-lines"></i>
             <span>Articles</span>
         </a>
@@ -42,3 +44,14 @@
         </div>
     </div>
 </aside>
+<script>
+    const NotAllowed = document.querySelectorAll('.coming-soon');
+    NotAllowed.forEach(item => {
+        item.classList.add('disabled');
+        item.setAttribute('href', '#');
+        item.setAttribute('tabindex', '-1');
+        item.setAttribute('aria-disabled', 'true');
+        item.setAttribute('aria-hidden', 'true');
+    })
+
+</script>
