@@ -52,6 +52,8 @@ Route::middleware([checkAuthentication::class, CheckAdminRole::class])->group(fu
     Route::put('/admin/articles/archive/{article_id}', [AdminArticlesController::class, 'archive'])->name('admin.article-archive');
     Route::put('/admin/articles/restore/{article_id}', [AdminArticlesController::class, 'restore'])->name('admin.article-restore');
     Route::put('/admin/articles/delete-permanently/{article_id}', [AdminArticlesController::class, 'delete_permanently'])->name('admin.article-delete-permanently');
+    // filter articles
+    Route::get('/admin/articles/filter', [AdminArticlesController::class, 'filter'])->name('admin.article-filter');
 });
 
 Route::get('/articles/create', [ArticleController::class, 'create'])->name('articles.create');

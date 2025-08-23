@@ -121,5 +121,28 @@ class AdminArticlesController extends Controller
         Alert::error('Error', 'Article not found');
         return redirect()->back();
     }
+    // 9. filter the articles
+    public function filter(Request $request)
+    {
+        $articles = Article::query();
+
+        if ($request->filled('category_id')) {
+            $articles->where('category_id', $request->category_id);
+        }
+        if ($request->filled('writer_id')) {
+            $articles->where('writer_id', $request->writer_id);
+        }
+        if ($request->filled('status')) {
+            $articles->where('status', $request->status);
+        }
+
+        $articles = $articles->with('user', 'category')->paginate(5);
+
+        // load all writers and categories (same as index)
+        $writers = User::where('role_id', 3)->get();
+        $categories = Category::all();
+        $articlesCount = Article::count();
+        return view('admin.articles', compact('articles', 'writers', 'categories', 'articlesCount'));
+    }
 
 }

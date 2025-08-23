@@ -325,7 +325,12 @@
 .page-btn:hover:not(.active) {
     background-color: var(--light);
 }
-
+.no-articles-found {
+    text-align: center;
+    padding: 2rem;
+    font-size: 1.25rem;
+    color: var(--gray);
+}
 /* Responsive */
 @media (max-width: 1024px) {
     .sidebar {
