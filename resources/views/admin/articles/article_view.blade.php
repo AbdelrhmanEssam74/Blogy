@@ -162,13 +162,13 @@
 
             <!-- Comment List -->
             <div class="comments-list">
-                @empty($article->comment)
+                @if(!count($article->comment))
                     <div class="empty-state">
                         <i class="fas fa-comment-slash"></i>
                         <h3>No Comments Yet</h3>
-                        <p>This article doesn't have any comments yet. Be the first to comment!</p>
+                        <p>This article doesn't have any comments yet!</p>
                     </div>
-                @endempty
+                @endif
                 @isset($article->comment)
                     @foreach($article->comment as $comment)
                         <div class="comment-item">
@@ -213,12 +213,6 @@
                 @endisset
             </div>
 
-            <!-- Empty State (for demonstration) -->
-            <!-- <div class="empty-state">
-                <i class="fas fa-comment-slash"></i>
-                <h3>No Comments Yet</h3>
-                <p>This article doesn't have any comments yet. Be the first to comment!</p>
-            </div> -->
         </div>
     </main>
 @endsection
