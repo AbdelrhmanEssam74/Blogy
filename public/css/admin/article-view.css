@@ -324,6 +324,15 @@
     background-color: var(--danger);
     color: var(--white);
 }
+.btn-archive {
+    background-color: rgba(107, 114, 128, 0.1);
+    color: var(--gray);
+}
+
+.btn-archive:hover {
+    background-color: var(--gray);
+    color: var(--white);
+}
 
 .comment-status {
     padding: 0.25rem 0.75rem;
@@ -345,6 +354,10 @@
 .status-rejected {
     background-color: rgba(239, 68, 68, 0.1);
     color: var(--danger);
+}
+.status-archived {
+    background-color: rgba(107, 114, 128, 0.1);
+    color: var(--gray);
 }
 
 /* Empty State */

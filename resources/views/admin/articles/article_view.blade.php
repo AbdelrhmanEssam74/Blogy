@@ -14,14 +14,14 @@
         <div class="header">
             <h1>Article Details</h1>
             <div class="header-actions">
-                <button class="btn btn-outline">
+                <button class="btn btn-outline " onclick="backToRoute('{{route('admin.articles')}}')">
                     <i class="fas fa-arrow-left"></i>
                     <span>Back to Articles</span>
                 </button>
-                <button class="btn btn-primary">
-                    <i class="fas fa-edit"></i>
-                    <span>Edit Article</span>
-                </button>
+{{--                <button class="btn btn-primary">--}}
+{{--                    <i class="fas fa-edit"></i>--}}
+{{--                    <span>Edit Article</span>--}}
+{{--                </button>--}}
             </div>
         </div>
 
@@ -215,4 +215,11 @@
 
         </div>
     </main>
+
+    <script>
+        // create function to get back to a specific route
+        function backToRoute(route) {
+            window.location.href = route;
+        }
+    </script>
 @endsection
