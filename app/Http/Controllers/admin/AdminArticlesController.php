@@ -29,6 +29,12 @@ class AdminArticlesController extends Controller
             ));
     }
     // 2. admin shows a single article
+    public function show($slug)
+    {
+        // get the article with its category, user, and comments based on the slug
+        $article = Article::where('slug', $slug)->with(['category' , 'user' , 'comment'])->first();
+        return view('admin.articles.article_view', ['article' => $article]);
+    }
     // 3. admin approves article
     // 4. admin rejects article
     // 5. admin deletes article
