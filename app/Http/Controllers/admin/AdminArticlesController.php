@@ -7,6 +7,7 @@ use App\Models\Article;
 use App\Models\Category;
 use App\Models\User;
 use Illuminate\Http\Request;
+use RealRashid\SweetAlert\Facades\Alert;
 
 class AdminArticlesController extends Controller
 {
@@ -36,6 +37,16 @@ class AdminArticlesController extends Controller
         return view('admin.articles.article_view', ['article' => $article]);
     }
     // 3. admin approves article
+    public function approve($article_id){
+//        dd($article_id);
+        $article = Article::findOrFail($article_id);
+        if ($article){
+            $article->status = 'published';
+            $article->save();
+            Alert::success('Success', 'Article published successfully');
+            return redirect()->back();
+        }
+    }
     // 4. admin rejects article
     // 5. admin deletes article
     // 6. admin archives article
