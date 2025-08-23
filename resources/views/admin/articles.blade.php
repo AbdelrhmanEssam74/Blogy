@@ -16,63 +16,70 @@
 
         <!-- Filter Section -->
         <div class="filter-section">
-            <div class="filter-grid">
-                <div class="filter-group">
-                    <label class="filter-label">Status</label>
-                    <select class="filter-select" id="statusFilter">
-                        <option value="">All Statuses</option>
-                        <option value="published">Published</option>
-                        <option value="pending">Pending Review</option>
-                        <option value="draft">Draft</option>
-                        <option value="rejected">Rejected</option>
-                        <option value="archived">Archived</option>
-                    </select>
+            <form id="filter-form" action="{{ route('admin.article-filter') }}" method="get" class="d-none">
+                <div class="filter-grid">
+                    <div class="filter-group">
+
+                        <label class="filter-label">Status</label>
+                        <select class="filter-select" name="status" id="statusFilter">
+                            <option value="" {{ request('status') == '' ? 'selected' : '' }}>All Statuses</option>
+                            <option value="published" {{ request('status') == 'published' ? 'selected' : '' }}>
+                                Published
+                            </option>
+                            <option value="pending" {{ request('status') == 'pending' ? 'selected' : '' }}>Pending
+                                Review
+                            </option>
+                            <option value="draft" {{ request('status') == 'draft' ? 'selected' : '' }}>Draft</option>
+                            <option value="rejected" {{ request('status') == 'rejected' ? 'selected' : '' }}>Rejected
+                            </option>
+                            <option value="archived" {{ request('status') == 'archived' ? 'selected' : '' }}>Archived
+                            </option>
+                            <option value="deleted" {{ request('status') == 'deleted' ? 'selected' : '' }}>Deleted
+                            </option>
+                        </select>
+                    </div>
+
+                    <div class="filter-group">
+                        <label class="filter-label">Writer</label>
+                        <select class="filter-select" name="writer_id" id="writerFilter">
+                            <option value="">All Writers</option>
+                            @foreach($writers as $writer)
+                                <option
+                                    value="{{ $writer->user_id }}" {{ request('writer_id') == $writer->user_id ? 'selected' : '' }}>
+                                    {{ $writer->full_name }}
+                                </option>
+                            @endforeach
+
+                        </select>
+                    </div>
+
+                    <div class="filter-group">
+                        <label class="filter-label">Category</label>
+                        <select class="filter-select" name="category_id" id="categoryFilter">
+                            <option value="">All Categories</option>
+                            @foreach($categories as $category)
+                                <option
+                                    value="{{ $category->category_id }}" {{ request('category_id') == $category->category_id ? 'selected' : '' }}>
+                                    {{ $category->name }}
+                                </option>
+                            @endforeach
+
+                        </select>
+                    </div>
                 </div>
 
-                <div class="filter-group">
-                    <label class="filter-label">Writer</label>
-                    <select class="filter-select" id="writerFilter">
-                        <option value="">All Writers</option>
-                        @foreach($writers as $writer)
-                            <option value="{{$writer->user_id}}">{{$writer->full_name}}</option>
-                        @endforeach
-                    </select>
+                <div class="filter-actions">
+                    <button class="btn btn-outline">
+                        <i class="fas fa-times"></i>
+                        <span>Clear Filters</span>
+                    </button>
+                    <button type="submit" class="btn btn-primary">
+                        <i class="fas fa-filter"></i>
+                        <span>Apply Filters</span>
+                    </button>
                 </div>
-
-                <div class="filter-group">
-                    <label class="filter-label">Category</label>
-                    <select class="filter-select" id="categoryFilter">
-                        <option value="">All Categories</option>
-                        @foreach($categories as $category)
-                            <option value="{{$category->category_id}}">{{$category->name}}</option>
-                        @endforeach
-                    </select>
-                </div>
-
-                <div class="filter-group">
-                    <label class="filter-label">Date Range</label>
-                    <select class="filter-select" id="dateFilter">
-                        <option value="">All Time</option>
-                        <option value="7">Last 7 Days</option>
-                        <option value="30">Last 30 Days</option>
-                        <option value="90">Last 90 Days</option>
-                        <option value="365">Last Year</option>
-                    </select>
-                </div>
-            </div>
-
-            <div class="filter-actions">
-                <button class="btn btn-outline">
-                    <i class="fas fa-times"></i>
-                    <span>Clear Filters</span>
-                </button>
-                <button class="btn btn-primary">
-                    <i class="fas fa-filter"></i>
-                    <span>Apply Filters</span>
-                </button>
-            </div>
+            </form>
         </div>
-
         <!-- Articles Table -->
         <div class="articles-table-container">
             <div class="table-header">
@@ -95,6 +102,11 @@
                 </tr>
                 </thead>
                 <tbody>
+                @if(!count($articles))
+                    <tr>
+                        <td colspan="6" class="no-articles-found">No articles found.</td>
+                    </tr>
+                @endif
                 @foreach($articles as $article)
                     <tr>
                         <td>
@@ -128,8 +140,8 @@
                                         <i class="fas fa-archive"></i>
                                         <span>Archive</span>
                                     </button>
-                                    <button  class="action-btn btn-delete"
-                                    onclick="updateArticleStatus({{$article->article_id}},'{{route('admin.article-delete',$article->article_id)}}')"
+                                    <button class="action-btn btn-delete"
+                                            onclick="updateArticleStatus({{$article->article_id}},'{{route('admin.article-delete',$article->article_id)}}')"
                                     >
                                         <i class="fas fa-trash"></i>
                                         <span>Delete</span>
@@ -138,14 +150,14 @@
                             @elseif($article->status === 'archived')
                                 <div class="action-buttons">
                                     <button class="action-btn btn-restore"
-                                    onclick="updateArticleStatus({{$article->article_id}},'{{route('admin.article-restore',$article->article_id)}}')"
+                                            onclick="updateArticleStatus({{$article->article_id}},'{{route('admin.article-restore',$article->article_id)}}')"
                                     >
                                         <i class="fas fa-undo"></i>
                                         <span>Restore</span>
 
                                     </button>
-                                    <button  class="action-btn btn-delete"
-                                             onclick="updateArticleStatus({{$article->article_id}},'{{route('admin.article-delete',$article->article_id)}}')"
+                                    <button class="action-btn btn-delete"
+                                            onclick="updateArticleStatus({{$article->article_id}},'{{route('admin.article-delete',$article->article_id)}}')"
                                     >
                                         <i class="fas fa-trash"></i>
                                         <span>Delete</span>
@@ -168,13 +180,13 @@
                             @elseif($article->status === 'draft')
                                 <div class="action-buttons">
                                     <button class="action-btn btn-archive"
-                                    onclick="updateArticleStatus({{$article->article_id}},'{{route('admin.article-archive',$article->article_id)}}')"
+                                            onclick="updateArticleStatus({{$article->article_id}},'{{route('admin.article-archive',$article->article_id)}}')"
                                     >
                                         <i class="fas fa-archive"></i>
                                         <span>Archive</span>
                                     </button>
-                                    <button  class="action-btn btn-delete"
-                                             onclick="updateArticleStatus({{$article->article_id}},'{{route('admin.article-delete',$article->article_id)}}')"
+                                    <button class="action-btn btn-delete"
+                                            onclick="updateArticleStatus({{$article->article_id}},'{{route('admin.article-delete',$article->article_id)}}')"
                                     >
                                         <i class="fas fa-trash"></i>
                                         <span>Delete</span>
@@ -183,7 +195,7 @@
                             @elseif($article->status === 'deleted')
                                 <div class="action-buttons">
                                     <button class="action-btn btn-delete"
-                                    onclick="updateArticleStatus({{$article->article_id}},'{{route('admin.article-delete-permanently',$article->article_id)}}')"
+                                            onclick="updateArticleStatus({{$article->article_id}},'{{route('admin.article-delete-permanently',$article->article_id)}}')"
                                     >
                                         <i class="fas fa-trash"></i>
                                         <span>Delete Permanently</span>
