@@ -3,28 +3,47 @@
 * @param {int} articleId
 * @param {string} route
 */
-function updateArticleStatus(articleId , route) {
+function updateArticleStatus(articleId, route) {
     const form = document.getElementById('update-form');
     form.action = route;
     form.submit();
 }
 
-/*
- * Filter articles
- */
+// Open rejection modal
+function openRejectionModal() {
+    const modal = document.getElementById('rejectionModal');
+    modal.classList.add('active');
+    document.body.style.overflow = 'hidden';
+    // Focus on textarea after modal opens
+    setTimeout(() => {
+        document.getElementById('rejectionNote').focus();
+    }, 100);
+}
 
-// function applyFilters() {
-//     // get articles status
-//     const status = document.getElementById('statusFilter').value;
-//     // get articles category
-//     const category_id = document.getElementById('categoryFilter').value;
-//     // get article writer
-//     const writer_id = document.getElementById('writerFilter').value;
-//     console.log( status, category_id, writer_id);
-//     // get the form and submit it with the new values and the route
-//     const form = document.getElementById('filter-form');
-//     form.action = `/admin/articles/filter?status=${status}&category_id=${category_id}&writer_id=${writer_id}`;
-//
-//     console.log(form)
-//     form.submit();
-// }
+// Close rejection modal
+function closeRejectionModal() {
+    const modal = document.getElementById('rejectionModal');
+    modal.classList.remove('active');
+    document.body.style.overflow = 'auto';
+}
+
+// Update character count
+function updateCharacterCount() {
+    const textarea = document.getElementById('rejectionNote');
+    const characterCount = document.getElementById('characterCount');
+    const confirmButton = document.getElementById('confirmReject');
+    const currentLength = textarea.value.length;
+    const maxLength = 500;
+
+    characterCount.textContent = `${currentLength}/${maxLength} characters`;
+
+    // Enable/disable confirm button based on input
+    confirmButton.disabled = currentLength === 0;
+
+    // Change color when approaching limit
+    if (currentLength > maxLength * 0.8) {
+        characterCount.classList.add('limit');
+    } else {
+        characterCount.classList.remove('limit');
+    }
+}

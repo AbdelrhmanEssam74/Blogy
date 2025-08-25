@@ -44,6 +44,7 @@ class AdminArticlesController extends Controller
         $article = Article::findOrFail($article_id);
         if ($article) {
             $article->status = 'published';
+            $article->published_at = now();
             $article->save();
             Alert::success('Success', 'Article published successfully');
             return redirect()->back();
@@ -53,8 +54,9 @@ class AdminArticlesController extends Controller
     }
 
     // 4. admin rejects article
-    public function reject($article_id)
+    public function reject($article_id ,Request $request)
     {
+        dd($request->all());
         $article = Article::findOrFail($article_id);
         if ($article) {
             $article->status = 'rejected';
