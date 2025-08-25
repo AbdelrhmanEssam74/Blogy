@@ -64,7 +64,7 @@
         <div class="content-section">
             <div class="section-header">
                 <h2 class="section-title">Recent Articles</h2>
-                <a href="#" class="section-link">
+                <a href="{{ route('admin.articles') }}" class="section-link">
                     <span>View All</span>
                     <i class="fas fa-chevron-right"></i>
                 </a>

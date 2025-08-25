@@ -97,7 +97,7 @@
                     <th>Writer</th>
                     <th>Category</th>
                     <th>Status</th>
-                    <th>Date</th>
+                    <th>Created at</th>
                     <th>Actions</th>
                 </tr>
                 </thead>
@@ -125,9 +125,7 @@
                                         <i class="fas fa-check"></i>
                                         <span>Approve</span>
                                     </button>
-                                    <button class="action-btn btn-reject"
-                                            onclick="updateArticleStatus({{$article->article_id}},'{{route('admin.article-reject',$article->article_id)}}')"
-                                    >
+                                    <button class="action-btn btn-reject" onclick="openRejectionModal('Mike Brown')">
                                         <i class="fas fa-times"></i>
                                         <span>Reject</span>
                                     </button>
@@ -204,14 +202,16 @@
                             @endif
                         </td>
                     </tr>
-                    {{-- update status form  --}}
-                    <form id="update-form" action="" method="POST" class="d-none">
-                        @method('PUT')
-                        @csrf
-                    </form>
                 @endforeach
                 </tbody>
             </table>
+            {{--      Reject Modal        --}}
+            <x-rejection-modal :rejectWhat="'article'" :rejectTitle="$article->title" :article-id="$article->article_id" :route="route('admin.article-reject' , $article->article_id)"></x-rejection-modal>
+            {{-- update status form  --}}
+            <form id="update-form" action="" method="POST" class="d-none">
+                @method('PUT')
+                @csrf
+            </form>
             {{--      Pagination         --}}
             <div class="pagination">
                 {{ $articles->withQueryString()->onEachSide(1)->links('components.pagination') }}

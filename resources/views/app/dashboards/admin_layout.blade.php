@@ -68,6 +68,7 @@
 </head>
 <link rel="stylesheet" href="{{ asset('css/admin/main.css') }}">
 <link rel="stylesheet" href="{{ asset('css/admin/sidebar.css') }}">
+<link rel="stylesheet" href="{{asset('css/modal.css')}}">
 @yield('styles')
 <body>
 @include('sweetalert::alert')
