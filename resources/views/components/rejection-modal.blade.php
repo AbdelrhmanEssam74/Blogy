@@ -2,15 +2,14 @@
 <div class="modal-overlay" id="rejectionModal">
     <div class="modal">
         <div class="modal-header">
-            <h3 class="modal-title">Reject {{$rejectWhat}}</h3>
+            <h3 class="modal-title" id="modalTitle"></h3>
             <button class="modal-close" onclick="closeRejectionModal()">
                 <i class="fas fa-times"></i>
             </button>
         </div>
         <div class="modal-body">
-            <p class="modal-message">
-                You are about to reject a {{$rejectWhat}} by <strong id="commentAuthor">{{$rejectTitle}}</strong>.
-                Please provide a reason for rejection. This note will be visible to the {{$rejectWhat}} author.
+            <p class="modal-message" id="modalMessage">
+
             </p>
 
             <div class="form-group">
@@ -18,7 +17,7 @@
                 <textarea
                     id="rejectionNote"
                     class="form-textarea"
-                    placeholder="Please explain why this {{$rejectWhat}} is being rejected..."
+                    placeholder=""
                     maxlength="500"
                     oninput="updateCharacterCount()"
                 ></textarea>
@@ -29,7 +28,7 @@
             <button class="btn btn-outline" onclick="closeRejectionModal()">
                 Cancel
             </button>
-            <button class="btn btn-danger" id="confirmReject" onclick="updateArticleStatus({{$articleId}} , {{$route}})" disabled>
+            <button class="btn btn-danger" id="confirmReject"  disabled>
                 <i class="fas fa-times"></i>
                 Confirm Rejection
             </button>

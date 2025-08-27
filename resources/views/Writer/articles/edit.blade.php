@@ -13,15 +13,7 @@
             <h1>Edit Article</h1>
             <div>
                 <div class="status-dropdown">
-                    <div class="status-toggle" id="statusToggle">
-                        <span class="status-badge">{{$article->status}}</span>
-                        {{--                        <i class="fas fa-chevron-down"></i>--}}
-                    </div>
-                    {{--                    <div class="status-options" id="statusOptions">--}}
-                    {{--                        <div class="status-option" data-value="draft">Draft</div>--}}
-                    {{--                        <div class="status-option" data-value="pending">Pending Review</div>--}}
-                    {{--                        <div class="status-option" data-value="published">Published</div>--}}
-                    {{--                    </div>--}}
+                    <span class="article-status status-{{$article->status}}">{{$article->status}}</span>
                 </div>
             </div>
         </div>
@@ -42,7 +34,8 @@
                 </div>
                 <div class="form-group">
                     <label for="articleContent" class="form-label">Content</label>
-                    <textarea id="articleContent" name="content" class="form-control @error('content') is-invalid @enderror"
+                    <textarea id="articleContent" name="content"
+                              class="form-control @error('content') is-invalid @enderror"
                               rows="10">{{ $article->content }}</textarea>
                     @error('content')
                     <div class="invalid-feedback d-block">{{ $message }}</div>
