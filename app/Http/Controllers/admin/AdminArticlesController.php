@@ -56,10 +56,11 @@ class AdminArticlesController extends Controller
     // 4. admin rejects article
     public function reject($article_id ,Request $request)
     {
-        dd($request->all());
         $article = Article::findOrFail($article_id);
         if ($article) {
             $article->status = 'rejected';
+            $article->note = $request->note;
+            $article->note_date = now()->toDateString();
             $article->save();
             Alert::success('Success', 'Article rejected successfully');
             return redirect()->back();

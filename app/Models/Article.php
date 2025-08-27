@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class Article extends Model
 {
     protected $primaryKey = 'article_id';
-    protected $fillable = ['title', 'slug', 'content', 'image', 'category_id', 'writer_id' , 'published_at'];
+    protected $fillable = ['title', 'slug', 'content', 'image', 'category_id', 'writer_id' , 'published_at' , 'notebook' , 'status' , 'note_date'];
 
     public static function getLimitArticles($n)
     {
