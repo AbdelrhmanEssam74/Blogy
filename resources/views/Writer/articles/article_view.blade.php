@@ -104,17 +104,17 @@
         </div>
 
         <div class="management-section">
-            {{--            <div class="admin-notes">--}}
-            {{--                <div class="notes-header">--}}
-            {{--                    <div class="notes-title">Editor's Note</div>--}}
-            {{--                    <div class="notes-date">Added by Editor on May 14, 2023</div>--}}
-            {{--                </div>--}}
-            {{--                <div class="notes-content">--}}
-            {{--                    Great article! Just made a few minor edits for clarity. Consider adding an example for tip #5--}}
-            {{--                    about active voice.--}}
-            {{--                </div>--}}
-            {{--            </div>--}}
-
+            @if($article->note)
+                <div class="admin-notes">
+                    <div class="notes-header">
+                        <div class="notes-title">Editor's Note</div>
+                        <div class="notes-date">Added by Editor on May 14, 2023</div>
+                    </div>
+                    <div class="notes-content">
+                        {{$article->note}}
+                    </div>
+                </div>
+            @endif
             <div class="article-actions">
                 {{--                todo: will avilable in new version--}}
                 {{--                <button class="btn btn-outline">--}}

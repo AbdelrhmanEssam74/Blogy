@@ -134,9 +134,13 @@
     background-color: rgba(255, 193, 7, 0.1);
     color: var(--warning);
 }
-.status-archived{
+.status-rejected{
     background-color: rgba(255, 0, 0, 0.1);
     color: var(--danger);
+}
+.status-archived{
+    background-color: rgba(108, 99, 255, 0.1);
+    color: var(--primary);
 }
 .action-btn {
     background: none;
