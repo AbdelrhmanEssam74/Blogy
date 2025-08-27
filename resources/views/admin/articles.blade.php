@@ -125,7 +125,7 @@
                                         <i class="fas fa-check"></i>
                                         <span>Approve</span>
                                     </button>
-                                    <button class="action-btn btn-reject" onclick="openRejectionModal('Mike Brown')">
+                                    <button class="action-btn btn-reject" onclick="openRejectionModal('Article' , '{{$article->title}}' , '{{$article->article_id}}' , '{{route('admin.article-reject' , $article->article_id)}}')">
                                         <i class="fas fa-times"></i>
                                         <span>Reject</span>
                                     </button>
@@ -202,11 +202,12 @@
                             @endif
                         </td>
                     </tr>
+                    {{--      Reject Modal        --}}
+                    <x-rejection-modal :rejectWhat="'article'" :rejectTitle="$article->title" :article-id="$article->article_id" :route="route('admin.article-reject' , $article->article_id)"></x-rejection-modal>
                 @endforeach
                 </tbody>
             </table>
-            {{--      Reject Modal        --}}
-            <x-rejection-modal :rejectWhat="'article'" :rejectTitle="$article->title" :article-id="$article->article_id" :route="route('admin.article-reject' , $article->article_id)"></x-rejection-modal>
+
             {{-- update status form  --}}
             <form id="update-form" action="" method="POST" class="d-none">
                 @method('PUT')
