@@ -197,6 +197,32 @@
     box-shadow: 0 0 0 3px rgba(108, 99, 255, 0.1);
 }
 
+.article-status {
+    padding: 5px 10px;
+    border-radius: 20px;
+    font-size: 0.8rem;
+    font-weight: 500;
+}
+
+.status-published {
+    background-color: rgba(40, 167, 69, 0.1);
+    color: var(--success);
+}
+
+.status-draft {
+    background-color: rgba(108, 99, 255, 0.1);
+    color: var(--primary);
+}
+
+.status-pending {
+    background-color: rgba(255, 193, 7, 0.1);
+    color: var(--warning);
+}
+.status-rejected {
+    background-color: rgba(255, 0, 0, 0.1);
+    color: var(--danger);
+}
+
 /* Form actions */
 .form-actions {
     display: flex;
