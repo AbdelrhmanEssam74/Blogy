@@ -16,7 +16,7 @@
 
         <!-- Filter Section -->
         <div class="filter-section">
-            <form id="filter-form" action="{{ route('admin.article-filter') }}" method="get" class="d-none">
+            <form id="filter-form" action="{{ route('admin.article-filter') }}" method="get" >
                 <div class="filter-grid">
                     <div class="filter-group">
 
@@ -27,6 +27,8 @@
                                 Published
                             </option>
                             <option value="pending" {{ request('status') == 'pending' ? 'selected' : '' }}>Pending
+                            </option>
+                            <option value="pending-review" {{ request('status') == 'pending-review' ? 'selected' : '' }}>Pending
                                 Review
                             </option>
                             <option value="draft" {{ request('status') == 'draft' ? 'selected' : '' }}>Draft</option>
@@ -49,7 +51,6 @@
                                     {{ $writer->full_name }}
                                 </option>
                             @endforeach
-
                         </select>
                     </div>
 
@@ -110,6 +111,9 @@
                 @foreach($articles as $article)
                     <tr>
                         <td>
+                            @if($article->status === 'pending-review')
+                                <span class="review-alarm"><i class="fa-solid fa-bell-ring"></i></span>
+                            @endif
                             <a href="{{route('admin.article-show',$article->slug)}}"> {{  Str::substr($article->title, 0, 30) }}
                                 .....</a>
                         </td>
@@ -118,7 +122,7 @@
                         <td><span class="badge badge-{{$article->status}}">{{$article->status}}</span></td>
                         <td> {{ \Carbon\Carbon::parse($article->created_at)->format('d M Y h:i')}}</td>
                         <td>
-                            @if($article->status === 'pending')
+                            @if($article->status === 'pending' || $article->status === 'pending-review')
                                 <div class="action-buttons">
                                     <button class="action-btn btn-approve"
                                             onclick="updateArticleStatus({{$article->article_id}},'{{route('admin.article-approve',$article->article_id)}}')">
