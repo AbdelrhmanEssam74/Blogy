@@ -52,7 +52,7 @@
                             <div class="article-title">
                                 <img src="{{asset('storage/' . $article->image) }}" alt="Article thumbnail">
                                 <a href="{{ route('writer.view_article' , $article->slug) }}">
-                                    <span>{{ $article->title }}</span></a>
+                                    <span>{{ \Str::substr($article->title , 0 , 20) }}....</span></a>
                             </div>
                         </td>
                         <td><span class="article-status status-{{$article->status}}">{{$article->status}}</span></td>
