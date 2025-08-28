@@ -334,28 +334,32 @@
     color: var(--white);
 }
 
-.comment-status {
+.badge {
     padding: 0.25rem 0.75rem;
-    border-radius: 0.25rem;
+    border-radius: 9999px;
     font-size: 0.75rem;
     font-weight: 500;
 }
 
-.status-approved {
+.badge-approved {
     background-color: rgba(16, 185, 129, 0.1);
     color: var(--secondary);
 }
 
-.status-pending {
+.badge-pending {
+    background-color: rgba(245, 158, 11, 0.1);
+    color: var(--warning);
+}
+.badge-pending-review {
     background-color: rgba(245, 158, 11, 0.1);
     color: var(--warning);
 }
 
-.status-rejected {
+.badge-rejected {
     background-color: rgba(239, 68, 68, 0.1);
     color: var(--danger);
 }
-.status-archived {
+.badge-archived {
     background-color: rgba(107, 114, 128, 0.1);
     color: var(--gray);
 }
