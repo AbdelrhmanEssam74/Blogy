@@ -149,7 +149,7 @@
     color: var(--dark);
 }
 
-.post-status {
+.article-status {
     padding: 5px 10px;
     border-radius: 20px;
     font-size: 0.8rem;
@@ -169,6 +169,14 @@
 .status-pending {
     background-color: rgba(255, 193, 7, 0.1);
     color: var(--warning);
+}
+.status-rejected{
+    background-color: rgba(255, 0, 0, 0.1);
+    color: var(--danger);
+}
+.status-archived{
+    background-color: rgba(108, 99, 255, 0.1);
+    color: var(--primary);
 }
 
 .action-btn {

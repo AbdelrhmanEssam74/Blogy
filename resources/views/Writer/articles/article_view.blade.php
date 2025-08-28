@@ -108,11 +108,16 @@
                 <div class="admin-notes">
                     <div class="notes-header">
                         <div class="notes-title">Editor's Note</div>
-                        <div class="notes-date">Added by Editor on May 14, 2023</div>
+                        <div class="notes-date">Added by Editor on {{\Carbon\Carbon::parse($article->note_daqte)->format('d M Y')}}</div>
                     </div>
                     <div class="notes-content">
                         {{$article->note}}
                     </div>
+                    @if($article->status === 'pending-review')
+                        <div class="note">
+                            <strong>Note:</strong> Your article is currently under review.
+                        </div>
+                    @endif
                 </div>
             @endif
             <div class="article-actions">

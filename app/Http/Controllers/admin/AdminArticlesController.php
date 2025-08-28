@@ -45,6 +45,8 @@ class AdminArticlesController extends Controller
         if ($article) {
             $article->status = 'published';
             $article->published_at = now();
+            $article->note = null;
+            $article->note_date = null;
             $article->save();
             Alert::success('Success', 'Article published successfully');
             return redirect()->back();

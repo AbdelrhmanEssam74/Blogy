@@ -28,6 +28,9 @@ body {
 a{
     text-decoration: none;
 }
+.d-none{
+    display: none;
+}
 .btn {
     padding: 10px 20px;
     border-radius: 6px;

@@ -107,6 +107,9 @@
                                 <i class="fas fa-eye"></i></a>
                             <a href="{{route('writer.edit_article',$article->article_id)}}" class="action-btn edit">
                                 <i class="fas fa-edit"></i></a>
+                           @if($article->status === 'pending-review')
+                                <span class="action-btn review-alarm"><i class="fa-solid fa-bell-ring"></i></span>
+                           @endif
                         </td>
                     </tr>
 

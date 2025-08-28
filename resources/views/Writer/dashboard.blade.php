@@ -103,7 +103,7 @@
                             @endif
                         </td>
                         {{--                    <td>3,245</td>--}}
-                        <td><span class="post-status status-{{  $article->status }}">{{  $article->status }}</span></td>
+                        <td><span class="article-status status-{{$article->status }}">{{  $article->status }}</span></td>
                         <td>
                             @if($article->status==='pending')
                                 <a href="{{route('writer.view_article',$article->slug)}}" class="action-btn show">

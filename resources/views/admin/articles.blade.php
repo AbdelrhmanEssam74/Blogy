@@ -202,9 +202,9 @@
                             @endif
                         </td>
                     </tr>
-                    {{--      Reject Modal        --}}
-                    <x-rejection-modal :rejectWhat="'article'" :rejectTitle="$article->title" :article-id="$article->article_id" :route="route('admin.article-reject' , $article->article_id)"></x-rejection-modal>
                 @endforeach
+                {{--      Reject Modal        --}}
+                <x-rejection-modal :rejectWhat="'article'" :rejectTitle="$article->title" :article-id="$article->article_id" :route="route('admin.article-reject' , $article->article_id)"></x-rejection-modal>
                 </tbody>
             </table>
 
@@ -232,5 +232,5 @@
             });
         });
     </script>
-    <script src="{{asset('js/AdminArticlesManagement.js')}}"></script>
+
 @endsection

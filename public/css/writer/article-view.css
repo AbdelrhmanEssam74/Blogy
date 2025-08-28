@@ -37,7 +37,6 @@
 }
 
 .article-title {
-    width: 80%;
     font-size: 1.8rem;
     color: var(--dark);
     margin-bottom: 10px;
@@ -83,7 +82,10 @@
     background-color: rgba(255, 0, 0, 0.1);
     color: var(--danger);
 }
-
+.status-pending-review{
+    background-color: rgba(255, 193, 7, 0.1);
+    color: var(--warning);
+}
 .article-actions {
     display: flex;
     align-items: center;
@@ -227,7 +229,11 @@
     color: var(--dark);
     line-height: 1.5;
 }
-
+.note{
+    margin-top: 10px;
+    color: var(--primary);
+    font-style: italic;
+}
 .tag-list {
     display: flex;
     flex-wrap: wrap;

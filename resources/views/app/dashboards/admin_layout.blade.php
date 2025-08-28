@@ -85,5 +85,6 @@
         content.classList.toggle('full');
     });
 </script>
+<script src="{{asset('js/AdminArticlesManagement.js')}}"></script>
 </body>
 </html>
