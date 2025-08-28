@@ -21,7 +21,7 @@ class AdminArticlesController extends Controller
         $writers = User::where('role_id', 3)->get();
         // load all categories
         $categories = Category::all();
-        return view('admin.articles',
+        return view('admin.articles.articles',
             compact(
                 'articles',
                 'writers',
@@ -147,7 +147,7 @@ class AdminArticlesController extends Controller
         $writers = User::where('role_id', 3)->get();
         $categories = Category::all();
         $articlesCount = Article::count();
-        return view('admin.articles', compact('articles', 'writers', 'categories', 'articlesCount'));
+        return view('admin.articles.articles', compact('articles', 'writers', 'categories', 'articlesCount'));
     }
 
 }

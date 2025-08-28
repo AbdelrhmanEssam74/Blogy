@@ -16,7 +16,8 @@
             <i class="fa-light fa-file-lines"></i>
             <span>Articles</span>
         </a>
-        <a href="admin-categories.html" class="menu-item">
+        <a href="{{ route('admin.categories') }}"
+           class="menu-item {{request()->routeIs('admin.categories') ? 'active' : ' '}}" data-target="categories">
             <i class="fa-light fa-tags"></i>
             <span>Categories</span>
         </a>

@@ -12,6 +12,13 @@ class Category extends Model
         'description',
         'category_author',
         'image',
+        'status',
+        'created_at',
+        'updated_at',
+        'deleted_at',
+        'slug',
+        'active',
+        'article_count'
     ];
     public function articles()
     {
