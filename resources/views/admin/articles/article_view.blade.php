@@ -28,63 +28,95 @@
         <!-- Article Details Section -->
         <div class="article-details ">
             <div class="admin-article-actions">
-                @if($article->status === 'pending')
+                @if($article->status === 'pending' || $article->status === 'pending-review')
                     <div class="action-buttons">
-                        <a href="#" class="action-btn btn-approve">
+                        <button class="action-btn btn-approve"
+                                onclick="updateArticleStatus({{$article->article_id}},'{{route('admin.article-approve',$article->article_id)}}')">
                             <i class="fas fa-check"></i>
                             <span>Approve</span>
-                        </a>
-                        <a class="action-btn btn-reject">
+                        </button>
+                        <button class="action-btn btn-reject" onclick="openRejectionModal('Article' , '{{$article->title}}' , '{{$article->article_id}}' , '{{route('admin.article-reject' , $article->article_id)}}')">
                             <i class="fas fa-times"></i>
                             <span>Reject</span>
-                        </a>
+                        </button>
                     </div>
                 @elseif($article->status === 'published')
                     <div class="action-buttons">
-                        <a href="#" class="action-btn btn-archive">
+                        <button class="action-btn btn-archive"
+                                onclick="updateArticleStatus({{$article->article_id}},'{{route('admin.article-archive',$article->article_id)}}')"
+                        >
                             <i class="fas fa-archive"></i>
                             <span>Archive</span>
-                        </a>
-                        <a href="#" class="action-btn btn-delete">
+                        </button>
+                        <button class="action-btn btn-delete"
+                                onclick="updateArticleStatus({{$article->article_id}},'{{route('admin.article-delete',$article->article_id)}}')"
+                        >
                             <i class="fas fa-trash"></i>
                             <span>Delete</span>
-                        </a>
+                        </button>
                     </div>
                 @elseif($article->status === 'archived')
                     <div class="action-buttons">
-                        <a href="#" class="action-btn btn-restore">
+                        <button class="action-btn btn-restore"
+                                onclick="updateArticleStatus({{$article->article_id}},'{{route('admin.article-restore',$article->article_id)}}')"
+                        >
                             <i class="fas fa-undo"></i>
                             <span>Restore</span>
 
-                        </a>
-                        <a href="#" class="action-btn btn-delete">
+                        </button>
+                        <button class="action-btn btn-delete"
+                                onclick="updateArticleStatus({{$article->article_id}},'{{route('admin.article-delete',$article->article_id)}}')"
+                        >
                             <i class="fas fa-trash"></i>
                             <span>Delete</span>
-                        </a>
+                        </button>
                     </div>
                 @elseif($article->status === 'rejected')
                     <div class="action-buttons">
-                        <a href="#" class="action-btn btn-approve">
+                        <button class="action-btn btn-approve"
+                                onclick="updateArticleStatus({{$article->article_id}},'{{route('admin.article-approve',$article->article_id)}}')">
                             <i class="fas fa-check"></i>
                             <span>Approve</span>
-                        </a>
-                        <a href="#" class="action-btn btn-archive">
+                        </button>
+                        <button class="action-btn btn-archive"
+                                onclick="updateArticleStatus({{$article->article_id}},'{{route('admin.article-archive',$article->article_id)}}')"
+                        >
                             <i class="fas fa-archive"></i>
                             <span>Archive</span>
-                        </a>
+                        </button>
                     </div>
                 @elseif($article->status === 'draft')
                     <div class="action-buttons">
-                        <a href="#"  class="action-btn btn-archive">
+                        <button class="action-btn btn-archive"
+                                onclick="updateArticleStatus({{$article->article_id}},'{{route('admin.article-archive',$article->article_id)}}')"
+                        >
                             <i class="fas fa-archive"></i>
                             <span>Archive</span>
-                        </a>
-                        <a href="#" class="action-btn btn-delete">
+                        </button>
+                        <button class="action-btn btn-delete"
+                                onclick="updateArticleStatus({{$article->article_id}},'{{route('admin.article-delete',$article->article_id)}}')"
+                        >
                             <i class="fas fa-trash"></i>
                             <span>Delete</span>
-                        </a>
+                        </button>
+                    </div>
+                @elseif($article->status === 'deleted')
+                    <div class="action-buttons">
+                        <button class="action-btn btn-delete"
+                                onclick="updateArticleStatus({{$article->article_id}},'{{route('admin.article-delete-permanently',$article->article_id)}}')"
+                        >
+                            <i class="fas fa-trash"></i>
+                            <span>Delete Permanently</span>
+                        </button>
                     </div>
                 @endif
+                    {{--      Reject Modal        --}}
+                    <x-rejection-modal :rejectWhat="'article'" :rejectTitle="$article->title" :article-id="$article->article_id" :route="route('admin.article-reject' , $article->article_id)"></x-rejection-modal>
+                    {{-- update status form  --}}
+                    <form id="update-form" action="" method="POST" class="d-none">
+                        @method('PUT')
+                        @csrf
+                    </form>
             </div>
             <div class="article-header">
                 <div>
@@ -113,6 +145,9 @@
                         </span>
                         <span class="meta-item">
                             <span class="badge badge-{{$article->status}}">{{Str::ucfirst($article->status)}}</span>
+                            @if($article->note)
+                                <span>{{$article->note}} on {{\Carbon\Carbon::parse($article->note_date)->format('d M Y')}}</span>
+                            @endif
                         </span>
                     </div>
                 </div>
