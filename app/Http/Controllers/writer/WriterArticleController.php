@@ -114,7 +114,12 @@ class WriterArticleController extends Controller
         $article->title = $validated['title'];
         $article->content = $validated['content'];
         $article->category_id = $validated['category_id'];
-        $article->status = 'pending';
+        if ($article->note) {
+            $article->status = 'pending-review';
+        } else {
+            $article->status = 'pending';
+
+        }
 
         if ($request->hasFile('new-image')) {
             // create a folder for the article images if it doesn't exist ( main folder name -> articles ) (writer folder name -> user_id)
