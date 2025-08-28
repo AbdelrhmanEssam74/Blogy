@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\admin\AdminArticlesController;
+use App\Http\Controllers\admin\AdminCategoriesController;
 use App\Http\Controllers\admin\AdminDashboardController;
 use App\Http\Controllers\ArticleController;
 use App\Http\Controllers\CategoryController;
@@ -54,6 +55,9 @@ Route::middleware([checkAuthentication::class, CheckAdminRole::class])->group(fu
     Route::put('/admin/articles/delete-permanently/{article_id}', [AdminArticlesController::class, 'delete_permanently'])->name('admin.article-delete-permanently');
     // filter articles
     Route::get('/admin/articles/filter', [AdminArticlesController::class, 'filter'])->name('admin.article-filter');
+
+    // Categories's route
+    Route::get('/admin/categories', [AdminCategoriesController::class, 'index'])->name('admin.categories');
 });
 
 Route::get('/articles/create', [ArticleController::class, 'create'])->name('articles.create');
