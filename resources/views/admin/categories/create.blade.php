@@ -13,7 +13,8 @@
         <div class="header">
             <div>
                 <div class="breadcrumb">
-                    <a href="{{ route('admin.dashboard') }}">Dashboard</a> > <a href="{{ route('admin.categories') }}">Categories</a> > Create New
+                    <a href="{{ route('admin.dashboard') }}">Dashboard</a> > <a href="{{ route('admin.categories') }}">Categories</a>
+                    > Create New
                 </div>
                 <h1>Create New Category</h1>
             </div>
@@ -25,7 +26,9 @@
 
         <!-- Create Form -->
         <div class="create-form-container">
-            <form id="createCategoryForm">
+            <form id="createCategoryForm" method="POST" action="{{ route('admin.category-store') }}"
+                  enctype="multipart/form-data">
+                @csrf
                 <div class="form-grid">
                     <!-- Left Column -->
                     <div>
@@ -34,25 +37,42 @@
 
                             <div class="form-group">
                                 <label for="categoryName" class="form-label">Category Name *</label>
-                                <input type="text" id="categoryName" name="name" class="form-control" placeholder="e.g., Technology, Business, Lifestyle"  >
-                                <div class="form-help">This will be displayed as the category name throughout the site.</div>
-                                <div class="form-error" id="nameError">Please enter a category name.</div>
+                                <input type="text" id="categoryName"
+                                       name="name" class="form-control @error('name') is-invalid @enderror"
+                                       placeholder="e.g., Technology, Business, Lifestyle"
+                                       value="{{ old('name') }}"
+                                >
+                                <div class="form-help">This will be displayed as the category name throughout the
+                                    site.
+                                </div>
+                                @error('name')
+                                <div class="invalid-feedback d-block">{{ $message }}</div>
+                                @enderror
                             </div>
 
                             <div class="form-group">
                                 <label for="categorySlug" class="form-label">Slug *</label>
                                 <div class="slug-group">
                                     <span class="slug-prefix">/category/</span>
-                                    <input type="text" id="categorySlug" name="=slug" disabled class="form-control slug-input" placeholder="category-slug"  >
+                                    <input type="text" id="categorySlug" name="slug" readonly
+                                           class="form-control slug-input    @error('name') is-invalid @enderror "
+                                           placeholder="category-slug">
                                 </div>
-                                <div class="form-help">URL-friendly version of the name. Auto-generated from the category name.</div>
-                                <div class="form-error" id="slugError">Please enter a valid slug (letters, numbers, and hyphens only).</div>
+                                <div class="form-help">URL-friendly version of the name. Auto-generated from the
+                                    category name.
+                                </div>
+                                @error('slug')
+                                <div class="invalid-feedback d-block">{{ $message }}</div>
+                                @enderror
                             </div>
 
                             <div class="form-group">
                                 <label for="categoryDescription" class="form-label">Description</label>
-                                <textarea id="categoryDescription" class="form-control form-textarea" name="description" placeholder="Brief description of the category..."></textarea>
-                                <div class="form-help">Brief description of the category that will be displayed on category pages.</div>
+                                <textarea id="categoryDescription" class="form-control form-textarea" name="description"
+                                          placeholder="Brief description of the category..."></textarea>
+                                <div class="form-help">Brief description of the category that will be displayed on
+                                    category pages.
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -73,21 +93,28 @@
                                             <i class="fas fa-upload"></i>
                                             <span>Upload Image</span>
                                         </button>
-                                        <input type="file" id="categoryImage" accept="image/*">
+                                        <input type="file" name="image" id="categoryImage" accept="image/*">
                                     </div>
                                 </div>
-                                <div class="form-help">Recommended size: 400×400 pixels. Supported formats: JPG, PNG, GIF.</div>
+                                <div class="form-help">Supported formats: JPG, PNG,
+                                    GIF.
+                                </div>
+                                @error('image')
+                                <div class="invalid-feedback d-block">{{ $message }}</div>
+                                @enderror
                             </div>
                         </div>
                         <div class="form-group">
                             <div class="toggle-group">
                                 <span class="toggle-label">Status</span>
                                 <label class="toggle-switch">
-                                    <input type="checkbox" id="categoryStatus" checked>
+                                    <input type="checkbox" name="active" id="categoryStatus" checked>
                                     <span class="toggle-slider"></span>
                                 </label>
                             </div>
-                            <div class="form-help">Active categories are visible to users. Inactive categories are hidden.</div>
+                            <div class="form-help">Active categories are visible to users. Inactive categories are
+                                hidden.
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -108,8 +135,7 @@
 
 
     <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            const form = document.getElementById('createCategoryForm');
+        document.addEventListener('DOMContentLoaded', function () {
             const nameInput = document.getElementById('categoryName');
             const slugInput = document.getElementById('categorySlug');
             const imageInput = document.getElementById('categoryImage');
@@ -117,7 +143,7 @@
             const imagePreview = document.getElementById('imagePreview');
 
             // Auto-generate slug from name
-            nameInput.addEventListener('input', function() {
+            nameInput.addEventListener('input', function () {
                 const name = this.value.trim();
                 const slug = generateSlug(name);
 
@@ -129,7 +155,7 @@
             });
 
             // Allow manual slug editing without auto-overwrite
-            slugInput.addEventListener('input', function() {
+            slugInput.addEventListener('input', function () {
                 this.dataset.autoGenerated = 'false';
 
                 // Validate slug format
@@ -144,24 +170,12 @@
                     document.getElementById('slugError').style.display = 'none';
                 }
             });
-
-            // Manual slug generation button (optional - could be added)
-            function generateSlugManual() {
-                const name = nameInput.value.trim();
-                if (name) {
-                    slugInput.value = generateSlug(name);
-                    slugInput.dataset.autoGenerated = 'true';
-                    slugInput.classList.add('pulse');
-                    setTimeout(() => slugInput.classList.remove('pulse'), 500);
-                }
-            }
-
             // Image preview
-            imageInput.addEventListener('change', function() {
+            imageInput.addEventListener('change', function () {
                 if (this.files && this.files[0]) {
                     const reader = new FileReader();
 
-                    reader.onload = function(e) {
+                    reader.onload = function (e) {
                         previewImage.src = e.target.result;
                         previewImage.style.display = 'block';
                         imagePreview.querySelector('i').style.display = 'none';
@@ -171,44 +185,9 @@
                 }
             });
 
-            // Form submission
-            form.addEventListener('submit', function(e) {
-                e.preventDefault();
-
-                // Validate form
-                if (validateForm()) {
-                    // In a real application, you would send this data to your server
-                    const formData = new FormData();
-                    formData.append('name', nameInput.value.trim());
-                    formData.append('slug', slugInput.value.trim());
-                    formData.append('description', document.getElementById('categoryDescription').value);
-                    formData.append('status', document.getElementById('categoryStatus').checked ? 'active' : 'inactive');
-                    formData.append('metaTitle', document.getElementById('metaTitle').value);
-                    formData.append('metaDescription', document.getElementById('metaDescription').value);
-
-                    if (imageInput.files[0]) {
-                        formData.append('image', imageInput.files[0]);
-                    }
-
-                    console.log('Creating category with:', {
-                        name: nameInput.value.trim(),
-                        slug: slugInput.value.trim(),
-                        description: document.getElementById('categoryDescription').value,
-                        status: document.getElementById('categoryStatus').checked ? 'active' : 'inactive',
-                        metaTitle: document.getElementById('metaTitle').value,
-                        metaDescription: document.getElementById('metaDescription').value,
-                        hasImage: !!imageInput.files[0]
-                    });
-
-                    // Show success message (in real app, this would be after API response)
-                    alert('Category created successfully!');
-                    // Redirect to categories list
-                    window.location.href = '#';
-                }
-            });
 
             // Cancel button
-            document.querySelector('.btn-outline').addEventListener('click', function() {
+            document.querySelector('.btn-outline').addEventListener('click', function () {
                 if (confirm('Are you sure you want to cancel? Any entered data will be lost.')) {
                     window.location.href = '#';
                 }
