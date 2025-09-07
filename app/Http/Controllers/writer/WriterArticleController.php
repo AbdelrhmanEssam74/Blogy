@@ -125,7 +125,7 @@ class WriterArticleController extends Controller
             // create a folder for the article images if it doesn't exist ( main folder name -> articles ) (writer folder name -> user_id)
             // delete the old image if it exists
             if ($article->image) {
-                $oldImagePath = 'public/' . $article->image;
+                $oldImagePath = 'storage/' . $article->image;
                 if (file_exists($oldImagePath)) {
                     unlink($oldImagePath);
                 }

@@ -1,5 +1,6 @@
 @extends('app.dashboards.admin_layout')
-
+@section('description')Manage and organize your blog categories. Add, edit, or delete categories to keep your content structured and easily navigable for your readers.
+@endsection
 @section('title', auth()->user()->full_name . ' | Categories')
 @section('styles')
     <link rel="stylesheet" href="{{ asset('css/admin/categories.css') }}">
@@ -12,10 +13,10 @@
         <div class="header">
             <h1>Manage Categories</h1>
             <div class="header-actions">
-                <button class="btn btn-primary" onclick="openCategoryModal()">
+                <a class="btn btn-primary" href="{{ route('admin.category-create') }}">
                     <i class="fas fa-plus"></i>
                     <span>Add Category</span>
-                </button>
+                </a>
             </div>
         </div>
 
@@ -53,14 +54,6 @@
                         <option value="inactive">Inactive</option>
                     </select>
                 </div>
-
-                <div class="filter-group">
-                    <label class="filter-label">Search</label>
-                    <div class="search-box">
-                        <input type="text" id="searchInput" placeholder="Search categories..." onkeyup="applyFilters()">
-                        <i class="fas fa-search"></i>
-                    </div>
-                </div>
             </div>
 
             <div class="filter-actions">
@@ -92,7 +85,8 @@
                          ">
                         <div class="category-header">
                             <div class="category-image">
-                                <img src="{{asset('storage/' . $category->image) }}" alt="category-thumbnail-img">
+                                <img src="{{asset('storage/' . $category->image) }}" loading="lazy"
+                                     alt="category-thumbnail-img">
                             </div>
                             <div class="category-info">
                                 <h3 class="category-name">{{$category->name}}</h3>
@@ -104,17 +98,18 @@
                             </div>
                         </div>
                         <p class="category-description">
-                            {{$category->description}}
+                            {{ \Str::substr($category->description , 0 , 50) }}.....
                         </p>
                         <div class="category-actions">
-                            <button class="action-btn btn-edit" onclick="">
+                            <a class="action-btn btn-edit"
+                               href="{{ route('admin.category-edit' , $category->category_id) }}">
                                 <i class="fas fa-edit"></i>
                                 <span>Edit</span>
-                            </button>
-                            <button class="action-btn btn-delete" onclick="">
-                                <i class="fas fa-trash"></i>
-                                <span>Delete</span>
-                            </button>
+                            </a>
+                            {{--                            <a class="action-btn btn-delete" onclick="">--}}
+                            {{--                                <i class="fas fa-trash"></i>--}}
+                            {{--                                <span>Delete</span>--}}
+                            {{--                            </a>--}}
                         </div>
                     </div>
                 @endforeach
@@ -123,6 +118,9 @@
 
 
         <!-- Pagination -->
+        <div class="pagination">
+            {{ $categories->withQueryString()->onEachSide(1)->links('components.pagination') }}
+        </div>
     </main>
 
 
@@ -154,15 +152,4 @@
             </div>
         </div>
     </div>
-
-    <script>
-        // Auto-generate slug from name
-        document.getElementById('categoryName').addEventListener('input', function () {
-            const name = this.value.trim();
-            const slug = name.toLowerCase()
-                .replace(/[^a-z0-9]+/g, '-')
-                .replace(/(^-|-$)/g, '');
-            document.getElementById('categorySlug').value = slug;
-        });
-    </script>
 @endsection
