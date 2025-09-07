@@ -1,5 +1,7 @@
 @extends('app.dashboards.admin_layout')
-
+@section('description')
+    Edit details and settings for the category.
+    @endsection
 @section('title', auth()->user()->full_name . ' | Categories')
 @section('styles')
     <link rel="stylesheet" href="{{ asset('css/admin/edit-category.css') }}">
@@ -18,7 +20,7 @@
                 </div>
                 <h1>Edit Category</h1>
             </div>
-            <a href="#" class="btn btn-outline">
+            <a href="{{ route('admin.categories') }}" class="btn btn-outline">
                 <i class="fas fa-arrow-left"></i>
                 <span>Back to Categories</span>
             </a>
@@ -26,16 +28,6 @@
 
         <!-- Edit Form -->
         <div class="edit-form-container">
-            {{--           display all errors--}}
-            @if ($errors->any())
-                <div class="alert alert-danger">
-                    <ul>
-                        @foreach ($errors->all() as $error)
-                            <li>{{ $error }}</li>
-                        @endforeach
-                    </ul>
-                </div>
-            @endif
             <form id="editCategoryForm" action="{{ route('admin.category-update' , $category->category_id) }}"
                   method="POST" enctype="multipart/form-data">
                 @method('PUT')
@@ -48,26 +40,32 @@
 
                             <div class="form-group">
                                 <label for="categoryName" class="form-label">Category Name</label>
-                                <input type="text" id="categoryName" name="name" class="form-control"
+                                <input type="text" id="categoryName" name="name" class="form-control @error('name') is-invalid @enderror"
                                        value="{{$category->name}}">
                                 <div class="form-help">This will be displayed as the category name throughout the
                                     site.
                                 </div>
+                                @error('name')
+                                <div class="invalid-feedback d-block">{{ $message }}</div>
+                                @enderror
                             </div>
 
                             <div class="form-group">
                                 <label for="categorySlug" class="form-label">Slug</label>
-                                <input type="text" id="categorySlug" name="slug" class="form-control"
+                                <input type="text" id="categorySlug" name="slug" class="form-control   @error('name') is-invalid @enderror "
                                        value="{{$category->slug}}"
                                 >
                                 <div class="form-help">URL-friendly version of the name. Usually all lowercase and
                                     contains only letters, numbers, and hyphens, Created Automatically
                                 </div>
+                                @error('slug')
+                                <div class="invalid-feedback d-block">{{ $message }}</div>
+                                @enderror
                             </div>
 
                             <div class="form-group">
                                 <label for="categoryDescription" class="form-label">Description</label>
-                                <textarea id="categoryDescription"
+                                <textarea id="categoryDescription" name="description" rows="11"
                                           class="form-control form-textarea">{{$category->description}}</textarea>
                                 <div class="form-help">Brief description of the category that will be displayed on
                                     category pages.
@@ -84,7 +82,7 @@
                             <div class="form-group">
                                 <div class="image-upload">
                                     <div class="image-preview" id="imagePreview">
-                                        <img src="{{asset('storage/' . $category->image)}}"
+                                        <img src="{{asset('storage/' . $category->image)}}" loading="lazy"
                                              alt="Current category image">
                                     </div>
                                     <div class="upload-btn">
@@ -100,6 +98,9 @@
                                 <div class="form-help">Supported formats: JPG, PNG,
                                     GIF.
                                 </div>
+                                @error('new_image')
+                                <div class="invalid-feedback d-block">{{ $message }}</div>
+                                @enderror
                             </div>
                         </div>
                         <div class="form-group">
@@ -135,7 +136,7 @@
 
                 <div class="form-actions">
                     <div>
-                        <button type="button" class="btn btn-danger">
+                        <button disabled type="button" class="btn btn-danger">
                             <i class="fas fa-trash"></i>
                             <span>Delete Category</span>
                         </button>

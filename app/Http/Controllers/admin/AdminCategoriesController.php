@@ -68,9 +68,7 @@ class AdminCategoriesController extends Controller
 
         $category = Category::findOrFail($category_id);
         $category->name = $validated['name'];
-        if ($request->has('description')) {
-            $category->description = $validated['description'];
-        }
+        $category->description = $validated['description'];
         $category->slug = $validated['slug'];
         if ($request->has('active') && $request->active === 'on') {
             $category->active = 1;
