@@ -3,6 +3,7 @@
 use App\Http\Controllers\admin\AdminArticlesController;
 use App\Http\Controllers\admin\AdminCategoriesController;
 use App\Http\Controllers\admin\AdminDashboardController;
+use App\Http\Controllers\admin\AdminUsersController;
 use App\Http\Controllers\ArticleController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\CommentController;
@@ -62,6 +63,9 @@ Route::middleware([checkAuthentication::class, CheckAdminRole::class])->group(fu
     Route::post('/admin/categories/store', [AdminCategoriesController::class, 'store'])->name('admin.category-store');
     Route::get('/admin/categories/{category_id}/edit', [AdminCategoriesController::class, 'edit'])->name('admin.category-edit');
     Route::put('/admin/categories/{category_id}/update', [AdminCategoriesController::class, 'update'])->name('admin.category-update');
+
+    // Users Management Routes
+    Route::get('/admin/users', [AdminUsersController::class, 'index'])->name('admin.users');
 });
 
 Route::get('/articles/create', [ArticleController::class, 'create'])->name('articles.create');

@@ -21,7 +21,7 @@
             <i class="fa-light fa-tags"></i>
             <span>Categories</span>
         </a>
-        <a href="admin-users.html" class="menu-item">
+        <a href="{{ route('admin.users') }}" class="menu-item {{request()->routeIs('admin.users') ? 'active' : ' '}}"  data-target="users">
             <i class="fa-light fa-users"></i>
             <span>Users</span>
         </a>
