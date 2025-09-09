@@ -58,6 +58,10 @@ Route::middleware([checkAuthentication::class, CheckAdminRole::class])->group(fu
 
     // Categories's route
     Route::get('/admin/categories', [AdminCategoriesController::class, 'index'])->name('admin.categories');
+    Route::get('/admin/categories/create', [AdminCategoriesController::class, 'create'])->name('admin.category-create');
+    Route::post('/admin/categories/store', [AdminCategoriesController::class, 'store'])->name('admin.category-store');
+    Route::get('/admin/categories/{category_id}/edit', [AdminCategoriesController::class, 'edit'])->name('admin.category-edit');
+    Route::put('/admin/categories/{category_id}/update', [AdminCategoriesController::class, 'update'])->name('admin.category-update');
 });
 
 Route::get('/articles/create', [ArticleController::class, 'create'])->name('articles.create');
