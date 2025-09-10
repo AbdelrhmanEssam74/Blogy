@@ -22,6 +22,7 @@ class User extends Authenticatable
         'full_name',
         'email',
         'password',
+        'role_id',
     ];
 
     /**
@@ -55,5 +56,8 @@ class User extends Authenticatable
     }
     public function writer_profile(){
         return $this->hasOne(WriterProfile::class, 'user_id', 'user_id');
+    }
+    public function role(){
+        return $this->belongsTo(Role::class, 'role_id', 'role_id');
     }
 }
