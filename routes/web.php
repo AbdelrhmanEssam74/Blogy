@@ -66,6 +66,8 @@ Route::middleware([checkAuthentication::class, CheckAdminRole::class])->group(fu
 
     // Users Management Routes
     Route::get('/admin/users', [AdminUsersController::class, 'index'])->name('admin.users');
+    Route::get('/admin/users/active/{user_id}', [AdminUsersController::class, 'active'])->name('admin.users-active');
+    Route::get('/admin/users/deactivate/{user_id}', [AdminUsersController::class, 'deactivate'])->name('admin.users-deactivate');;
 });
 
 Route::get('/articles/create', [ArticleController::class, 'create'])->name('articles.create');
