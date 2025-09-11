@@ -90,6 +90,7 @@
                     <th>Role</th>
                     <th>Articles</th>
                     <th>Joined</th>
+                    <th>Status</th>
                     <th>Actions</th>
                 </tr>
                 </thead>
@@ -116,17 +117,38 @@
                         </td>
                         <td><span class="badge badge-{{$user->role->role_name}}">{{$user->role->role_name}}</span></td>
                         <td>0</td>
+                        @if($user->writer_profile)
+                            <td>
+                                <span
+                                    class="badge badge-{{$user->writer_profile->status}}">{{\Str::ucfirst($user->writer_profile->status)}}</span>
+                            </td>
+                        @else
+                            <td>
+                                <span class="badge badge-active">Active</span>
+                            </td>
+                        @endif
                         <td>{{\Carbon\Carbon::parse($user->created_at)->format('D, d M Y ')}}</td>
                         <td>
                             <div class="action-buttons">
-                                <button class="action-btn btn-role" title="Change Role"
-                                        onclick="openRoleModal(1, 'Admin User', 'admin')">
-                                    <i class="fas fa-user-cog"></i>
-                                </button>
-                                <button class="action-btn btn-status inactive" title="Deactivate"
-                                        onclick="toggleUserStatus(1, true)">
-                                    <i class="fas fa-user-slash"></i>
-                                </button>
+                                {{--                                <button class="action-btn btn-role" title="Change Role"--}}
+                                {{--                                        onclick="openRoleModal(1, 'Admin User', 'admin')">--}}
+                                {{--                                    <i class="fas fa-user-cog"></i>--}}
+                                {{--                                </button>--}}
+                                @if($user->writer_profile)
+                                    @if($user->writer_profile->status === 'active')
+                                        <a class="action-btn btn-status inactive"
+                                                href="{{ route('admin.users-deactivate' , $user->user_id) }}"
+                                                title="Deactivate">
+                                            <i class="fas fa-user-slash"></i>
+                                        </a>
+                                    @elseif($user->writer_profile->status === 'inactive')
+                                        <a class="action-btn btn-status active"
+                                           href="{{ route('admin.users-active' , $user->user_id) }}"
+                                                title="Activate">
+                                            <i class="fas fa-user-check"></i>
+                                        </a>
+                                    @endif
+                                @endif
                             </div>
                         </td>
                     </tr>
@@ -134,60 +156,11 @@
 
                 </tbody>
             </table>
-
             <div class="pagination">
-                <div class="pagination-info">
-                    Showing 1-5 of 24 users
-                </div>
-                <div class="pagination-controls">
-                    <button class="page-btn">
-                        <i class="fas fa-chevron-left"></i>
-                    </button>
-                    <button class="page-btn active">1</button>
-                    <button class="page-btn">2</button>
-                    <button class="page-btn">3</button>
-                    <button class="page-btn">4</button>
-                    <button class="page-btn">5</button>
-                    <button class="page-btn">
-                        <i class="fas fa-chevron-right"></i>
-                    </button>
-                </div>
+                {{ $users->withQueryString()->onEachSide(1)->links('components.pagination') }}
             </div>
         </div>
     </main>
-    <!-- Role Change Modal -->
-    <div class="modal-overlay" id="roleModal">
-        <div class="modal">
-            <div class="modal-header">
-                <h3 class="modal-title">Change User Role</h3>
-                <button class="modal-close" onclick="closeRoleModal()">
-                    <i class="fas fa-times"></i>
-                </button>
-            </div>
-            <div class="modal-body">
-                <p class="modal-message">
-                    Change role for <strong id="roleUserName">Jane Smith</strong>:
-                </p>
-
-                <div class="form-group">
-                    <select class="filter-select" id="roleSelect">
-                        <option value="reader">Reader</option>
-                        <option value="writer">Writer</option>
-                        <option value="admin">Administrator</option>
-                    </select>
-                </div>
-            </div>
-            <div class="modal-footer">
-                <button class="btn btn-outline" onclick="closeRoleModal()">
-                    Cancel
-                </button>
-                <button class="btn btn-primary" onclick="updateUserRole()">
-                    <i class="fas fa-save"></i>
-                    <span>Update Role</span>
-                </button>
-            </div>
-        </div>
-    </div>
     <script>
         // Store current user data
         let currentUser = null;
@@ -243,73 +216,19 @@
             document.getElementById('roleModal').classList.remove('active');
         }
 
-        function updateUserRole() {
-            if (!currentUser) return;
-
-            const newRole = document.getElementById('roleSelect').value;
-
-            // In a real application, you would send this to the server
-            console.log(`Changing role for user ${currentUser.id} from ${currentUser.role} to ${newRole}`);
-
-            // Update the UI
-            const roleBadge = document.querySelector(`tr:nth-child(${currentUser.id}) td:nth-child(2) span`);
-            roleBadge.textContent = newRole.charAt(0).toUpperCase() + newRole.slice(1);
-            roleBadge.className = 'badge badge-' + newRole;
-
-            // Show success message
-            alert(`Role updated successfully for ${currentUser.name}`);
-            closeRoleModal();
-        }
-
-        // Toggle user status
-        function toggleUserStatus(userId, isCurrentlyActive) {
-            const userName = document.querySelector(`tr:nth-child(${userId}) .user-name`).textContent;
-
-            if (confirm(`Are you sure you want to ${isCurrentlyActive ? 'deactivate' : 'activate'} ${userName}?`)) {
-                // In a real application, you would send this to the server
-                console.log(`Toggling status for user ${userId}`);
-
-                // Update the UI
-                const statusBadge = document.querySelector(`tr:nth-child(${userId}) td:nth-child(4) span`);
-                const statusButton = document.querySelector(`tr:nth-child(${userId}) .btn-status`);
-
-                if (isCurrentlyActive) {
-                    statusBadge.textContent = 'Inactive';
-                    statusBadge.className = 'badge badge-inactive';
-                    statusButton.className = 'action-btn btn-status';
-                    statusButton.title = 'Activate';
-                    statusButton.innerHTML = '<i class="fas fa-user-check"></i>';
-                    statusButton.onclick = function () {
-                        toggleUserStatus(userId, false);
-                    };
-                } else {
-                    statusBadge.textContent = 'Active';
-                    statusBadge.className = 'badge badge-active';
-                    statusButton.className = 'action-btn btn-status inactive';
-                    statusButton.title = 'Deactivate';
-                    statusButton.innerHTML = '<i class="fas fa-user-slash"></i>';
-                    statusButton.onclick = function () {
-                        toggleUserStatus(userId, true);
-                    };
-                }
-
-                // Show success message
-                alert(`${userName} has been ${isCurrentlyActive ? 'deactivated' : 'activated'} successfully`);
-            }
-        }
-
         // Close modal when clicking outside
         document.getElementById('roleModal').addEventListener('click', function (e) {
             if (e.target === this) {
                 closeRoleModal();
             }
         });
-
         // Close modal with Escape key
         document.addEventListener('keydown', function (e) {
             if (e.key === 'Escape') {
                 closeRoleModal();
             }
         });
+
+}
     </script>
 @endsection
