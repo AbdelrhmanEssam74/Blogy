@@ -116,7 +116,7 @@
                             </div>
                         </td>
                         <td><span class="badge badge-{{$user->role->role_name}}">{{$user->role->role_name}}</span></td>
-                        <td>0</td>
+                        <td>{{$user->articles_count}}</td>
                         @if($user->writer_profile)
                             <td>
                                 <span
@@ -162,15 +162,14 @@
         </div>
     </main>
     <script>
-        // Store current user data
-        let currentUser = null;
-
         // Filter functionality
         function applyFilters() {
             const roleFilter = document.getElementById('roleFilter').value;
             const statusFilter = document.getElementById('statusFilter').value;
+            const sortFilter = document.getElementById('sortFilter').value;
             const searchTerm = document.getElementById('searchInput').value.toLowerCase();
-            const rows = document.querySelectorAll('.data-table tbody tr');
+            const tbody = document.querySelector('.data-table tbody');
+            const rows = Array.from(tbody.querySelectorAll('tr'));
 
             rows.forEach(row => {
                 const role = row.querySelector('td:nth-child(2) span').textContent.toLowerCase();
@@ -190,6 +189,32 @@
                     row.style.display = 'none';
                 }
             });
+
+            // Sorting
+            const visibleRows = rows.filter(row => row.style.display !== 'none');
+
+            visibleRows.sort((a, b) => {
+                if (sortFilter === 'name') {
+                    const nameA = a.querySelector('.user-name').textContent.toLowerCase();
+                    const nameB = b.querySelector('.user-name').textContent.toLowerCase();
+                    return nameA.localeCompare(nameB);
+                } else if (sortFilter === 'articles') {
+                    const articlesA = parseInt(a.querySelector('td:nth-child(3)').textContent) || 0;
+                    const articlesB = parseInt(b.querySelector('td:nth-child(3)').textContent) || 0;
+                    return articlesB - articlesA; // descending
+                } else if (sortFilter === 'oldest') {
+                    const dateA = new Date(a.querySelector('td:nth-child(5)').textContent);
+                    const dateB = new Date(b.querySelector('td:nth-child(5)').textContent);
+                    return dateA - dateB;
+                } else { // newest
+                    const dateA = new Date(a.querySelector('td:nth-child(5)').textContent);
+                    const dateB = new Date(b.querySelector('td:nth-child(5)').textContent);
+                    return dateB - dateA;
+                }
+            });
+
+            // Append sorted rows back
+            visibleRows.forEach(row => tbody.appendChild(row));
         }
 
         function clearFilters() {
@@ -203,32 +228,6 @@
                 row.style.display = '';
             });
         }
-
-        // Role change modal
-        function openRoleModal(userId, userName, currentRole) {
-            currentUser = {id: userId, name: userName, role: currentRole};
-            document.getElementById('roleUserName').textContent = userName;
-            document.getElementById('roleSelect').value = currentRole;
-            document.getElementById('roleModal').classList.add('active');
-        }
-
-        function closeRoleModal() {
-            document.getElementById('roleModal').classList.remove('active');
-        }
-
-        // Close modal when clicking outside
-        document.getElementById('roleModal').addEventListener('click', function (e) {
-            if (e.target === this) {
-                closeRoleModal();
-            }
-        });
-        // Close modal with Escape key
-        document.addEventListener('keydown', function (e) {
-            if (e.key === 'Escape') {
-                closeRoleModal();
-            }
-        });
-
-}
     </script>
+
 @endsection
