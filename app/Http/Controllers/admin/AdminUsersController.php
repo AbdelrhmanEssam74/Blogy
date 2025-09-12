@@ -12,7 +12,9 @@ class AdminUsersController extends Controller
 {
     public function index()
     {
-        $users = User::with(['role', 'writer_profile'])->paginate(10);
+        $users = User::with(['role', 'writer_profile'])
+            ->withCount('articles')
+            ->paginate(10);
         return view('admin.users.index', compact('users'));
     }
 
