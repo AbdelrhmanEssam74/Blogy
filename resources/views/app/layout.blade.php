@@ -13,6 +13,10 @@
     <link href="{{asset('img/favicon.png')}}" rel="icon">
     <link href="assets/img/apple-touch-icon.png" rel="apple-touch-icon">
 
+    {{--    aos animation  --}}
+    <!-- CSS -->
+    <link rel="stylesheet" href="https://unpkg.com/aos@2.3.1/dist/aos.css"/>
+
     <!-- Fonts -->
     <link href="https://fonts.googleapis.com" rel="preconnect">
     <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin>
@@ -115,6 +119,10 @@
 <script src="{{asset('vendor/purecounter/purecounter_vanilla.js')}}"></script>
 <script src="{{asset('vendor/glightbox/js/glightbox.min.js')}}"></script>
 
+
+{{--    aos animation  --}}
+<!-- JS -->
+<script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
 
 <!-- Main JS File -->
 <script src="{{asset('js/main.js')}}"></script>
