@@ -1,7 +1,7 @@
 @extends('app.layout')
 @section('header')
-    <x-upper_navbar></x-upper_navbar>
-    <x-down_navbar></x-down_navbar>
+    @include('partials.upper-navbar')
+    @include('partials.main-navbar')
 @endsection
 @section('content')
     {{--    errors - success message--}}
