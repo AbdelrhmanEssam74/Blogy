@@ -3,6 +3,7 @@
 use App\Http\Controllers\admin\AdminArticlesController;
 use App\Http\Controllers\admin\AdminCategoriesController;
 use App\Http\Controllers\admin\AdminDashboardController;
+use App\Http\Controllers\admin\AdminSettingsController;
 use App\Http\Controllers\admin\AdminUsersController;
 use App\Http\Controllers\ArticleController;
 use App\Http\Controllers\CategoryController;
@@ -19,6 +20,8 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', [HomeController::class, 'index'])->name('home');
 Route::get('/home', [HomeController::class, 'index'])->name('home');
+Route::get('/about', [HomeController::class, 'about'])->name('about');
+Route::get('/contact', [HomeController::class, 'contact'])->name('contact');
 Route::get('/articles', [ArticleController::class, 'index'])->name('articles.index');
 
 
@@ -67,7 +70,9 @@ Route::middleware([checkAuthentication::class, CheckAdminRole::class])->group(fu
     // Users Management Routes
     Route::get('/admin/users', [AdminUsersController::class, 'index'])->name('admin.users');
     Route::get('/admin/users/active/{user_id}', [AdminUsersController::class, 'active'])->name('admin.users-active');
-    Route::get('/admin/users/deactivate/{user_id}', [AdminUsersController::class, 'deactivate'])->name('admin.users-deactivate');;
+    Route::get('/admin/users/deactivate/{user_id}', [AdminUsersController::class, 'deactivate'])->name('admin.users-deactivate');
+    // Admin Settings Route
+    Route::get('/admin/settings', [AdminSettingsController::class, 'index'])->name('admin.settings');;
 });
 
 Route::get('/articles/create', [ArticleController::class, 'create'])->name('articles.create');
