@@ -89,6 +89,40 @@
     color: var(--gray);
 }
 
+/* Submenu hidden by default */
+.submenu {
+    display: none;
+    list-style: none;
+    padding-left: 20px;
+    margin: 5px 0;
+}
+
+.submenu li a {
+    display: block;
+    padding: 10px 15px;
+    font-size: 15px;
+    color: var(--dark);
+    transition: 0.3s;
+    cursor: pointer;
+    border-bottom: 1px solid var(--light-gray);
+}
+
+.submenu li a:hover {
+    background-color: var(--light-gray);
+    color: var(--primary);
+}
+
+/* Active state */
+.submenu li a.active {
+    color: var(--primary);
+    font-weight: bold;
+}
+
+/* When parent active (opened) */
+.menu-item.open + .submenu {
+    display: block;
+}
+
 @media (max-width: 768px) {
     .sidebar {
         width: 70px;
