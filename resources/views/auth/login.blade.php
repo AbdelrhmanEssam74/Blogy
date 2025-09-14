@@ -1,9 +1,8 @@
 @extends('app.layout')
-
-@section('title', 'Login')
-@section('header')
-    <x-upper_navbar></x-upper_navbar>
+@section('description')
+    Login to your account to access personalized features and manage your settings. Enter your email and password to securely log in. If you don't have an account, you can easily register for one.
 @endsection
+@section('title', 'Login')
 @section('content')
     <div class="full-width-auth-container" role="main" aria-label="Login Page">
         <!-- Image Section -->
