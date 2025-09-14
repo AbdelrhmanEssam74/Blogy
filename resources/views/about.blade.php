@@ -1,7 +1,13 @@
 @extends('app.layout')
+@section('title', 'About Us')
+@section('description')
+    About Us - Learn more about our company's mission, values, and team. Discover how we strive to deliver exceptional service and innovative solutions to our clients.
+@endsection
 @section('header')
+    <header id="header" class="header position-relative">
     @include('partials.upper-navbar')
     @include('partials.main-navbar')
+    </header>
 @endsection
 @section('content')
     <main class="main">

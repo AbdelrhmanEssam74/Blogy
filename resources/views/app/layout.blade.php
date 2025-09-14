@@ -6,7 +6,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.5/css/bootstrap.min.css"
           integrity="sha512-VKRuFSBOvhd0K/u8OFOE2ChWfbu8qKvXjGWirtOznTauCSkpeu0suyEg2Zm5JqBumCHJOBJcTfE7xYJlDjknCg=="
           crossorigin="anonymous" referrerpolicy="no-referrer"/>
-    <meta name="description" content="">
+    <meta name="description" content="@yield('description', 'Blogy is a blog website where you can read and write blogs.')">
     <meta name="keywords" content="">
 
     <!-- Favicons -->
@@ -91,9 +91,9 @@
 </head>
 <body>
 
-<header id="header" class="header position-relative">
+
     @yield('header')
-</header>
+
 @include('sweetalert::alert')
 <main class="main">
     @yield('content')
