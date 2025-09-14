@@ -1,7 +1,10 @@
 @extends('app.layout')
+@section('title' , 'Home - Blog')
 @section('header')
+    <header id="header" class="header position-relative">
     @include('partials.upper-navbar')
     @include('partials.main-navbar')
+    </header>
 @endsection
 @section('content')
     {{--    errors - success message--}}

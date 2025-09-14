@@ -1,7 +1,13 @@
 @extends('app.layout')
+@section('title', 'Contact - ' . config('app.name', 'Laravel'))
+@section('description')
+    Contact page of {{ config('app.name', 'Laravel') }} - Get in touch with us for inquiries, support, or feedback.
+@endsection
 @section('header')
-    @include('partials.upper-navbar')
-    @include('partials.main-navbar')
+    <header id="header" class="header position-relative">
+        @include('partials.upper-navbar')
+        @include('partials.main-navbar')
+    </header>
 @endsection
 @section('content')
     <main class="main">
@@ -11,7 +17,8 @@
             <div class="breadcrumbs">
                 <nav aria-label="breadcrumb">
                     <ol class="breadcrumb">
-                        <li class="breadcrumb-item"><a href="{{previousRouteName(url()->previous())}}"><i class="bi bi-house"></i>{{ucfirst(previousRouteName(url()->previous()))}}</a></li>
+                        <li class="breadcrumb-item"><a href="{{previousRouteName(url()->previous())}}"><i
+                                    class="bi bi-house"></i>{{ucfirst(previousRouteName(url()->previous()))}}</a></li>
                         <li class="breadcrumb-item active current">{{ucfirst(request()->route()->getName())}}</li>
                     </ol>
                 </nav>
@@ -19,7 +26,8 @@
 
             <div class="title-wrapper">
                 <h1>Contact</h1>
-                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut elit tellus, luctus nec ullamcorper mattis, pulvinar dapibus leo.</p>
+                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut elit tellus, luctus nec ullamcorper
+                    mattis, pulvinar dapibus leo.</p>
             </div>
         </div><!-- End Page Title -->
 
@@ -70,26 +78,31 @@
                                     <div class="col-md-6 form-group">
                                         <div class="input-group">
                                             <span class="input-group-text"><i class="fa-light fa-user"></i></span>
-                                            <input type="text" name="name" class="form-control" placeholder="Your name*" required="">
+                                            <input type="text" name="name" class="form-control" placeholder="Your name*"
+                                                   required="">
                                         </div>
                                     </div>
                                     <div class="col-md-6 form-group">
                                         <div class="input-group">
                                             <span class="input-group-text"><i class="fa-light fa-envelope"></i></span>
-                                            <input type="email" class="form-control" name="email" placeholder="Email address*" required="">
+                                            <input type="email" class="form-control" name="email"
+                                                   placeholder="Email address*" required="">
                                         </div>
                                     </div>
                                 </div>
                                 <div class="row mt-3">
                                     <div class="col-md-6 form-group">
                                         <div class="input-group">
-                                            <span class="input-group-text"><i class="fa-light fa-mobile-button"></i></span>
-                                            <input type="text" class="form-control" name="phone" placeholder="Phone number*" required="">
+                                            <span class="input-group-text"><i
+                                                    class="fa-light fa-mobile-button"></i></span>
+                                            <input type="text" class="form-control" name="phone"
+                                                   placeholder="Phone number*" required="">
                                         </div>
                                     </div>
                                     <div class="col-md-6 form-group">
                                         <div class="input-group">
-                                            <span class="input-group-text"><i class="fa-light fa-bars-staggered"></i></span>
+                                            <span class="input-group-text"><i
+                                                    class="fa-light fa-bars-staggered"></i></span>
                                             <select name="subject" class="form-control" required="">
                                                 <option value="">Select service*</option>
                                                 <option value="Service 1">Consulting</option>
@@ -101,8 +114,10 @@
                                     </div>
                                     <div class="form-group mt-3">
                                         <div class="input-group">
-                                            <span class="input-group-text"><i class="fa-light fa-comment-dots"></i></span>
-                                            <textarea class="form-control" name="message" rows="6" placeholder="Write a message*" required=""></textarea>
+                                            <span class="input-group-text"><i
+                                                    class="fa-light fa-comment-dots"></i></span>
+                                            <textarea class="form-control" name="message" rows="6"
+                                                      placeholder="Write a message*" required=""></textarea>
                                         </div>
                                     </div>
                                     <div class="my-3">
