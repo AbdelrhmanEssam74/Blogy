@@ -9,11 +9,11 @@
                     <ul class="dropdown-menu">
                         @php($categories=\App\Models\Category::all())
                         @foreach($categories as $category)
-                            <li><a href="#">{{$category->name}}</a></li>
+                            <li><a href="{{ route('categories.index' , $category->slug) }}">{{$category->name}}</a></li>
                         @endforeach
                     </ul>
                 </li>
-                <li><a href="{{ route('contact') }}"  class="{{ request()->routeIs('about') ? 'active' : '' }}">Contact</a></li>
+                <li><a href="{{ route('contact') }}"  class="{{ request()->routeIs('contact') ? 'active' : '' }}">Contact</a></li>
                 @if(!auth()->user())
                     <li><a href="{{route('login')}}">Login</a></li>
                     <li><a href="{{route('register')}}">Register</a></li>
