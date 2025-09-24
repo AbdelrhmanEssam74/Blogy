@@ -9,3 +9,16 @@ if (!function_exists('previousRouteName')) {
         return end($segments);
     }
 }
+/**
+ * Function to get custom length of string
+ */
+if (!function_exists('custom_strlen')) {
+     function custom_strlen($string, $length)
+     {
+         if (strlen($string) > $length) {
+             return substr($string, 0, $length) . '...';
+         } else {
+             return $string;
+         }
+     }
+ }
