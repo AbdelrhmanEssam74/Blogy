@@ -1785,8 +1785,10 @@ section,
 
 .category-postst .post-author-img {
     width: 50px;
+    height: 50px;
     border-radius: 50%;
     margin-right: 15px;
+    object-fit: cover;
 }
 
 .category-postst .post-author {
@@ -3493,7 +3495,10 @@ a.add-category,
 .widget-item:last-child {
     margin-bottom: 0;
 }
-
+.post-item img.img-fluid{
+    aspect-ratio: 1/1;
+    object-fit: cover;
+}
 .search-widget form {
     background: var(--background-color);
     border: 1px solid color-mix(in srgb, var(--default-color), transparent 75%);
