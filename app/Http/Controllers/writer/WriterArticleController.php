@@ -57,7 +57,9 @@ class WriterArticleController extends Controller
             $imagePath = $request->file('image')->store('articles/' . auth()->user()->user_id, 'public');
             $validated['image'] = $imagePath;
         }
-
+        // increase the number of the articles by 1 in category table
+        $category = Category::findOrFail($validated['category_id']);
+        $category->increment('articles_count');
         Article::create($validated);
         Alert::success('Success', 'Article created successfully');
         return redirect()->route('writer.dashboard');
@@ -73,6 +75,9 @@ class WriterArticleController extends Controller
                 unlink($imagePath);
             }
         }
+        // decrease the number of the articles by 1 in category table
+        $category = Category::findOrFail($article->category_id);
+        $category->decrement('articles_count');
         $article->delete();
         Alert::success('Success', 'Article deleted successfully');
         $prevRoute = app('router')
@@ -138,6 +143,13 @@ class WriterArticleController extends Controller
         if (!$article->isDirty()) {
             Alert::info('No Changes', 'No updates were made to the article.');
             return redirect()->back();
+        }
+        // check if the user changed the category and update the articles_count in the category table
+        if ($article->category_id !== $validated['category_id']) {
+            $oldCategory = Category::findOrFail($article->category_id);
+            $oldCategory->decrement('articles_count');
+            $newCategory = Category::findOrFail($validated['category_id']);
+            $newCategory->increment('articles_count');
         }
         $article->save();
         Alert::success('Success', 'Article updated successfully');
