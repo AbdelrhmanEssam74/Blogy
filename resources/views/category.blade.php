@@ -38,9 +38,7 @@
 
         <div class="container">
             <div class="row">
-
                 <div class="col-lg-8">
-
                     <!-- Category Postst Section -->
                     <section id="category-postst" class="category-postst section">
 
@@ -80,7 +78,11 @@
                                 @endforeach
                             </div>
                         </div>
-                    </section><!-- /Category Postst Section -->
+                    </section>
+                    <!-- /Category Postst Section -->
+                    <div class="pagination">
+                        {{ $articles->withQueryString()->onEachSide(1)->links('components.pagination_-v2') }}
+                    </div>
                 </div>
 
                 <div class="col-lg-4 sidebar">
@@ -158,7 +160,6 @@
 
             </div>
         </div>
-
     </main>
 @endsection
 

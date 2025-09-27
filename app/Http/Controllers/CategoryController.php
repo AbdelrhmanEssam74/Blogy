@@ -16,11 +16,11 @@ class CategoryController extends Controller
         $articles = Article::where('category_id', $category->category_id)->with('user.writer_profile')
             ->where('status', 'published')
             ->orderBy('created_at', 'desc')
-            ->paginate(2);
+            ->paginate(8);
         $recentArticles = Article::where('status', 'published')
             ->orderBy('created_at', 'desc')
             ->take(5)
             ->get();
-        return view('search.category', compact('category', 'articles' , 'allCategories' , 'recentArticles'));
+        return view('category', compact('category', 'articles' , 'allCategories' , 'recentArticles'));
     }
 }
