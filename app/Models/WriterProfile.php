@@ -6,6 +6,9 @@ use Illuminate\Database\Eloquent\Model;
 
 class WriterProfile extends Model
 {
+    protected $casts = [
+        'social_media_links' => 'array',
+    ];
 
     protected $fillable = [
         'user_id',
