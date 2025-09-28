@@ -38,9 +38,7 @@
 
         <div class="container">
             <div class="row">
-
                 <div class="col-lg-8">
-
                     <!-- Category Postst Section -->
                     <section id="category-postst" class="category-postst section">
 
@@ -49,18 +47,14 @@
                                 @foreach($articles as $article)
                                     <div class="col-lg-6">
                                         <article>
-
                                             <div class="post-img">
                                                 <img src="{{asset('storage/' . $article->image)}}" alt=""
                                                      class="img-fluid">
                                             </div>
-
                                             <p class="post-category">{{$category->name}}</p>
-
                                             <h2 class="title">
-                                                <a href="">{{custom_strlen($article->content , 50)}}...</a>
+                                                <a href="{{ route('article.view' , $article->slug) }}">{{custom_strlen($article->content , 50)}}...</a>
                                             </h2>
-
                                             <div class="d-flex align-items-center">
                                                 <img
                                                     src="{{asset('storage/' . $article->user->writer_profile->profile_picture)}}"
@@ -74,13 +68,16 @@
                                                     </p>
                                                 </div>
                                             </div>
-
                                         </article>
                                     </div><!-- End post list item -->
                                 @endforeach
                             </div>
                         </div>
-                    </section><!-- /Category Postst Section -->
+                    </section>
+                    <!-- /Category Postst Section -->
+                    <div class="pagination">
+                        {{ $articles->withQueryString()->onEachSide(1)->links('components.pagination_-v2') }}
+                    </div>
                 </div>
 
                 <div class="col-lg-4 sidebar">
@@ -120,10 +117,12 @@
                             @foreach($recentArticles as $recent)
 
                                 <div class="post-item">
-                                    <img src="{{asset('storage/' . $recent->image)}}" alt="" class="flex-shrink-0 img-fluid">
+                                    <img src="{{asset('storage/' . $recent->image)}}" alt=""
+                                         class="flex-shrink-0 img-fluid">
                                     <div>
-                                        <h4><a href="blog-details.html">{{$recent->title}}</a></h4>
-                                        <time datetime="2020-01-01">  {{\Carbon\Carbon::parse($recent->published_at)->format('M d, Y')}}</time>
+                                        <h4><a href="{{ route('article.view' , $recent->slug) }}">{{$recent->title}}</a></h4>
+                                        <time
+                                            datetime="2020-01-01">  {{\Carbon\Carbon::parse($recent->published_at)->format('M d, Y')}}</time>
                                     </div>
                                 </div>
                             @endforeach
@@ -158,7 +157,6 @@
 
             </div>
         </div>
-
     </main>
 @endsection
 

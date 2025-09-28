@@ -9,23 +9,19 @@ use Illuminate\Support\Str;
 
 class ArticleController extends Controller
 {
-    public function index()
+
+    public function show($slug)
     {
-        $articles = Article::orderBy('created_at', 'DESC')->paginate(9);
-        return view('articles.index', ['articles' => $articles]);
+        $article = Article::where('slug', $slug)->with('category' , 'user')->firstOrFail();
+        $allCategories = Category::select('category_id', 'name', 'slug' , 'articles_count')->get();
+        $related_articles = Article::where('category_id', $article->category_id)
+            ->where('article_id', '!=', $article->article_id)
+            ->inRandomOrder()
+            ->take(3)
+            ->get();
+        return view('article_view', ['article' => $article, 'related_articles' => $related_articles , 'allCategories' => $allCategories]);
     }
 
-
-    public function show($id)
-    {
-        $article = Article::findOrFail($id);
-        return view('articles.article', ['article' => $article]);
-    }
-
-    public function create()
-    {
-        return view('articles.create');
-    }
 
     public function create_first()
     {
